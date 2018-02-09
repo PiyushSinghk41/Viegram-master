@@ -26,14 +26,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class My_ranking extends Fragment {
-    private SharedPreferences preferences;
-    private TextView world_rank;
-    private TextView rank_country;
-    private TextView rank_follower;
-    private TextView rank_following;
-    private RelativeLayout progress_layout;
-    private RelativeLayout working_layout;
-    private ProgressBar progress;
+
+     SharedPreferences preferences;
+
+     TextView world_rank , rank_country , rank_follower , rank_following;
+
+     RelativeLayout progress_layout , working_layout;
+
+     ProgressBar progress;
 
     @Nullable
     @Override

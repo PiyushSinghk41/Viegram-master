@@ -29,10 +29,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Leader extends Fragment {
-    private ListView leader_list;
-    private SharedPreferences preferences;
-    private RelativeLayout progress_layout;
-    private ProgressBar progress;
+
+    ListView leader_list;
+    SharedPreferences preferences;
+    RelativeLayout progress_layout;
+    ProgressBar progress;
 
     @Nullable
     @Override
@@ -54,8 +55,7 @@ public class Leader extends Fragment {
                 leader_list.setVisibility(View.GONE);
                 get_ranking();
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             progress_layout.setVisibility(View.VISIBLE);
             leader_list.setVisibility(View.GONE);
             get_ranking();
@@ -85,8 +85,7 @@ public class Leader extends Fragment {
                         progress_layout.setVisibility(View.VISIBLE);
                         leader_list.setVisibility(View.GONE);
                         progress.setVisibility(View.GONE);
-                        if(getActivity()!=null)
-                        {
+                        if (getActivity() != null) {
                             Alerter.create(getActivity())
                                     .setText(R.string.network_error)
                                     .setBackgroundColor(R.color.login_bg)
@@ -94,8 +93,7 @@ public class Leader extends Fragment {
                         }
                     }
                 } else {
-                    if(getActivity()!=null)
-                    {
+                    if (getActivity() != null) {
                         Alerter.create(getActivity())
                                 .setText(R.string.network_error)
                                 .setBackgroundColor(R.color.login_bg)
@@ -111,8 +109,7 @@ public class Leader extends Fragment {
                 leader_list.setVisibility(View.GONE);
                 progress.setVisibility(View.GONE);
 
-                if(getActivity()!=null)
-                {
+                if (getActivity() != null) {
                     Alerter.create(getActivity())
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)

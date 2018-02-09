@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Pojo.IconDetail;
 import com.relinns.viegram.R;
 import java.util.List;
@@ -29,9 +31,18 @@ public class Icon_guide_Adapter extends RecyclerView.Adapter<Icon_guide_Adapter.
 
     @Override
     public void onBindViewHolder(View_holder holder, final int position) {
-        Glide.with(context).load(icon_data.get(position).getIcons())
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(icon_data.get(position).getIcons() , holder.icon_view , options);
+
+
+
+       /* Glide.with(context).load(icon_data.get(position).getIcons())
                 .into(holder.icon_view);
-        holder.guide_text.setText(icon_data.get(position).getDetail());
+        holder.guide_text.setText(icon_data.get(position).getDetail());*/
     }
 
     @Override
@@ -40,9 +51,11 @@ public class Icon_guide_Adapter extends RecyclerView.Adapter<Icon_guide_Adapter.
     }
 
     public class View_holder extends RecyclerView.ViewHolder {
+
         ImageView icon_view;
         TextView guide_text;
         RelativeLayout guide_layout;
+
         public View_holder(View itemView) {
             super(itemView);
             icon_view=(ImageView)itemView.findViewById(R.id.guide_icon);

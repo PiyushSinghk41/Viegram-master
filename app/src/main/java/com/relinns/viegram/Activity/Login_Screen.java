@@ -29,14 +29,14 @@ import retrofit2.Callback;
 
 public class Login_Screen extends Activity implements View.OnClickListener, View.OnTouchListener {
 
-    private TextView sign_up;
-    private TextView forgot_password;
-    private Button login;
-    private View activityRootView;
-    private EditText_cursor login_email;
-    private EditText_cursor login_password;
-    private ProgressDialog progress_Dialog;
-    private SharedPreferences preferences;
+    TextView sign_up;
+    TextView forgot_password;
+    Button login;
+    View activityRootView;
+    EditText_cursor login_email;
+    EditText_cursor login_password;
+    ProgressDialog progress_Dialog;
+    SharedPreferences preferences;
     private boolean backpressed = true;
     private String token;
 
@@ -44,6 +44,7 @@ public class Login_Screen extends Activity implements View.OnClickListener, View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login__screen);
+
         progress_Dialog = new ProgressDialog(this);
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
         token = FirebaseInstanceId.getInstance().getToken();
@@ -169,7 +170,7 @@ public class Login_Screen extends Activity implements View.OnClickListener, View
             public void onFailure(Call<API_Response> call, Throwable t) {
                 Log.d("API_Error", "login Error : " + t.getMessage());
                 progress_Dialog.dismiss();
-               Alerter.create(Login_Screen.this)
+                Alerter.create(Login_Screen.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.login_bg)
                         .show();

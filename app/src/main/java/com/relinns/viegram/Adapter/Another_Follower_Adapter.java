@@ -24,6 +24,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_follower_following;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Modal.API_Response;
@@ -45,11 +47,13 @@ import retrofit2.Callback;
 
 @SuppressWarnings("ALL")
 public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follower_Adapter.View_Holder> {
+
     private SharedPreferences preferences;
     private List<FollowerList_Model> listData = new ArrayList<>();
     private Another_follower_following activity;
 
     public Another_Follower_Adapter(Another_follower_following followers, List<FollowerList_Model> list) {
+
         this.listData = list;
         this.activity = followers;
         preferences = activity.getSharedPreferences("Viegram", Context.MODE_PRIVATE);
@@ -64,11 +68,22 @@ public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follo
     @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(final View_Holder holder, int position) {
-        Glide.with(activity).load(listData.get(position).getProfileImage())
+
+        FollowerList_Model item = listData.get(position);
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(item.getProfileImage() , holder.following_image , options);
+
+
+       /* Glide.with(activity).load(listData.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(activity))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .into(holder.following_image);
+                .into(holder.following_image);*/
+
         holder.following_name.setText(listData.get(position).getDisplayName());
 
         holder.following_name.setOnClickListener(new View.OnClickListener() {

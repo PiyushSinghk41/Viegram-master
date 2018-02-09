@@ -30,52 +30,62 @@ import retrofit2.Callback;
 
 
 public class Follow_people extends AppCompatActivity implements View.OnClickListener {
-    private RecyclerView follow_people_list;
-    private RelativeLayout badgeLayout;
-    private RelativeLayout progress_layout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click_view;
-    private TextView badgeText;
-    private ProgressBar progress;
-    private SharedPreferences preferences;
-private LinearLayout noDataLayout;
+    RecyclerView follow_people_list;
+    RelativeLayout badgeLayout, progress_layout, back,
+            activity_layout, menu_home, menu_open_layout, menu_close,
+            menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+
+    ImageView menu_click_view;
+    TextView badgeText;
+    ProgressBar progress;
+    SharedPreferences preferences;
+    LinearLayout noDataLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_people);
 
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
-noDataLayout=(LinearLayout)findViewById(R.id.no_follower);
+
+        noDataLayout = (LinearLayout) findViewById(R.id.no_follower);
+
         follow_people_list = (RecyclerView) findViewById(R.id.follow_people_list);
+
         progress_layout = (RelativeLayout) findViewById(R.id.progress_layout);
+
         progress = (ProgressBar) findViewById(R.id.progress);
+
         activity_layout = (RelativeLayout) findViewById(R.id.activity_layout);
+
         menu_home = (RelativeLayout) findViewById(R.id.menu_home);
+
         back = (RelativeLayout) findViewById(R.id.back);
+
         menu_open_layout = (RelativeLayout) findViewById(R.id.follow_menu_open);
+
         menu_click_view = (ImageView) findViewById(R.id.follow_menu_click);
+
         menu_profile = (RelativeLayout) findViewById(R.id.menu_profile);
+
         menu_stat = (RelativeLayout) findViewById(R.id.menu_stat);
+
         menu_follow = (RelativeLayout) findViewById(R.id.menu_follow_following);
+
         menu_notifications = (RelativeLayout) findViewById(R.id.menu_notification);
+
         menu_settings = (RelativeLayout) findViewById(R.id.menu_settings);
+
         menu_search = (RelativeLayout) findViewById(R.id.menu_search);
+
         menu_ranking = (RelativeLayout) findViewById(R.id.menu_ranking);
+
         menu_camera = (RelativeLayout) findViewById(R.id.menu_camera);
+
         menu_close = (RelativeLayout) findViewById(R.id.menu_close);
+
         badgeLayout = (RelativeLayout) findViewById(R.id.badge_layout);
+
         badgeText = (TextView) findViewById(R.id.badge_text);
 
         menu_home.setOnClickListener(this);
@@ -95,8 +105,8 @@ noDataLayout=(LinearLayout)findViewById(R.id.no_follower);
 
         menu_open_layout.setVisibility(View.GONE);
 
-        if (Settings.followPeople.size()!=0)
-        {follow_people_list.setVisibility(View.VISIBLE);
+        if (Settings.followPeople.size() != 0) {
+            follow_people_list.setVisibility(View.VISIBLE);
             progress_layout.setVisibility(View.GONE);
             noDataLayout.setVisibility(View.GONE);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Follow_people.this);
@@ -104,8 +114,7 @@ noDataLayout=(LinearLayout)findViewById(R.id.no_follower);
             Follow_people_Adapter adapter = new Follow_people_Adapter(Follow_people.this, Settings.followPeople);
             follow_people_list.setAdapter(adapter);
 
-        }
-        else {
+        } else {
             follow_people_list.setVisibility(View.GONE);
             progress_layout.setVisibility(View.VISIBLE);
             noDataLayout.setVisibility(View.GONE);
@@ -145,8 +154,7 @@ noDataLayout=(LinearLayout)findViewById(R.id.no_follower);
                                 .setBackgroundColor(R.color.red)
                                 .show();
                     }
-                } else
-                {
+                } else {
                     Alerter.create(Follow_people.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)
@@ -161,7 +169,7 @@ noDataLayout=(LinearLayout)findViewById(R.id.no_follower);
                 follow_people_list.setVisibility(View.GONE);
                 progress_layout.setVisibility(View.VISIBLE);
                 progress.setVisibility(View.GONE);
-               Alerter.create(Follow_people.this)
+                Alerter.create(Follow_people.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.login_bg)
                         .show();
@@ -253,8 +261,7 @@ noDataLayout=(LinearLayout)findViewById(R.id.no_follower);
     }
 
     //transition animation
-    private void transition()
-    {
+    private void transition() {
         overridePendingTransition(R.anim.enter, R.anim.exit);
     }
 

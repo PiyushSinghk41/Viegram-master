@@ -28,59 +28,71 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 public class Ranking extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
-    private RelativeLayout badgeLayout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout menu_home;
-    private RelativeLayout leader;
-    private RelativeLayout my_ranking;
-    private RelativeLayout follower_ranking;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click_view;
-    private TextView leader_text;
-    private TextView ranking_text;
-    private TextView flwr_rnk_text;
-    private TextView badgeText;
-    private SharedPreferences preferences;
-    private ViewPager mRankingPager;
+
+    RelativeLayout badgeLayout, back, activity_layout, menu_home,
+            leader, my_ranking, follower_ranking,
+            menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications,
+            menu_settings, menu_search, menu_ranking, menu_camera;
+
+    ImageView menu_click_view;
+    TextView leader_text, ranking_text, flwr_rnk_text, badgeText;
+
+    SharedPreferences preferences;
+    ViewPager mRankingPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
+
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
+
         leader = (RelativeLayout) findViewById(R.id.leader);
+
         menu_home = (RelativeLayout) findViewById(R.id.menu_home);
+
         back = (RelativeLayout) findViewById(R.id.back);
+
         activity_layout = (RelativeLayout) findViewById(R.id.activity_layout);
+
         my_ranking = (RelativeLayout) findViewById(R.id.my_ranking);
+
         follower_ranking = (RelativeLayout) findViewById(R.id.follower_ranking);
+
         leader_text = (TextView) findViewById(R.id.leader_text);
+
         ranking_text = (TextView) findViewById(R.id.ranking_text);
+
         flwr_rnk_text = (TextView) findViewById(R.id.fllwr_text);
+
         menu_open_layout = (RelativeLayout) findViewById(R.id.ranking_menu_open);
+
         menu_click_view = (ImageView) findViewById(R.id.ranking_menu_click);
+
         menu_profile = (RelativeLayout) findViewById(R.id.menu_profile);
+
         menu_stat = (RelativeLayout) findViewById(R.id.menu_stat);
+
         menu_follow = (RelativeLayout) findViewById(R.id.menu_follow_following);
+
         menu_notifications = (RelativeLayout) findViewById(R.id.menu_notification);
+
         menu_settings = (RelativeLayout) findViewById(R.id.menu_settings);
+
         menu_search = (RelativeLayout) findViewById(R.id.menu_search);
+
         menu_ranking = (RelativeLayout) findViewById(R.id.menu_ranking);
+
         menu_camera = (RelativeLayout) findViewById(R.id.menu_camera);
+
         menu_close = (RelativeLayout) findViewById(R.id.menu_close);
+
         badgeLayout = (RelativeLayout) findViewById(R.id.badge_layout);
+
         badgeText = (TextView) findViewById(R.id.badge_text);
+
         mRankingPager = (ViewPager) findViewById(R.id.ranking_pager);
+
         menu_open_layout.setVisibility(View.GONE);
 
         menu_follow.setOnClickListener(this);
@@ -109,7 +121,7 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
     }
 
     private void setUpViewPager(ViewPager mRankingPager) {
-        Log.d("Fragment","setUp");
+        Log.d("Fragment", "setUp");
         Ranking.ViewPagerAdapter rankingViewAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         rankingViewAdapter.addFragment(new Leader());
         rankingViewAdapter.addFragment(new My_ranking());
@@ -129,14 +141,14 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
 
         }
         if (v == my_ranking) {
-            mRankingPager.setCurrentItem(1,true);
+            mRankingPager.setCurrentItem(1, true);
 //            Fragment fragment_leader = new My_ranking();
 //            FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
 //            fragmentTransaction3.replace(R.id.ranking_data, fragment_leader, null);
 //            fragmentTransaction3.commit();
         }
         if (v == follower_ranking) {
-            mRankingPager.setCurrentItem(2,true);
+            mRankingPager.setCurrentItem(2, true);
 //            Fragment fragment_leader = new Follower_ranking();
 //            FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
 //            fragmentTransaction3.replace(R.id.ranking_data, fragment_leader, null);
@@ -218,7 +230,7 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
     }
 
     private void callLeaderMethod() {
-        mRankingPager.setCurrentItem(0,true);
+        mRankingPager.setCurrentItem(0, true);
 
 //
 //        Fragment fragment_leader = new Leader();
@@ -246,31 +258,43 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
 
     @Override
     public void onPageSelected(int position) {
-        if (position==0)
-        {
+        if (position == 0) {
             leader.setBackground(getResources().getDrawable(R.drawable.login_bg));
+
             my_ranking.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
             follower_ranking.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
             leader_text.setTextColor(getResources().getColor(R.color.white));
+
             ranking_text.setTextColor(getResources().getColor(R.color.login_bg));
+
             flwr_rnk_text.setTextColor(getResources().getColor(R.color.login_bg));
         }
-        if (position==1)
-        {
+        if (position == 1) {
             my_ranking.setBackground(getResources().getDrawable(R.drawable.login_bg));
+
             leader.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
             follower_ranking.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
             ranking_text.setTextColor(getResources().getColor(R.color.white));
+
             leader_text.setTextColor(getResources().getColor(R.color.login_bg));
+
             flwr_rnk_text.setTextColor(getResources().getColor(R.color.login_bg));
         }
-        if (position==2)
-        {
+        if (position == 2) {
             follower_ranking.setBackground(getResources().getDrawable(R.drawable.login_bg));
+
             my_ranking.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
             leader.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
             flwr_rnk_text.setTextColor(getResources().getColor(R.color.white));
+
             ranking_text.setTextColor(getResources().getColor(R.color.login_bg));
+
             leader_text.setTextColor(getResources().getColor(R.color.login_bg));
         }
 
@@ -283,8 +307,9 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
+
         public ViewPagerAdapter(FragmentManager supportFragmentManager) {
-            super(supportFragmentManager );
+            super(supportFragmentManager);
 
         }
 

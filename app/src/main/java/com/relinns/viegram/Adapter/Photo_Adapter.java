@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -21,6 +22,7 @@ import com.relinns.viegram.Activity.Open_photo;
 import com.relinns.viegram.Modal.Photo_Model;
 import com.relinns.viegram.Pojo.Post;
 import com.relinns.viegram.R;
+
 import java.util.List;
 
 public class Photo_Adapter extends RecyclerView.Adapter<Photo_Adapter.View_Holder> {
@@ -49,13 +51,14 @@ public class Photo_Adapter extends RecyclerView.Adapter<Photo_Adapter.View_Holde
         Glide.with(context).load(posts.get(position).getPhoto())
                 .centerCrop()
                 .override(100, 100)
-             //   .thumbnail(0.01f)
+                //   .thumbnail(0.01f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                         return false;
                     }
+
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                         holder.progress.setVisibility(View.GONE);
@@ -63,6 +66,7 @@ public class Photo_Adapter extends RecyclerView.Adapter<Photo_Adapter.View_Holde
                     }
                 })
                 .into(holder.img_view);
+
         if (posts.get(position).getType().equals("video")) {
             holder.play_icon.setVisibility(View.VISIBLE);
         } else {
@@ -79,6 +83,7 @@ public class Photo_Adapter extends RecyclerView.Adapter<Photo_Adapter.View_Holde
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return posts.size();

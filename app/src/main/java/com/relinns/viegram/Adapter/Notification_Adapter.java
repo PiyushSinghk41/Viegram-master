@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Activity.Comments;
 import com.relinns.viegram.Fragment.NotificationFragment;
@@ -25,6 +27,7 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adapter.ViewHolder> {
+
     private SharedPreferences preferences;
     private List<Notification> listData;
     private NotificationFragment fragment;
@@ -43,26 +46,55 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
+
+
+        Notification item = listData.get(position);
         holder.request_layout.setVisibility(View.GONE);
         holder.notification_layout.setVisibility(View.VISIBLE);
-        Glide.with(fragment.getActivity()).load(listData.get(position).getProfileImage())
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(item.getProfileImage() , holder.user_image , options);
+
+        holder.notify_name.setText(item.getDisplayName());
+        holder.notify_time.setText(item.getTimeAgo());
+        holder.notify_text.setText(item.getPurpose());
+        holder.notify_name.setText(item.getDisplayName());
+
+
+
+       /* Glide.with(fragment.getActivity()).load(listData.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(fragment.getActivity()))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
               //  .skipMemoryCache(true)
              //   .thumbnail(0.5f)
-                .into(holder.user_image);
-        holder.notify_time.setText(listData.get(position).getTimeAgo());
-        holder.notify_text.setText(listData.get(position).getPurpose());
-        holder.notify_name.setText(listData.get(position).getDisplayName());
+                .into(holder.user_image);*/
+        //holder.notify_time.setText(listData.get(position).getTimeAgo());
+        //holder.notify_text.setText(listData.get(position).getPurpose());
+        //holder.notify_name.setText(listData.get(position).getDisplayName());
         if (listData.get(position).getPurpose().contains("follow")) {
             holder.post_image.setVisibility(View.GONE);
         } else {
+
             holder.post_image.setVisibility(View.VISIBLE);
-            Glide.with(fragment.getActivity()).load(listData.get(position).getPhoto())
+
+           /* Glide.with(fragment.getActivity()).load(listData.get(position).getPhoto())
               //      .thumbnail(0.1f)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                  //   .skipMemoryCache(true)
-                    .into(holder.post_image);
+                    .into(holder.post_image);*/
+
+            DisplayImageOptions options1 = new DisplayImageOptions.Builder().
+                    cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+            ImageLoader loader1 = ImageLoader.getInstance();
+            loader1.displayImage(item.getProfileImage() , holder.post_image , options1);
+
+
+
         }
 
         holder.post_image.setOnClickListener(new View.OnClickListener() {

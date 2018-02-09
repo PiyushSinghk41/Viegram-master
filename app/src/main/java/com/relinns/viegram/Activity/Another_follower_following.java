@@ -43,32 +43,16 @@ import retrofit2.Callback;
 
 @SuppressWarnings("ALL")
 public class Another_follower_following extends AppCompatActivity implements View.OnClickListener, TextWatcher {
-    private RelativeLayout badgeLayout;
-    private RelativeLayout search_layout;
-    private RelativeLayout progress_layout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout search_user;
-    private RelativeLayout menu_home;
-    private RelativeLayout another_follower_button;
-    private RelativeLayout another_following_button;
-    private RelativeLayout menu_open;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private TextView another_follower_text;
-    private TextView another_following_text;
-    private TextView another_userName;
-    private TextView badgeText;
-    private ImageView menu_click;
-    private ImageView another_user_profile_image;
-    private ImageView cover_Image;
+
+    RelativeLayout badgeLayout, search_layout, progress_layout, back, activity_layout,
+            search_user, menu_home, another_follower_button , another_following_button, menu_open,
+            menu_close, menu_profile, menu_stat, menu_follow,
+            menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+
+    TextView another_follower_text, another_following_text, another_userName, badgeText;
+
+    ImageView menu_click, another_user_profile_image, cover_Image;
+
     private String another_follow_code = "1";
     private String totalfollowers = "0";
     private String total_followings = "0";
@@ -156,13 +140,13 @@ public class Another_follower_following extends AppCompatActivity implements Vie
 
         //setData
         Glide.with(this).load(profile_image)
-            //    .thumbnail(0.1f)
+                //    .thumbnail(0.1f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .bitmapTransform(new CropCircleTransformation(this))
                 .into(another_user_profile_image);
         another_userName.setText(display_name);
         Glide.with(this).load(cover_image)
-              //  .thumbnail(0.01f)
+                //  .thumbnail(0.01f)
                 .into(cover_Image);
 
         menu_open.setVisibility(View.GONE);

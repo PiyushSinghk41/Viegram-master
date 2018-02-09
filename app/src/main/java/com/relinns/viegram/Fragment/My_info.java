@@ -21,11 +21,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 @SuppressWarnings("ALL")
 public class My_info extends Fragment {
-    private TextView display_name;
-    private TextView score_point;
-    private TextView point_status;
-    private TextView link;
-    private TextView bio_data;
+
+     TextView display_name , score_point ,point_status , link  , bio_data;
+
     private int status;
     private boolean mCheck,mCheck1;
     private static Detail info_detail=null;

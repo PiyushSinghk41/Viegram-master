@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Activity.Profile;
 import com.relinns.viegram.Modal.RepostPost;
@@ -22,11 +24,13 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class RepostAdapter extends RecyclerView.Adapter<RepostAdapter.ViewHolder> {
+
     private Context context;
     private List<RepostPost> list;
     private SharedPreferences preferences;
 
     public RepostAdapter(Context activity, List<RepostPost> list_data) {
+
         this.context = activity;
         this.list = list_data;
         preferences = context.getSharedPreferences("Viegram", Context.MODE_PRIVATE);
@@ -40,13 +44,28 @@ public class RepostAdapter extends RecyclerView.Adapter<RepostAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.name_text.setText(list.get(position).getDisplayName());
-        Glide.with(context).load(list.get(position).getProfileImage())
+
+        RepostPost item = list.get(position);
+
+        holder.name_text.setText(item.getDisplayName());
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(item.getProfileImage() , holder.display_image , options);
+
+
+
+
+        //holder.name_text.setText(list.get(position).getDisplayName());
+       /* Glide.with(context).load(list.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
              //   .skipMemoryCache(true)
               //  .thumbnail(0.1f)
-                .into(holder.display_image);
+                .into(holder.display_image);*/
         holder.name_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,11 +99,13 @@ public class RepostAdapter extends RecyclerView.Adapter<RepostAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         ImageView display_image;
         TextView name_text;
 
         public ViewHolder(View v) {
             super(v);
+
             name_text = (TextView) itemView.findViewById(R.id.name_text);
             display_image = (ImageView) itemView.findViewById(R.id.display_image);
         }

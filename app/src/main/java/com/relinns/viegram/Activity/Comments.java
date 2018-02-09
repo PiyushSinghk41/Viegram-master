@@ -42,37 +42,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Comments extends AppCompatActivity implements View.OnClickListener {
-    private RecyclerView comment_list;
-    private Comment_Adapter adapter;
-    private RelativeLayout send;
-    private RelativeLayout badgeLayout;
-    private RelativeLayout progress_layout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout no_comment_found;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click_view;
-    private MultiAutoCompleteTextView write_comment;
-    private ProgressBar progress;
-    private ProgressDialog progress_Dialog;
-    private SharedPreferences preferences;
-    private TextView badgeText;
-    private List<CommentPost> name_data;
-    private String comment = "";
-    private String mentionID = "";
-    private List<String> id_list;
-    private List<String> nameList;
-    private Result result;
+
+    RecyclerView comment_list;
+    Comment_Adapter adapter;
+    RelativeLayout send, badgeLayout, progress_layout, back,
+            activity_layout, no_comment_found, menu_home,
+            menu_open_layout, menu_close, menu_profile,
+            menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+
+
+    ImageView menu_click_view;
+    MultiAutoCompleteTextView write_comment;
+    ProgressBar progress;
+    ProgressDialog progress_Dialog;
+    SharedPreferences preferences;
+    TextView badgeText;
+    List<CommentPost> name_data;
+    String comment = "";
+    String mentionID = "";
+    List<String> id_list;
+    List<String> nameList;
+    Result result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,14 +76,12 @@ public class Comments extends AppCompatActivity implements View.OnClickListener 
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
 
         //notification badge code
-        if (getIntent().getExtras()!=null)
-        {
-            if (getIntent().getExtras().containsKey("decrement"))
-            {
-                int badge_value=preferences.getInt("badge_value",0);
+        if (getIntent().getExtras() != null) {
+            if (getIntent().getExtras().containsKey("decrement")) {
+                int badge_value = preferences.getInt("badge_value", 0);
                 badge_value--;
-                SharedPreferences.Editor editor=preferences.edit();
-                editor.putInt("badge_value",badge_value);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("badge_value", badge_value);
                 editor.commit();
                 ShortcutBadger.applyCount(getApplicationContext(), badge_value);
 
@@ -239,20 +227,17 @@ public class Comments extends AppCompatActivity implements View.OnClickListener 
                         comment_list.setLayoutManager(mLayoutManager);
                         adapter = new Comment_Adapter(Comments.this, response.body().getResult().getComments());
                         comment_list.setAdapter(adapter);
-                    } else if (response.body().getResult().getMsg().equals("204")){
+                    } else if (response.body().getResult().getMsg().equals("204")) {
                         progress_layout.setVisibility(View.GONE);
                         no_comment_found.setVisibility(View.VISIBLE);
                         comment_list.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         Alerter.create(Comments.this)
                                 .setText(R.string.network_error)
                                 .setBackgroundColor(R.color.login_bg)
                                 .show();
                     }
-                } else
-                {
+                } else {
                     Alerter.create(Comments.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)
@@ -434,8 +419,7 @@ public class Comments extends AppCompatActivity implements View.OnClickListener 
     }
 
     //transition animation
-    private void transition()
-    {
+    private void transition() {
         overridePendingTransition(R.anim.enter, R.anim.exit);
     }
 
@@ -493,8 +477,7 @@ public class Comments extends AppCompatActivity implements View.OnClickListener 
                                 .show();
                     }
 
-                } else
-                {
+                } else {
                     Alerter.create(Comments.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)
@@ -507,7 +490,7 @@ public class Comments extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
                 progress_Dialog.dismiss();
-               Alerter.create(Comments.this)
+                Alerter.create(Comments.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.login_bg)
                         .show();

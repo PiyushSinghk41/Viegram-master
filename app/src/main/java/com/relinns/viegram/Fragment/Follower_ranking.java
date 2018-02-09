@@ -31,27 +31,45 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Follower_ranking extends Fragment {
-    private RecyclerView follower_rank_list;
-    private SharedPreferences preferences;
-    private RelativeLayout progress_layout;
-    private RelativeLayout follower_ranking_layout;
-    private RelativeLayout no_follower_ranking;
-    private TextView no_follower_ranking_text;
-    private ProgressBar progress;
+
+     RecyclerView follower_rank_list;
+
+     SharedPreferences preferences;
+
+     RelativeLayout progress_layout;
+
+     RelativeLayout follower_ranking_layout;
+
+     RelativeLayout no_follower_ranking;
+
+     TextView no_follower_ranking_text;
+
+     ProgressBar progress;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.follower_ranking, container, false);
+
         follower_rank_list = (RecyclerView) v.findViewById(R.id.flwr_rnk_list);
+
         follower_ranking_layout = (RelativeLayout) v.findViewById(R.id.follower_ranking_layout);
+
         no_follower_ranking = (RelativeLayout) v.findViewById(R.id.no_follower_ranking);
+
         no_follower_ranking_text = (TextView) v.findViewById(R.id.no_follower_ranking_text);
+
         progress = (ProgressBar) v.findViewById(R.id.progress);
+
         progress_layout = (RelativeLayout) v.findViewById(R.id.progress_layout);
+
         no_follower_ranking.setVisibility(View.GONE);
+
         preferences = getActivity().getSharedPreferences("Viegram", Context.MODE_PRIVATE);
+
         progress_layout.setVisibility(View.GONE);
+
         follower_ranking_layout.setVisibility(View.VISIBLE);
         if (Timeline.resultp!=null)
         {

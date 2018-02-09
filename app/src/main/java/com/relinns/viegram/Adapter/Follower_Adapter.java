@@ -23,6 +23,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Activity.Follower_following;
 import com.relinns.viegram.Activity.Timeline;
@@ -45,9 +47,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Follower_Adapter extends RecyclerView.Adapter<Follower_Adapter.View_holder> {
-    private Follower_following context;
-    private List<FollowerList> list_data;
-    private SharedPreferences preferences;
+
+     Follower_following context;
+     List<FollowerList> list_data;
+     SharedPreferences preferences;
 
     public Follower_Adapter(Follower_following activity, List<FollowerList> list) {
         context = activity;
@@ -64,12 +67,22 @@ public class Follower_Adapter extends RecyclerView.Adapter<Follower_Adapter.View
     @Override
     public void onBindViewHolder(final View_holder holder, final int position) {
 
-        Glide.with(context).load(list_data.get(position).getProfileImage())
+        FollowerList item = list_data.get(position);
+        holder.follower_name.setText(item.getDisplayName());
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(item.getProfileImage() , holder.follower_image , options);
+
+
+       /* Glide.with(context).load(list_data.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .into(holder.follower_image);
-        holder.follower_name.setText(list_data.get(position).getDisplayName());
+                .into(holder.follower_image);*/
+        //holder.follower_name.setText(list_data.get(position).getDisplayName());
 
         if (list_data.get(position).getFollowStatus().equals("1")) {
             holder.follow_button.setBackground(context.getResources().getDrawable(R.drawable.login_bg));

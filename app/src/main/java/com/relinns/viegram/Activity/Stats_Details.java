@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.google.gson.Gson;
 import com.relinns.viegram.Adapter.StatDetailAdapter;
 import com.relinns.viegram.Modal.API_Response;
@@ -24,36 +25,26 @@ import com.tapadoo.alerter.Alerter;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Stats_Details extends AppCompatActivity implements View.OnClickListener {
-    private RecyclerView detail_stat;
-    private StatDetailAdapter adapter;
-    private TextView badgeText;
-    private TextView stat_type;
-    private TextView stat_title;
-    private RelativeLayout badgeLayout;
-    private RelativeLayout progress_layout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click_view;
-    private ProgressBar progress;
-    private SharedPreferences preferences;
-    private String stats_id;
-    private String type;
-    private String header_text;
+    RecyclerView detail_stat;
+    StatDetailAdapter adapter;
+    TextView badgeText, stat_type, stat_title;
+
+    RelativeLayout badgeLayout, progress_layout, back,
+            activity_layout, menu_home, menu_open_layout,
+            menu_close, menu_profile, menu_stat, menu_follow,
+            menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+
+    ImageView menu_click_view;
+    ProgressBar progress;
+    SharedPreferences preferences;
+    String stats_id;
+    String type;
+    String header_text;
 
 
     @Override

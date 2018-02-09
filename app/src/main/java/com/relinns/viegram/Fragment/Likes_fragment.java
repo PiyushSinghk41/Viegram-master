@@ -18,6 +18,7 @@ import com.relinns.viegram.R;
 
 @SuppressWarnings("ALL")
 public class Likes_fragment extends Fragment {
+
     private RecyclerView list;
     private NameAdapter adapter;
     private RelativeLayout no_data_found;

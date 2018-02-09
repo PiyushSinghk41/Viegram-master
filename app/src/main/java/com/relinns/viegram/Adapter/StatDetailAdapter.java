@@ -14,6 +14,7 @@ import com.relinns.viegram.R;
 import java.util.List;
 
 public class StatDetailAdapter extends RecyclerView.Adapter<StatDetailAdapter.View_holder> {
+
     private Context context;
     private List<Point_Model> data_point;
 

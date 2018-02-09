@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Activity.Follow_people;
 import com.relinns.viegram.Modal.API_Response;
@@ -58,13 +60,29 @@ public class Follow_people_Adapter extends RecyclerView.Adapter<Follow_people_Ad
 
     @Override
     public void onBindViewHolder(final Viewholder holder, final int position) {
+
+        CommentPost item = list_data.get(position);
+
         holder.following_name.setText(list_data.get(position).getDisplayName());
         holder.following_button.setVisibility(View.GONE);
-        Glide.with(context).load(list_data.get(position).getProfileImage())
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(item.getProfileImage() , holder.following_image , options);
+
+
+
+
+
+
+       /* Glide.with(context).load(list_data.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .into(holder.following_image);
+                .into(holder.following_image);*/
         holder.follow_button.setBackground(context.getResources().getDrawable(R.drawable.stats_bg));
         holder.follow_text.setText("Follow");
         holder.follow_text.setTextColor(context.getResources().getColor(R.color.login_bg));

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.google.gson.Gson;
 import com.relinns.viegram.Adapter.RequestAdapter;
 import com.relinns.viegram.Modal.API_Response;
@@ -35,18 +36,18 @@ import retrofit2.Callback;
 
 public class RequestFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private Result result;
-    private RecyclerView requestList;
-    private RelativeLayout noNotifications;
-    private RelativeLayout progress_layout;
-    private LinearLayout loadMore;
-    private LinearLayoutManager mLayoutManager;
+    RecyclerView requestList;
+    RelativeLayout noNotifications;
+    RelativeLayout progress_layout;
+    LinearLayout loadMore;
+    LinearLayoutManager mLayoutManager;
     private boolean loading = true;
     private int index = 1;
-    private SharedPreferences preferences;
-    private RequestAdapter requestAdapter;
-    private List<Notification> notificationData = new ArrayList<>();
-    private SwipeRefreshLayout refreshLayout;
-    private TextView noRequestTExt;
+    SharedPreferences preferences;
+    RequestAdapter requestAdapter;
+    List<Notification> notificationData = new ArrayList<>();
+    SwipeRefreshLayout refreshLayout;
+    TextView noRequestTExt;
 
     @Nullable
     @Override
@@ -123,17 +124,14 @@ public class RequestFragment extends Fragment implements SwipeRefreshLayout.OnRe
                                 }
                             }
                         });
-                    }
-                    else if (result.getMsg().equals("204")) {
+                    } else if (result.getMsg().equals("204")) {
                         noNotifications.setVisibility(View.VISIBLE);
                         requestList.setVisibility(View.GONE);
                         noRequestTExt.setText(getResources().getString(R.string.no_request));
-                    }
-                    else {
+                    } else {
                         noNotifications.setVisibility(View.GONE);
                         requestList.setVisibility(View.GONE);
-                        if(getActivity()!=null)
-                        {
+                        if (getActivity() != null) {
                             Alerter.create(getActivity())
                                     .setText(R.string.network_error)
                                     .setBackgroundColor(R.color.login_bg)
@@ -141,12 +139,10 @@ public class RequestFragment extends Fragment implements SwipeRefreshLayout.OnRe
                         }
                     }
 
-                }
-                else {
+                } else {
                     noNotifications.setVisibility(View.GONE);
                     requestList.setVisibility(View.GONE);
-                    if(getActivity()!=null)
-                    {
+                    if (getActivity() != null) {
                         Alerter.create(getActivity())
                                 .setText(R.string.network_error)
                                 .setBackgroundColor(R.color.login_bg)
@@ -163,8 +159,7 @@ public class RequestFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 progress_layout.setVisibility(View.GONE);
                 noNotifications.setVisibility(View.GONE);
                 requestList.setVisibility(View.GONE);
-                if(getActivity()!=null)
-                {
+                if (getActivity() != null) {
                     Alerter.create(getActivity())
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)
@@ -194,22 +189,21 @@ public class RequestFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     requestAdapter.notifyDataSetChanged();
 
                     loading = true;
-                } else{
-                    if(getActivity()!=null)
-                    {
+                } else {
+                    if (getActivity() != null) {
                         Alerter.create(getActivity())
                                 .setText(R.string.network_error)
                                 .setBackgroundColor(R.color.login_bg)
                                 .show();
                     }
                     Log.e("API_Response", "fetch_notification Response : " + new Gson().toJson(response.errorBody()));
-            }}
+                }
+            }
 
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
                 loadMore.setVisibility(View.GONE);
-                if(getActivity()!=null)
-                {
+                if (getActivity() != null) {
                     Alerter.create(getActivity())
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)

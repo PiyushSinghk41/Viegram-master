@@ -38,20 +38,16 @@ import retrofit2.Callback;
  */
 @SuppressLint("ValidFragment")
 public class My_stats extends Fragment implements View.OnClickListener {
-    private RelativeLayout progress_layout;
-    private RelativeLayout today;
-    private RelativeLayout week;
-    private RelativeLayout month;
-    private RelativeLayout year;
-    private RelativeLayout overall;
-    private TextView today_stats;
-    private TextView week_stats;
-    private TextView month_stats;
-    private TextView year_stats;
-    private TextView overall_stats;
-    private SharedPreferences preferences;
-    private ProgressBar progress;
-    private LinearLayout working_layout;
+
+     RelativeLayout progress_layout , today , week , month  , year , overall;
+
+     TextView today_stats , week_stats ,month_stats , year_stats , overall_stats ;
+
+     SharedPreferences preferences;
+
+     ProgressBar progress;
+
+     LinearLayout working_layout;
     private static String stats_id;
     private static String header_text;
 

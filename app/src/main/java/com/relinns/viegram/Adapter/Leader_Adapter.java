@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Activity.Profile;
 import com.relinns.viegram.Modal.LeaderData;
@@ -63,11 +65,17 @@ public class Leader_Adapter extends BaseAdapter {
             leader_image.setVisibility(View.GONE);
             leader_name.setVisibility(View.GONE);
         } else {
+
+
+
+
             Glide.with(context).load(data_list.get(i).getProfileImage())
                     .bitmapTransform(new CropCircleTransformation(context))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .into(leader_image);
+
+
             text_type.setText(data_list.get(i).getMsg());
             leader_name.setText(data_list.get(i).getDisplayName());
         }

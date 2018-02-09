@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.relinns.viegram.R;
 
 /**
@@ -18,18 +19,19 @@ import com.relinns.viegram.R;
  */
 @SuppressWarnings("ALL")
 public class Status_Score extends Fragment {
-private TextView neophyte;
-    private TextView bonafide;
-    private TextView socialite;
-    private TextView icon;
+
+    TextView neophyte , bonafide ,socialite , icon ;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       View v= inflater.inflate(R.layout.status_score,container,false);
-        neophyte=(TextView)v.findViewById(R.id.neophyte);
-        bonafide=(TextView)v.findViewById(R.id.bonafide);
-        socialite=(TextView)v.findViewById(R.id.socialite);
-        icon=(TextView)v.findViewById(R.id.icon);
+
+        View v = inflater.inflate(R.layout.status_score, container, false);
+        neophyte = (TextView) v.findViewById(R.id.neophyte);
+        bonafide = (TextView) v.findViewById(R.id.bonafide);
+        socialite = (TextView) v.findViewById(R.id.socialite);
+        icon = (TextView) v.findViewById(R.id.icon);
         SpannableString ss = new SpannableString("0 to 9,999 points");
 
 // Span to set text color to some RGB value
@@ -39,17 +41,17 @@ private TextView neophyte;
 // make them also bold
         ss.setSpan(fcs, 5, 10, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        String neo = "<font color='#FD2A04'>0</font> "+" to "+"<font color='#FD2A04'>24,999</font>"+" points ";
+        String neo = "<font color='#FD2A04'>0</font> " + " to " + "<font color='#FD2A04'>24,999</font>" + " points ";
         neophyte.setText(Html.fromHtml(neo));
 
-        String bofd = "<font color='#4B366C'>25,000</font> "+" to "+"<font color='#4B366C'>99,999</font>"+" points ";
+        String bofd = "<font color='#4B366C'>25,000</font> " + " to " + "<font color='#4B366C'>99,999</font>" + " points ";
         bonafide.setText(Html.fromHtml(bofd));
 
-        String social = "<font color='#325B61'>100,000</font> "+" to "+"<font color='#325B61'>999,999</font>"+" points ";
+        String social = "<font color='#325B61'>100,000</font> " + " to " + "<font color='#325B61'>999,999</font>" + " points ";
         socialite.setText(Html.fromHtml(social));
 
-        String icon_ = "<font color='#40866C'>1 millon</font> "+" points & above";
+        String icon_ = "<font color='#40866C'>1 millon</font> " + " points & above";
         icon.setText(Html.fromHtml(icon_));
-                return v;
+        return v;
     }
 }

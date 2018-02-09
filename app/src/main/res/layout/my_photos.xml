@@ -29,9 +29,10 @@
 
     </RelativeLayout>
     <RelativeLayout
-        android:orientation="vertical" android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/private_account_layout"
         android:background="@color/white">
         <ImageView
@@ -58,7 +59,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/load_moreData"
-        android:id="@+id/my_photos"></android.support.v7.widget.RecyclerView>
+        android:id="@+id/my_photos">
+    </android.support.v7.widget.RecyclerView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

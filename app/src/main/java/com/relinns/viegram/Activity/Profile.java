@@ -45,17 +45,28 @@ import retrofit2.Callback;
 @SuppressWarnings("ALL")
 public class Profile extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
-    private RelativeLayout badgeLayout, progress_layout, back, info, photos, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera, edit;
-    private ImageView menu_click_view, profile_image, profile_cover_image, info_view, photo_view;
-    private TextView info_text, photos_text, my_name, badgeText;
-    private ProgressBar progress, coverProgress, imageProgress;
-    private ViewPager profilepager;
-    private LinearLayout working_layout;
-    private SharedPreferences preferences;
-    private CoordinatorLayout activity_layout;
+    RelativeLayout badgeLayout, progress_layout, back, info, photos, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera, edit;
+
+    ImageView menu_click_view, profile_image, profile_cover_image, info_view, photo_view;
+
+    TextView info_text, photos_text, my_name, badgeText;
+
+    ProgressBar progress, coverProgress, imageProgress;
+
+    ViewPager profilepager;
+
+    LinearLayout working_layout;
+
+    SharedPreferences preferences;
+
+    CoordinatorLayout activity_layout;
+
     private int index = 1;
+
     private boolean mUpdateCheck;
+
     Detail detail;
+
     ViewPagerAdapter report_view_adapter;
 
     @Override
@@ -173,7 +184,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener, 
     private void setupViewPager(ViewPager profilepager) {
         report_view_adapter = new ViewPagerAdapter(getSupportFragmentManager());
         report_view_adapter.addFragment(new My_info(true));
-        report_view_adapter.addFragment(new My_photos(true,"1"));
+        report_view_adapter.addFragment(new My_photos(true, "1"));
         profilepager.setAdapter(report_view_adapter);
     }
 
@@ -241,7 +252,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener, 
 
         Glide.with(Profile.this).load(profileImage)
                 .bitmapTransform(new CropCircleTransformation(Profile.this))
-            //    .thumbnail(0.1f)
+                //    .thumbnail(0.1f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
@@ -258,7 +269,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener, 
                 .into(profile_image);
 
         Glide.with(Profile.this).load(coverImage)
-             //   .thumbnail(0.01f)
+                //   .thumbnail(0.01f)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {

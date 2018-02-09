@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Fragment.Follower_ranking;
 import com.relinns.viegram.Modal.FollowerDetail;
@@ -26,13 +28,19 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  * Created by win 7 on 5/31/2017.
  */
 public class Follower_ranking_Adapter extends RecyclerView.Adapter<Follower_ranking_Adapter.Viewholder> {
+
     private Context context;
+
     private List<FollowerRanking> data_list;
+
     private SharedPreferences preferences;
 
     public Follower_ranking_Adapter(Context activity, List<FollowerRanking> list) {
+
         this.context = activity;
+
         this.data_list = list;
+
         preferences = context.getSharedPreferences("Viegram", Context.MODE_PRIVATE);
     }
 
@@ -44,13 +52,28 @@ public class Follower_ranking_Adapter extends RecyclerView.Adapter<Follower_rank
 
     @Override
     public void onBindViewHolder(Viewholder holder, final int position) {
-        Glide.with(context).load(data_list.get(position).getProfileImage())
+
+        FollowerRanking item = data_list.get(position);
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(item.getProfileImage() , holder.image_view , options);
+
+
+        holder.text_rank.setText(item.getRank());
+        holder.text_name.setText(item.getDisplayName());
+
+
+
+        /*Glide.with(context).load(data_list.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .into(holder.image_view);
-        holder.text_rank.setText(data_list.get(position).getRank());
-        holder.text_name.setText(data_list.get(position).getDisplayName());
+                .into(holder.image_view);*/
+       /* holder.text_rank.setText(data_list.get(position).getRank());
+        holder.text_name.setText(data_list.get(position).getDisplayName());*/
         holder.text_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,11 +102,13 @@ public class Follower_ranking_Adapter extends RecyclerView.Adapter<Follower_rank
     }
 
     public class Viewholder extends RecyclerView.ViewHolder {
+
         ImageView image_view;
         TextView text_name, text_rank;
 
         public Viewholder(View itemView) {
             super(itemView);
+
             image_view = (ImageView) itemView.findViewById(R.id.prfl_img);
             text_name = (TextView) itemView.findViewById(R.id.user_text);
             text_rank = (TextView) itemView.findViewById(R.id.rank_text);

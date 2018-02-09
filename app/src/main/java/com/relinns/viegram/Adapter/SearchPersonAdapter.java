@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Activity.Search;
 import com.relinns.viegram.Modal.CommentPost;
@@ -39,13 +41,22 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
     @Override
     public void onBindViewHolder(SearchPersonAdapter.View_Holder holder, final int position) {
-        Glide.with(context).load(list.get(position).getProfileImage())
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(list.get(position).getProfileImage() , holder.displayImage , options);
+
+
+       /* Glide.with(context).load(list.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .into(holder.displayImage);
+                .into(holder.displayImage);*/
         holder.userName.setText(list.get(position).getDisplayName());
-        holder.searchedUser.setOnClickListener(new View.OnClickListener() {
+       /* holder.searchedUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -56,7 +67,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
                 Intent intent = new Intent(context, Another_user.class);
                 context.startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override

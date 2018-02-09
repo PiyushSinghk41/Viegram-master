@@ -83,34 +83,20 @@ import retrofit2.Callback;
 
 @SuppressWarnings("ALL")
 public class Edit_Profile extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener, View.OnFocusChangeListener {
-    private TextView change_photo;
-    private TextView cover_change;
-    private TextView badgeText;
-    private RelativeLayout badgeLayout;
-    private RelativeLayout progress_layout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private RelativeLayout menu_home;
-    private ImageView menu_click_view;
-    private ImageView edit_cover_image;
+    private TextView change_photo , cover_change , badgeText;
+
+    private RelativeLayout badgeLayout, progress_layout , back , activity_layout ,
+            menu_open_layout , menu_close , menu_profile ,menu_stat , menu_follow ,
+            menu_notifications ,menu_settings  , menu_search , menu_ranking ,menu_camera , menu_home  ;
+
+    private ImageView menu_click_view , edit_cover_image;
+
     private LinearLayout working_layout;
     private Button save;
     private CircleImageView circleImageView;
     private SharedPreferences preferences;
-    private EditText_cursor edit_name;
-    private EditText_cursor edit_username;
-    private EditText_cursor edit_link;
-    private EditText_cursor edit_bio;
+    private EditText_cursor edit_name , edit_username , edit_link , edit_bio;
+
     private final int CAPTURE_IMAGE = 5;
     private final int PICK_IMAGE = 6;
     private final int STORAGE_PERMISSION_CODE = 23;
@@ -136,37 +122,65 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
 
         save = (Button) findViewById(R.id.save);
+
         displayProgress = (ProgressBar) findViewById(R.id.display_progress);
+
         progress_layout = (RelativeLayout) findViewById(R.id.progress_layout);
+
         working_layout = (LinearLayout) findViewById(R.id.working_layout);
+
         activity_layout = (RelativeLayout) findViewById(R.id.activity_layout);
+
         edit_bio = (EditText_cursor) findViewById(R.id.edit_bio);
+
         edit_link = (EditText_cursor) findViewById(R.id.edit_link);
+
         edit_name = (EditText_cursor) findViewById(R.id.edit_name);
+
         edit_username = (EditText_cursor) findViewById(R.id.edit_username);
+
         menu_home = (RelativeLayout) findViewById(R.id.menu_home);
+
         back = (RelativeLayout) findViewById(R.id.back);
+
         change_photo = (TextView) findViewById(R.id.change_photo);
+
         cover_change = (TextView) findViewById(R.id.cover_change);
+
         menu_open_layout = (RelativeLayout) findViewById(R.id.edit_menu_open);
+
         menu_click_view = (ImageView) findViewById(R.id.edit_menu_click);
+
         menu_profile = (RelativeLayout) findViewById(R.id.menu_profile);
+
         menu_stat = (RelativeLayout) findViewById(R.id.menu_stat);
+
         menu_follow = (RelativeLayout) findViewById(R.id.menu_follow_following);
+
         menu_notifications = (RelativeLayout) findViewById(R.id.menu_notification);
+
         menu_settings = (RelativeLayout) findViewById(R.id.menu_settings);
+
         menu_search = (RelativeLayout) findViewById(R.id.menu_search);
+
         menu_ranking = (RelativeLayout) findViewById(R.id.menu_ranking);
+
         menu_camera = (RelativeLayout) findViewById(R.id.menu_camera);
+
         menu_close = (RelativeLayout) findViewById(R.id.menu_close);
+
         circleImageView = (CircleImageView) findViewById(R.id.profile_image);
+
         edit_cover_image = (ImageView) findViewById(R.id.edit_cover_image);
+
         badgeLayout = (RelativeLayout) findViewById(R.id.badge_layout);
+
         badgeText = (TextView) findViewById(R.id.badge_text);
 
-
         menu_open_layout.setVisibility(View.GONE);
+
         progress_layout.setVisibility(View.VISIBLE);
+
         working_layout.setVisibility(View.GONE);
 
         cover_change.setPaintFlags(change_photo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -201,30 +215,54 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
                 .into(circleImageView);
 
         progress_layout.setVisibility(View.GONE);
+
         working_layout.setVisibility(View.VISIBLE);
+
         save.setOnClickListener(this);
+
         back.setOnClickListener(this);
+
         menu_home.setOnClickListener(this);
+
         menu_follow.setOnClickListener(this);
+
         menu_ranking.setOnClickListener(this);
+
         menu_open_layout.setOnClickListener(this);
+
         menu_search.setOnClickListener(this);
+
         menu_notifications.setOnClickListener(this);
+
         menu_profile.setOnClickListener(this);
+
         menu_camera.setOnClickListener(this);
+
         menu_click_view.setOnClickListener(this);
+
         menu_close.setOnClickListener(this);
+
         menu_settings.setOnClickListener(this);
+
         menu_stat.setOnClickListener(this);
+
         activity_layout.setOnClickListener(this);
+
         edit_username.setOnFocusChangeListener(this);
+
         change_photo.setOnClickListener(this);
+
         cover_change.setOnClickListener(this);
+
         edit_username.setOnTouchListener(this);
+
         edit_link.setOnTouchListener(this);
+
         edit_name.setOnTouchListener(this);
+
         edit_bio.setOnTouchListener(this);
     }
+
 
 
     @Override

@@ -37,18 +37,18 @@ import static android.content.Context.MODE_PRIVATE;
 
 @SuppressLint("ValidFragment")
 public class My_photos extends Fragment {
-    private Photo_Adapter photo_adapter;
-    private RecyclerView my_photos;
-    private GridLayoutManager layoutManager;
-    private SharedPreferences preferences;
-    private RelativeLayout no_photos;
-    private RelativeLayout private_account_layout;
+     Photo_Adapter photo_adapter;
+     RecyclerView my_photos;
+     GridLayoutManager layoutManager;
+     SharedPreferences preferences;
+     RelativeLayout no_photos;
+     RelativeLayout private_account_layout;
     private static Detail detail=null;
     private static String profile="";
     private int index = 1;
     private boolean loading = true;
-    private LinearLayout load_more;
-    private List<Post> list = new ArrayList<>();
+     LinearLayout load_more;
+     List<Post> list = new ArrayList<>();
     private boolean mCheck, mCheck1;
 
     @SuppressLint("ValidFragment")

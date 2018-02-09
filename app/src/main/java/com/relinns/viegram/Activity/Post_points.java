@@ -37,30 +37,22 @@ import retrofit2.Callback;
 
 @SuppressWarnings("ALL")
 public class Post_points extends AppCompatActivity implements View.OnClickListener {
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private RelativeLayout badgeLayout;
-    private RelativeLayout progress_layout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click;
+
+    TabLayout tabLayout;
+    ViewPager viewPager;
+
+    RelativeLayout badgeLayout, progress_layout, back,
+            activity_layout, menu_home, menu_open,
+            menu_close, menu_profile, menu_stat, menu_follow,
+            menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+
+    ImageView menu_click;
     private int[] tabIcons = {R.drawable.like_96, R.drawable.comment_96, R.drawable.repost_96, R.drawable.commentlike};
     private String post_id;
-    private SharedPreferences preferences;
-    private TextView badgeText;
+    SharedPreferences preferences;
+    TextView badgeText;
     private Result result;
-    private ProgressBar progress;
+    ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,24 +63,43 @@ public class Post_points extends AppCompatActivity implements View.OnClickListen
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
 
         progress = (ProgressBar) findViewById(R.id.progress);
+
         progress_layout = (RelativeLayout) findViewById(R.id.progress_layout);
+
         activity_layout = (RelativeLayout) findViewById(R.id.activity_layout);
+
         menu_home = (RelativeLayout) findViewById(R.id.menu_home);
+
         back = (RelativeLayout) findViewById(R.id.back);
+
         menu_click = (ImageView) findViewById(R.id.point_menu_click);
+
         menu_close = (RelativeLayout) findViewById(R.id.menu_close);
+
         menu_open = (RelativeLayout) findViewById(R.id.point_menu_open);
+
         menu_profile = (RelativeLayout) findViewById(R.id.menu_profile);
+
         menu_stat = (RelativeLayout) findViewById(R.id.menu_stat);
+
         menu_follow = (RelativeLayout) findViewById(R.id.menu_follow_following);
+
         menu_notifications = (RelativeLayout) findViewById(R.id.menu_notification);
+
         menu_settings = (RelativeLayout) findViewById(R.id.menu_settings);
+
         menu_search = (RelativeLayout) findViewById(R.id.menu_search);
+
         menu_ranking = (RelativeLayout) findViewById(R.id.menu_ranking);
+
         menu_camera = (RelativeLayout) findViewById(R.id.menu_camera);
+
         badgeLayout = (RelativeLayout) findViewById(R.id.badge_layout);
+
         badgeText = (TextView) findViewById(R.id.badge_text);
+
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         menu_click.setOnClickListener(this);
@@ -130,8 +141,7 @@ public class Post_points extends AppCompatActivity implements View.OnClickListen
                         setupViewPager(viewPager);
                         tabLayout.setupWithViewPager(viewPager);
                         setupTabIcons();
-                    }
-                    else {
+                    } else {
                         progress_layout.setVisibility(View.VISIBLE);
                         progress.setVisibility(View.GONE);
                         Alerter.create(Post_points.this)
@@ -142,7 +152,7 @@ public class Post_points extends AppCompatActivity implements View.OnClickListen
                 } else {
                     progress_layout.setVisibility(View.VISIBLE);
                     progress.setVisibility(View.GONE);
-                   Alerter.create(Post_points.this)
+                    Alerter.create(Post_points.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)
                             .show();
@@ -154,7 +164,7 @@ public class Post_points extends AppCompatActivity implements View.OnClickListen
             public void onFailure(Call<API_Response> call, Throwable t) {
                 progress_layout.setVisibility(View.VISIBLE);
                 progress.setVisibility(View.GONE);
-               Alerter.create(Post_points.this)
+                Alerter.create(Post_points.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.login_bg)
                         .show();

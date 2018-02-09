@@ -12,35 +12,28 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.relinns.viegram.Fragment.NotificationFragment;
 import com.relinns.viegram.Fragment.RequestFragment;
 import com.relinns.viegram.R;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 @SuppressWarnings("ALL")
 public class Notifications extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
-    private RelativeLayout request_button;
-    private RelativeLayout notification_button;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click_view;
-    private SharedPreferences preferences;
-    private TextView notification_text;
-    private TextView request_text;
-    private ViewPager notificationPager;
+
+    RelativeLayout request_button, notification_button, back,
+            activity_layout, menu_home, menu_open_layout, menu_close,
+            menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+
+    ImageView menu_click_view;
+    SharedPreferences preferences;
+    TextView notification_text , request_text;
+
+    ViewPager notificationPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +42,8 @@ public class Notifications extends AppCompatActivity implements View.OnClickList
 
         ShortcutBadger.removeCount(this);
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferences.edit();
-        editor.putInt("badge_value",0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("badge_value", 0);
         editor.commit();
 
         activity_layout = (RelativeLayout) findViewById(R.id.activity_layout);
@@ -226,7 +219,7 @@ public class Notifications extends AppCompatActivity implements View.OnClickList
     public void onPageScrollStateChanged(int state) {
     }
 
-//viewpager adapter
+    //viewpager adapter
     private class NotificationPagerAdapter extends FragmentPagerAdapter {
         List<Fragment> fragmentlist = new ArrayList<>();
 

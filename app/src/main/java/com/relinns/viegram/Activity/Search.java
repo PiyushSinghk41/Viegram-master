@@ -41,32 +41,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Search extends AppCompatActivity implements View.OnClickListener {
-    private RandomPostAdapter photo_adapter;
-    private RecyclerView search_photos;
-    private GridLayoutManager layoutManager;
-    private RelativeLayout badgeLayout;
-    private RelativeLayout progress_layout;
-    private RelativeLayout back;
-    private RelativeLayout search_view;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click_view;
-    public RelativeLayout activity_layout;
-    private LinearLayout no_seach_result;
-    private LinearLayout load_moreData;
-    private SharedPreferences preferences;
-    private AutoCompleteTextView search_text;
-    private List<CommentPost> name_data;
-    private ProgressBar progress;
+
+    RandomPostAdapter photo_adapter;
+    RecyclerView search_photos;
+    GridLayoutManager layoutManager;
+    RelativeLayout badgeLayout;
+    RelativeLayout progress_layout, back, search_view, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera , activity_layout;
+
+     ImageView menu_click_view;
+     LinearLayout no_seach_result , load_moreData;
+
+     SharedPreferences preferences;
+     AutoCompleteTextView search_text;
+     List<CommentPost> name_data;
+     ProgressBar progress;
     private int index = 1;
     private boolean loading = true;
     private List<TimelinePost> list;
@@ -244,7 +232,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
             public void onFailure(Call<API_Response> call, Throwable t) {
                 progress_layout.setVisibility(View.VISIBLE);
                 progress.setVisibility(View.GONE);
-             Alerter.create(Search.this)
+                Alerter.create(Search.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.red)
                         .show();
@@ -301,10 +289,10 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
                 no_seach_result.setVisibility(View.GONE);
                 search_photos.setVisibility(View.GONE);
                 progress_layout.setVisibility(View.GONE);
-                    Alerter.create(Search.this)
-                            .setText(R.string.network_error)
-                            .setBackgroundColor(R.color.red)
-                            .show();
+                Alerter.create(Search.this)
+                        .setText(R.string.network_error)
+                        .setBackgroundColor(R.color.red)
+                        .show();
 
                 Log.d("API_Error", "search_user Error : " + t.getMessage());
             }
@@ -337,7 +325,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
 
-                 Alerter.create(Search.this)
+                Alerter.create(Search.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.red)
                         .show();

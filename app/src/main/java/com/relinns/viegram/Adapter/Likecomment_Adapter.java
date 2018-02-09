@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Activity.Comment_like;
 import com.relinns.viegram.Activity.Profile;
@@ -39,11 +41,22 @@ public class Likecomment_Adapter extends RecyclerView.Adapter<Likecomment_Adapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        Glide.with(context).load(list.get(position).getProfileImage())
+
+        CommentLiked item = list.get(position);
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(item.getProfileImage() , holder.user_image , options);
+
+
+
+      /*  Glide.with(context).load(list.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .into(holder.user_image);
+                .into(holder.user_image);*/
         holder.points.setVisibility(View.GONE);
         holder.like_text.setVisibility(View.VISIBLE);
         if (!list.get(position).getCommentLikes().equals("0")) {
@@ -51,6 +64,7 @@ public class Likecomment_Adapter extends RecyclerView.Adapter<Likecomment_Adapte
             holder.like_text.setText(list.get(position).getCommentLikes());
         } else
             holder.like_comment.setVisibility(View.GONE);
+
 
         holder.name.setText(list.get(position).getDisplayName());
         holder.comment.setText(list.get(position).getComment());

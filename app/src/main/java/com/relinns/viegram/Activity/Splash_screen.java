@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.relinns.viegram.R;
 import com.relinns.viegram.service.MyFirebaseInstanceIDService;
 import io.fabric.sdk.android.Fabric;
@@ -20,6 +22,7 @@ public class Splash_screen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(Splash_screen.this));
         if(FirebaseInstanceId.getInstance()==null){
             Log.d("instance","nhi");
         }

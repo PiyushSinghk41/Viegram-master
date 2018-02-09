@@ -32,6 +32,8 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Activity.Comments;
 import com.relinns.viegram.Activity.Post_points;
@@ -126,9 +128,20 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
 
         }
 
-        Glide.with(context).load(list.get(position).getProfileImage())
-                .bitmapTransform(new CropCircleTransformation(context))
-                .into(holder.profile_image);
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage( list.get(position).getProfileImage(),holder.profile_image , options);
+
+
+
+
+
+
+
+
 
 
 //set post image
@@ -161,7 +174,19 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
                 holder.showTagLayout.setVisibility(View.GONE);
                 holder.player.setVisibility(View.VISIBLE);
 
-                Glide.with(context).load(list.get(position).getPhoto())
+
+                DisplayImageOptions options1 = new DisplayImageOptions.Builder().
+                        cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+                ImageLoader loader1 = ImageLoader.getInstance();
+                loader1.displayImage( list.get(position).getPhoto(),holder.player.thumbImageView , options1);
+
+
+
+
+
+
+               /* Glide.with(context).load(list.get(position).getPhoto())
                         .crossFade()
                       //  .thumbnail(0.001f)
                         .diskCacheStrategy(DiskCacheStrategy.RESULT)
@@ -179,14 +204,21 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
                             }
                         })
                         .into(holder.player.thumbImageView);
-
+*/
                 holder.player.setUp(list.get(position).getVideo(), JZVideoPlayer.SCREEN_WINDOW_LIST, "");
             } else {
 
                 holder.post_image.setVisibility(View.VISIBLE);
                 holder.progressBar.setVisibility(View.VISIBLE);
 
-                Glide.with(context).load(list.get(position).getPhoto())
+                DisplayImageOptions options2 = new DisplayImageOptions.Builder().
+                        cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+                ImageLoader loader2 = ImageLoader.getInstance();
+                loader2.displayImage( list.get(position).getPhoto(),holder.post_image , options2);
+
+
+                /*Glide.with(context).load(list.get(position).getPhoto())
                         .crossFade()
                 //        .thumbnail(0.001f)
                       .diskCacheStrategy(DiskCacheStrategy.RESULT)
@@ -204,7 +236,7 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
                             }
                         })
                         .into(holder.post_image);
-
+*/
                 //  holder.post_video.setVisibility(View.GONE);
                 holder.player.setVisibility(View.GONE);
 

@@ -29,28 +29,17 @@ import retrofit2.Callback;
 
 public class Comment_like extends AppCompatActivity implements View.OnClickListener {
 
-    private RelativeLayout badgeLayout;
-    private RelativeLayout progress_layout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click;
-    private String comment_id;
-    private SharedPreferences preferences;
-    private NameAdapter adapter;
-    private RecyclerView likecomment_list;
-    private TextView badgeText;
-    private ProgressBar progress;
+    RelativeLayout badgeLayout, progress_layout, back, activity_layout,
+            menu_home, menu_open, menu_close, menu_profile, menu_stat,
+            menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+
+    ImageView menu_click;
+    String comment_id;
+    SharedPreferences preferences;
+    NameAdapter adapter;
+    RecyclerView likecomment_list;
+    TextView badgeText;
+    ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,7 +227,7 @@ public class Comment_like extends AppCompatActivity implements View.OnClickListe
                 likecomment_list.setVisibility(View.GONE);
                 progress_layout.setVisibility(View.VISIBLE);
                 progress.setVisibility(View.GONE);
-             Alerter.create(Comment_like.this)
+                Alerter.create(Comment_like.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.login_bg)
                         .show();

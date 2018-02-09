@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Fragment.RequestFragment;
 import com.relinns.viegram.Modal.API_Response;
@@ -56,14 +58,27 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
+
+        Notification item = list_data.get(position);
+
+        holder.request_username.setText(item.getDisplayName());
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(item.getProfileImage() , holder.request_image , options);
+
         holder.request_layout.setVisibility(View.VISIBLE);
+
         holder.notification_layout.setVisibility(View.GONE);
-        Glide.with(fragment.getActivity()).load(list_data.get(position).getProfileImage())
+       /* Glide.with(fragment.getActivity()).load(list_data.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(fragment.getActivity()))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .into(holder.request_image);
-        holder.request_username.setText(list_data.get(position).getDisplayName());
+                .into(holder.request_image);*/
+       // holder.request_username.setText(list_data.get(position).getDisplayName());
         holder.request_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,6 +166,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         RelativeLayout notification_layout, accept, reject, request_layout;
         ImageView request_image;
         TextView request_username;

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Activity.Profile;
 import com.relinns.viegram.Modal.CommentPost;
@@ -40,12 +42,26 @@ public class TotalCommentAdapter extends RecyclerView.Adapter<TotalCommentAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.name_text.setText(list.get(position).getDisplayName());
-        Glide.with(context).load(list.get(position).getProfileImage())
+
+        CommentPost item = list.get(position);
+
+        holder.name_text.setText(item.getDisplayName());
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(item.getProfileImage() , holder.display_image , options);
+
+
+
+
+       // holder.name_text.setText(list.get(position).getDisplayName());
+       /* Glide.with(context).load(list.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .into(holder.display_image);
+                .into(holder.display_image);*/
         holder.name_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

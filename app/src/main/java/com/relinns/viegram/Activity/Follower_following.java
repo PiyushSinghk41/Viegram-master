@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Adapter.Follower_Adapter;
 import com.relinns.viegram.Adapter.Following_Adapter;
 import com.relinns.viegram.Modal.API_Response;
@@ -47,32 +49,15 @@ import retrofit2.Callback;
 @SuppressWarnings("ALL")
 public class Follower_following extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView badgeText;
-    private TextView follower_text;
-    private TextView following_text;
-    private TextView full_name;
-    private TextView no_follower_text;
-    private RelativeLayout badgeLayout;
-    private RelativeLayout progress_layout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout search_follower_view;
-    private RelativeLayout followers;
-    private RelativeLayout following;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click_view;
-    private ImageView profile_image;
-    private ImageView cover_image;
+    private TextView badgeText , follower_text , following_text , full_name ,no_follower_text ;
+
+    private RelativeLayout badgeLayout , progress_layout ,back  ,
+            activity_layout , search_follower_view ,followers ,
+    following ,menu_home , menu_open_layout , menu_close , menu_profile ,
+            menu_stat , menu_follow , menu_notifications  , menu_settings , menu_search ,  menu_ranking ,menu_camera ;
+
+    private ImageView menu_click_view , profile_image ,cover_image ;
+
     private List<FollowerList> temp_data;
     private List<FollowerList> followerList;
     private List<FollowingList> followingList, tempFollowing;
@@ -103,68 +88,127 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
         followingRV = (RecyclerView) findViewById(R.id.following_list);
 
         no_follower = (LinearLayout) findViewById(R.id.no_follower);
+
         menu_home = (RelativeLayout) findViewById(R.id.menu_home);
+
         followers = (RelativeLayout) findViewById(R.id.followers);
+
         following = (RelativeLayout) findViewById(R.id.followed);
+
         progress = (ProgressBar) findViewById(R.id.progress);
+
         progress_layout = (RelativeLayout) findViewById(R.id.progress_layout);
+
         menu_open_layout = (RelativeLayout) findViewById(R.id.follower_following_menu_open);
+
         menu_profile = (RelativeLayout) findViewById(R.id.menu_profile);
+
         menu_stat = (RelativeLayout) findViewById(R.id.menu_stat);
+
         menu_follow = (RelativeLayout) findViewById(R.id.menu_follow_following);
+
         menu_notifications = (RelativeLayout) findViewById(R.id.menu_notification);
+
         menu_settings = (RelativeLayout) findViewById(R.id.menu_settings);
+
         menu_search = (RelativeLayout) findViewById(R.id.menu_search);
+
         menu_ranking = (RelativeLayout) findViewById(R.id.menu_ranking);
+
         menu_camera = (RelativeLayout) findViewById(R.id.menu_camera);
+
         menu_close = (RelativeLayout) findViewById(R.id.menu_close);
+
         activity_layout = (RelativeLayout) findViewById(R.id.activity_layout);
+
         badgeLayout = (RelativeLayout) findViewById(R.id.badge_layout);
+
         badgeText = (TextView) findViewById(R.id.badge_text);
 
         follower_text = (TextView) findViewById(R.id.follower_text);
+
         following_text = (TextView) findViewById(R.id.following_text);
+
         full_name = (TextView) findViewById(R.id.full_name);
+
         no_follower_text = (TextView) findViewById(R.id.no_folwr_text);
 
         profile_image = (ImageView) findViewById(R.id.profile_image);
+
         cover_image = (ImageView) findViewById(R.id.cover_image);
+
         menu_click_view = (ImageView) findViewById(R.id.follower_following_menu_click);
+
         search_follower_view = (RelativeLayout) findViewById(R.id.search_follower_view);
 
         search_follower = (EditText) findViewById(R.id.search_follower);
+
         back = (RelativeLayout) findViewById(R.id.back);
 
 
 //set profile and cover image dara
-        Glide.with(this).load(preferences.getString("profile_image", ""))
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage( preferences.getString("profile_image", ""),profile_image , options);
+
+
+
+        DisplayImageOptions options1 = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader1 = ImageLoader.getInstance();
+        loader1.displayImage( preferences.getString("cover_image", ""),cover_image , options1);
+
+
+        /*Glide.with(this).load(preferences.getString("profile_image", ""))
             //    .thumbnail(0.1f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .bitmapTransform(new CropCircleTransformation(this))
-                .into(profile_image);
-        Glide.with(this).load(preferences.getString("cover_image", ""))
+                .into(profile_image);*/
+      /*  Glide.with(this).load(preferences.getString("cover_image", ""))
              //   .thumbnail(0.01f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .into(cover_image);
+                .into(cover_image);*/
         full_name.setText(preferences.getString("display_name", ""));
 
         followingRV.setVisibility(View.GONE);
+
         search_follower_view.setOnClickListener(this);
+
         menu_follow.setOnClickListener(this);
+
         menu_ranking.setOnClickListener(this);
+
         menu_open_layout.setOnClickListener(this);
+
         menu_search.setOnClickListener(this);
+
         menu_notifications.setOnClickListener(this);
+
         menu_profile.setOnClickListener(this);
+
         menu_camera.setOnClickListener(this);
+
         menu_click_view.setOnClickListener(this);
+
         menu_close.setOnClickListener(this);
+
         menu_settings.setOnClickListener(this);
+
         menu_stat.setOnClickListener(this);
+
         menu_home.setOnClickListener(this);
+
         followers.setOnClickListener(this);
+
         following.setOnClickListener(this);
+
         back.setOnClickListener(this);
+
         activity_layout.setOnClickListener(this);
 
         search_follower.addTextChangedListener(new TextWatcher() {

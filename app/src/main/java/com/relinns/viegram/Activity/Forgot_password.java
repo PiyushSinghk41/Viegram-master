@@ -22,11 +22,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Forgot_password extends AppCompatActivity implements View.OnClickListener {
-    private RelativeLayout back;
-    private EditText forgot_email;
-    private Button submit;
-    private ProgressDialog progress_Dialog;
-    private SharedPreferences preferences;
+
+     RelativeLayout back;
+     EditText forgot_email;
+     Button submit;
+     ProgressDialog progress_Dialog;
+     SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

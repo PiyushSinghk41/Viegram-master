@@ -35,18 +35,17 @@ import retrofit2.Callback;
 
 public class NotificationFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private Result result;
-    private RecyclerView notificationList;
-    private RelativeLayout noNotifications;
-    private RelativeLayout progress_layout;
-    private LinearLayout loadMore;
+    RecyclerView notificationList;
+    RelativeLayout noNotifications , progress_layout;
+    LinearLayout loadMore;
 
-    private LinearLayoutManager mLayoutManager;
+    LinearLayoutManager mLayoutManager;
     private boolean loading = true;
     private int index = 1;
-    private SharedPreferences preferences;
-    private Notification_Adapter notificationAdapter;
-    private List<Notification> notificationData = new ArrayList<>();
-    private SwipeRefreshLayout notificationRefresh;
+    SharedPreferences preferences;
+    Notification_Adapter notificationAdapter;
+    List<Notification> notificationData = new ArrayList<>();
+    SwipeRefreshLayout notificationRefresh;
 
     @Nullable
     @Override
@@ -123,21 +122,20 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
                                 }
                             }
                         });
-                    }
-                    else if (result.getMsg().equals("204")) {
+                    } else if (result.getMsg().equals("204")) {
                         noNotifications.setVisibility(View.VISIBLE);
                         notificationList.setVisibility(View.GONE);
 
-                    } else{
-                        if(getActivity()!=null)
-                        {
+                    } else {
+                        if (getActivity() != null) {
                             Alerter.create(getActivity())
                                     .setText(R.string.network_error)
                                     .setBackgroundColor(R.color.login_bg)
                                     .show();
                         }
                         Log.e("API_Response", "fetch_notification Response : " + new Gson().toJson(response.errorBody()));
-                }}
+                    }
+                }
             }
 
             @Override
@@ -146,8 +144,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
                 progress_layout.setVisibility(View.GONE);
                 noNotifications.setVisibility(View.GONE);
                 notificationList.setVisibility(View.GONE);
-                if(getActivity()!=null)
-                {
+                if (getActivity() != null) {
                     Alerter.create(getActivity())
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)
@@ -179,8 +176,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
 
                     loading = true;
                 } else {
-                    if(getActivity()!=null)
-                    {
+                    if (getActivity() != null) {
                         Alerter.create(getActivity())
                                 .setText(R.string.network_error)
                                 .setBackgroundColor(R.color.login_bg)
@@ -189,11 +185,11 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
                     Log.e("API_Response", "fetch_notification Response : " + new Gson().toJson(response.errorBody()));
                 }
             }
+
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
                 loadMore.setVisibility(View.GONE);
-                if(getActivity()!=null)
-                {
+                if (getActivity() != null) {
                     Alerter.create(getActivity())
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)
