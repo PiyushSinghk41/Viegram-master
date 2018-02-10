@@ -16,8 +16,9 @@ import com.relinns.viegram.R;
 import java.util.List;
 
 public class Icon_guide_Adapter extends RecyclerView.Adapter<Icon_guide_Adapter.View_holder> {
-    private Context context;
-    private List<IconDetail> icon_data;
+
+     Context context;
+     List<IconDetail> icon_data;
     public Icon_guide_Adapter(Context options, List<IconDetail> list) {
         this.context=options;
         this.icon_data=list;
@@ -25,6 +26,7 @@ public class Icon_guide_Adapter extends RecyclerView.Adapter<Icon_guide_Adapter.
 
     @Override
     public View_holder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.guide_list,parent,false);
         return new View_holder(v);
     }

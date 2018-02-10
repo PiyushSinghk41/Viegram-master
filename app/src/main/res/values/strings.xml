@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Viegram</string>
+    <string name="key">AIzaSyBFy42JOU7XmVLCH6P-43T63kCT4rUyygo</string>
 
     <string name="logo">Share photos, earn points, gain popularity and have fun competing against friends
 </string>
@@ -25,7 +26,6 @@
     <string name="no_reposts">No Reposts</string>
     <string name="upload_video_done">Your Video has been posted.You\'ve earned 100 points.</string>
     <string name="no_request">No requests</string>
-
 
 
     <string name="upload_image_done">Your Image has been posted.You\'ve earned 100 points.</string>

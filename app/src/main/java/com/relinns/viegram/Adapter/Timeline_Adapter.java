@@ -209,7 +209,7 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
             } else {
 
                 holder.post_image.setVisibility(View.VISIBLE);
-                holder.progressBar.setVisibility(View.VISIBLE);
+                holder.progressBar.setVisibility(View.GONE);
 
                 DisplayImageOptions options2 = new DisplayImageOptions.Builder().
                         cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();

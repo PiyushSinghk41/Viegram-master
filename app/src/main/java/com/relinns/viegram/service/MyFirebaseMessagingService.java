@@ -27,6 +27,7 @@ import me.leolin.shortcutbadger.ShortcutBadger;
  * Created by win 7 on 6/14/2017.
  */
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
     private SharedPreferences preferences;
     private static final String TAG = "Firebase";
     private JSONObject data;

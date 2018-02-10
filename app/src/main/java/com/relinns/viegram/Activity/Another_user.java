@@ -44,43 +44,20 @@ import retrofit2.Callback;
 
 @SuppressWarnings("ALL")
 public class Another_user extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
-    private RelativeLayout badgeLayout;
-    private RelativeLayout progress_layout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout menu_home;
-    private RelativeLayout user_info;
-    private RelativeLayout user_photos;
-    private RelativeLayout follow_user;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private RelativeLayout another_follower_data;
-    private RelativeLayout another_stats;
-    private TextView userinfo_text;
-    private TextView userphotos_text;
-    private TextView following;
-    private TextView another_username;
-    private TextView badgeText;
-    private ImageView userinfo_view;
-    private ImageView userphoto_view;
-    private ImageView menu_click_view;
-    private ImageView another_profile_image;
-    private ImageView another_cover_imaage;
-    private ProgressBar progress;
-    private ProgressBar followProgress;
-    private LinearLayout working_layout;
-    private SharedPreferences preferences;
+
+     RelativeLayout badgeLayout , progress_layout,back,activity_layout , menu_home ,user_info , user_photos , follow_user ,menu_open_layout ,menu_close , menu_profile ,menu_stat , menu_follow , menu_notifications, menu_settings , menu_search ,menu_ranking , menu_camera , another_follower_data ,another_stats;
+
+     TextView userinfo_text , userphotos_text , following , another_username, badgeText;
+
+     ImageView userinfo_view , userphoto_view , menu_click_view , another_profile_image ,another_cover_imaage ;
+
+     ProgressBar progress;
+     ProgressBar followProgress;
+     LinearLayout working_layout;
+     SharedPreferences preferences;
     private String display_name;
     private Result result;
-    private ViewPager user_pager;
+     ViewPager user_pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
