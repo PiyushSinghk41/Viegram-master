@@ -45,10 +45,7 @@ public class Comments extends AppCompatActivity implements View.OnClickListener 
 
     RecyclerView comment_list;
     Comment_Adapter adapter;
-    RelativeLayout send, badgeLayout, progress_layout, back,
-            activity_layout, no_comment_found, menu_home,
-            menu_open_layout, menu_close, menu_profile,
-            menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+    RelativeLayout send, badgeLayout, progress_layout, back, activity_layout, no_comment_found, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
 
 
     ImageView menu_click_view;
@@ -63,6 +60,8 @@ public class Comments extends AppCompatActivity implements View.OnClickListener 
     List<String> id_list;
     List<String> nameList;
     Result result;
+
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,10 +211,14 @@ public class Comments extends AppCompatActivity implements View.OnClickListener 
 
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
         Log.d("API_Parameters", "fetch_comments parameters :" + postParam.toString());
+
+
         Call<API_Response> call = service.getPostActionResponse(postParam);
         call.enqueue(new Callback<API_Response>() {
             @Override
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+
+
                 Log.e("API_Response", "fetch_comments Response : " + new Gson().toJson(response.body()));
                 if (response.isSuccessful()) {
                     get_following();
@@ -227,6 +230,14 @@ public class Comments extends AppCompatActivity implements View.OnClickListener 
                         comment_list.setLayoutManager(mLayoutManager);
                         adapter = new Comment_Adapter(Comments.this, response.body().getResult().getComments());
                         comment_list.setAdapter(adapter);
+
+
+                        if (response.body().getResult().getComments().size() > count) {
+                            comment_list.smoothScrollToPosition(adapter.getItemCount() - 1);
+                            count = response.body().getResult().getComments().size();
+                        }
+
+
                     } else if (response.body().getResult().getMsg().equals("204")) {
                         progress_layout.setVisibility(View.GONE);
                         no_comment_found.setVisibility(View.VISIBLE);

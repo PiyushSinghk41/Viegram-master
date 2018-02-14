@@ -27,6 +27,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Activity.Comment_like;
 import com.relinns.viegram.Activity.Comments;
@@ -42,6 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,11 +72,23 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.View_h
     @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(final View_holder holder, int position) {
-        Glide.with(context).load(data.get(position).getProfileImage())
+
+        holder.setIsRecyclable(false);
+
+        DisplayImageOptions options2 = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader2 = ImageLoader.getInstance();
+        loader2.displayImage(data.get(position).getProfileImage(), holder.user_image, options2);
+
+
+
+
+        /*Glide.with(context).load(data.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .into(holder.user_image);
+                .into(holder.user_image);*/
 
         SpannableString spanString = new SpannableString(data.get(position).getComments());
         for (int k = 0; k < data.get(position).getMentionPeople().size(); k++) {
@@ -289,7 +304,9 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.View_h
     }
 
     public class View_holder extends RecyclerView.ViewHolder {
-        ImageView user_image, like, points;
+        ImageView  like, points;
+
+        CircleImageView user_image;
         TextView name, comment, time, point_text;
         RelativeLayout like_comment, posted_comment_layout;
 
@@ -297,7 +314,7 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.View_h
             super(itemView);
             like_comment = (RelativeLayout) itemView.findViewById(R.id.like_comment);
             posted_comment_layout = (RelativeLayout) itemView.findViewById(R.id.posted_comment_layout);
-            user_image = (ImageView) itemView.findViewById(R.id.comment_user);
+            user_image = (CircleImageView) itemView.findViewById(R.id.comment_user);
             like = (ImageView) itemView.findViewById(R.id.like_comnt_view);
             points = (ImageView) itemView.findViewById(R.id.point_view);
             name = (TextView) itemView.findViewById(R.id.comment_name);

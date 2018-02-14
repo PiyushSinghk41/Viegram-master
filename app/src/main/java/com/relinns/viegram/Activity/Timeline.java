@@ -48,7 +48,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Timeline extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+
     SwipeRefreshLayout swipe_refresh;
+
     TextView point1, point2, point3, point4, point5, point6, point7, point8, point9;
 
     private RecyclerView timeline;
@@ -99,7 +101,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         swipe_refresh = findViewById(R.id.swipe_refresh);
         menu_home = findViewById(R.id.menu_home);
         menu_open_layout = findViewById(R.id.timeline_menu_open);
-        menu_click_view = findViewById(R.id.timeline_menu_click);
+        menu_click_view = (ImageView) findViewById(R.id.timeline_menu_click);
         menu_profile = findViewById(R.id.menu_profile);
         menu_stat = findViewById(R.id.menu_stat);
         menu_follow = findViewById(R.id.menu_follow_following);
@@ -756,12 +758,19 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
                 menu_status();
             }
         }
+
+
         if (v == menu_home) {
             menu_status();
           /*  Intent i = new Intent(Timeline.this, Timeline.class);
             startActivity(i);
             overridePendingTransition(R.anim.enter, R.anim.exit);*/
         }
+
+
+
+
+
         if (v == menu_camera) {
             menu_status();
             Intent i = new Intent(Timeline.this, Upload_photo.class);
@@ -829,8 +838,8 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
     }
 
     private void menu_status() {
-        menu_open_layout.setVisibility(View.GONE);
-        menu_click_view.setVisibility(View.VISIBLE);
+        menu_open_layout.setVisibility(View.VISIBLE);
+        menu_click_view.setVisibility(View.GONE);
     }
 
     private void updatePoints(String points) {

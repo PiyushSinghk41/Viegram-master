@@ -15,6 +15,7 @@ import com.relinns.viegram.R;
 
 @SuppressWarnings({"ALL", "WeakerAccess"})
 public class Terms_service extends AppCompatActivity implements View.OnClickListener {
+
     private RelativeLayout badgeLayout;
     private RelativeLayout back;
     private RelativeLayout activity_layout;

@@ -46,15 +46,15 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
     RecyclerView search_photos;
     GridLayoutManager layoutManager;
     RelativeLayout badgeLayout;
-    RelativeLayout progress_layout, back, search_view, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera , activity_layout;
+    RelativeLayout progress_layout, back, search_view, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera, activity_layout;
 
-     ImageView menu_click_view;
-     LinearLayout no_seach_result , load_moreData;
+    ImageView menu_click_view;
+    LinearLayout no_seach_result, load_moreData;
 
-     SharedPreferences preferences;
-     AutoCompleteTextView search_text;
-     List<CommentPost> name_data;
-     ProgressBar progress;
+    SharedPreferences preferences;
+    AutoCompleteTextView search_text;
+    List<CommentPost> name_data;
+    ProgressBar progress;
     private int index = 1;
     private boolean loading = true;
     private List<TimelinePost> list;

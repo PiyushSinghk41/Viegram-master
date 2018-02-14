@@ -37,18 +37,18 @@ import static android.content.Context.MODE_PRIVATE;
 
 @SuppressLint("ValidFragment")
 public class My_photos extends Fragment {
-     Photo_Adapter photo_adapter;
-     RecyclerView my_photos;
-     GridLayoutManager layoutManager;
-     SharedPreferences preferences;
-     RelativeLayout no_photos;
-     RelativeLayout private_account_layout;
-    private static Detail detail=null;
-    private static String profile="";
+    Photo_Adapter photo_adapter;
+    RecyclerView my_photos;
+    GridLayoutManager layoutManager;
+    SharedPreferences preferences;
+    RelativeLayout no_photos;
+    RelativeLayout private_account_layout;
+    private static Detail detail = null;
+    private static String profile = "";
     private int index = 1;
     private boolean loading = true;
-     LinearLayout load_more;
-     List<Post> list = new ArrayList<>();
+    LinearLayout load_more;
+    List<Post> list = new ArrayList<>();
     private boolean mCheck, mCheck1;
 
     @SuppressLint("ValidFragment")
@@ -74,11 +74,11 @@ public class My_photos extends Fragment {
         no_photos.setVisibility(View.GONE);
 
         preferences = getActivity().getSharedPreferences("Viegram", MODE_PRIVATE);
-        if (mCheck1){
+        if (mCheck1) {
             Gson gson = new Gson();
-            String data = preferences.getString("detail","");
+            String data = preferences.getString("detail", "");
             if (!(data.isEmpty()))
-                detail =  gson.fromJson(data, Detail.class);
+                detail = gson.fromJson(data, Detail.class);
         }
         updateView();
 
@@ -122,7 +122,7 @@ public class My_photos extends Fragment {
     }
 
     private void setData() {
-        if (detail!=null){
+        if (detail != null) {
             if ((detail.getFollowerStatus().equals("1") || detail.getPrivacyStatus().equals("0")) && !detail.getTotalPosts().equals("0")) {
                 my_photos.setVisibility(View.VISIBLE);
                 no_photos.setVisibility(View.GONE);
@@ -243,7 +243,7 @@ public class My_photos extends Fragment {
     }
 
     public void updateViewCheck(Detail details, String s) {
-        if (!(mCheck)){
+        if (!(mCheck)) {
             detail = details;
             profile = s;
             updateView();
@@ -251,7 +251,7 @@ public class My_photos extends Fragment {
     }
 
     private void updateView() {
-        if (detail!=null){
+        if (detail != null) {
             mCheck = true;
             list = detail.getPosts();
             if (profile.equals("0")) {
@@ -273,7 +273,7 @@ public class My_photos extends Fragment {
                     no_photos.setVisibility(View.VISIBLE);
                 }
             }
-        }else {
+        } else {
             mCheck = false;
             detail = new Detail();
         }

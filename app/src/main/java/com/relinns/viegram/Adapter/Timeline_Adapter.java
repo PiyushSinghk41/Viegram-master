@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.jzvd.JZVideoPlayer;
+import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -134,13 +135,6 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
 
         ImageLoader loader = ImageLoader.getInstance();
         loader.displayImage( list.get(position).getProfileImage(),holder.profile_image , options);
-
-
-
-
-
-
-
 
 
 
@@ -490,7 +484,9 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView profile_image, post_image, like_view;
+        ImageView post_image, like_view;
+
+        ImageView profile_image;
         TextView user_name, post_points, caption, userName, post_time, location_text, errorText;
         RelativeLayout like, comment, repost, post_layout, showTagLayout;
         View mPostPointView;
@@ -501,13 +497,21 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
         public ViewHolder(View itemView) {
             super(itemView);
             profile_image = itemView.findViewById(R.id.user_image);
+
             post_image = itemView.findViewById(R.id.post_image);
+
             like_view = itemView.findViewById(R.id.like_view);
+
             like = itemView.findViewById(R.id.like);
+
             comment = itemView.findViewById(R.id.comment);
+
             repost = itemView.findViewById(R.id.repost);
+
             user_name = itemView.findViewById(R.id.username_text);
+
             post_points = itemView.findViewById(R.id.post_points);
+
             caption = itemView.findViewById(R.id.caption);
             userName = itemView.findViewById(R.id.username_post);
             post_time = itemView.findViewById(R.id.post_time);
