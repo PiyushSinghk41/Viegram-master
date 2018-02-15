@@ -102,11 +102,11 @@ import retrofit2.Callback;
 public class Upload_photo extends AppCompatActivity implements View.OnClickListener, ProgressRequestBody.Listener {
 
 
-    private VideoView upload_video_view;
-    private LinearLayout tag_people, working_layout, add_location;
-    private RelativeLayout  uploadprogressLayout,badgeLayout,progress_layout, restrict_layout, back, activity_layout, upload_edit_photo, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, imageHolder, menu_camera;
-    private ImageView play_video, menu_click_view, upload_image_view, inital_image;
-    private Button upload_photo;
+    VideoView upload_video_view;
+    LinearLayout tag_people, working_layout, add_location;
+    RelativeLayout  uploadprogressLayout,badgeLayout,progress_layout, restrict_layout, back, activity_layout, upload_edit_photo, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, imageHolder, menu_camera;
+    ImageView play_video, menu_click_view, upload_image_view, inital_image;
+    Button upload_photo;
     private final int PICK_VIDEOIMAGE = 5;
     private final int STORAGE_PERMISSION_CODE = 23;
     private final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 2;
@@ -114,23 +114,20 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
     private final int LOCATION_CODE = 3;
     private final int CAPTURE_PERMISSION_CODE = 5;
     private final int READ_PERMISSION_CODE = 10;
-    private String type;
-    private String upload_image_path = "";
-    private String check_value = "0";
-    private String filetype = "";
-    private String location_result = "";
-    private String result_id = "";
-    private String x_value_result = "";
-    private String y_value_result = "";
-    private TextView badgeText;
-    private TextView location;
-    private TextView tag_text;
-    private TextView add_caption_textbt;
-    private TextView upload_header;
-    private Uri fileUri;
-    private SharedPreferences preferences;
-    private CheckBox check;
-    private EditText caption_text;
+    String type;
+    String upload_image_path = "";
+    String check_value = "0";
+    String filetype = "";
+    String location_result = "";
+    String result_id = "";
+    String x_value_result = "";
+    String y_value_result = "";
+    TextView badgeText , upload_header ,location , tag_text ,  add_caption_textbt;
+
+    Uri fileUri;
+    SharedPreferences preferences;
+    CheckBox check;
+    EditText caption_text;
     private static final String IMAGE_DIRECTORY_NAME = "Hello Camera";
     private static final int MEDIA_TYPE_IMAGE = 1;
     private File thumbnail;

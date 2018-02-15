@@ -53,19 +53,17 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
 
     TextView point1, point2, point3, point4, point5, point6, point7, point8, point9;
 
-    private RecyclerView timeline;
+    RecyclerView timeline;
 
-    private Timeline_Adapter adapter;
+    Timeline_Adapter adapter;
 
-    private RelativeLayout badgeLayout, progress_layout, activity_layout, no_posts,
-            menu_home, menu_open_layout, menu_close, menu_profile, menu_stat,
-            menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+    RelativeLayout badgeLayout, progress_layout, activity_layout, no_posts, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
 
-    private ImageView menu_click_view;
-    private SharedPreferences preferences;
-    private ProgressBar progress;
-    private List<TimelinePost> list;
-    private LinearLayoutManager layoutManager;
+    ImageView menu_click_view;
+    SharedPreferences preferences;
+    ProgressBar progress;
+    List<TimelinePost> list;
+    LinearLayoutManager layoutManager;
     private Boolean loading = true;
     private int index = 1;
     private int total_posts = 0;
@@ -766,10 +764,6 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
             startActivity(i);
             overridePendingTransition(R.anim.enter, R.anim.exit);*/
         }
-
-
-
-
 
         if (v == menu_camera) {
             menu_status();
