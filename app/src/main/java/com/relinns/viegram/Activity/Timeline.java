@@ -237,6 +237,8 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         postParams.put("action", "all_data");
         postParams.put("userid", preferences.getString("user_id", ""));
 
+
+
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
         Log.d("API_Parameters", "fetch_profile parameters :" + postParams.toString());
         Call<UserData> call = service.getAllData(postParams);
@@ -455,6 +457,10 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         postParam.put("action", "fetch_timeline");
         postParam.put("userid", preferences.getString("user_id", ""));
         postParam.put("page", index + "");
+
+        Log.d("nisha" , preferences.getString("user_id", ""));
+        Log.d("nisha" , index + "");
+
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
 
         Call<API_Response> call = service.getTimeline(postParam);
@@ -832,8 +838,8 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
     }
 
     private void menu_status() {
-        menu_open_layout.setVisibility(View.VISIBLE);
-        menu_click_view.setVisibility(View.GONE);
+        menu_open_layout.setVisibility(View.GONE);
+        menu_click_view.setVisibility(View.VISIBLE);
     }
 
     private void updatePoints(String points) {

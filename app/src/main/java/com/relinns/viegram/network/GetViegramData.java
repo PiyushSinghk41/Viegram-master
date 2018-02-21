@@ -37,59 +37,70 @@ public interface GetViegramData {
     // view AnotherProfile,entering viegram, icon guide, follower_following_total, update token
 //    @Headers("Content-Type:application/json")
     @POST("hints_object.php")
-    Call<API_Response> pointsWork(@Body Map<String, String> body);
+    Call<API_Response> pointsWork
+    (@Body Map<String, String> body);
 
     //get Earning hints
 //    @Headers("Content-Type:application/json")
     @POST("hints_object.php")
-    Call<UserData> Earnings(@Body Map<String, String> body);
+    Call<UserData> Earnings
+    (@Body Map<String, String> body);
 
     //get All data
 //    @Headers("Content-Type:application/json")
     @POST("alldata_object.php")
-    Call<UserData> getAllData(@Body Map<String, String> body);
+    Call<UserData> getAllData
+    (@Body Map<String, String> body);
 
 //get Follower and get Following
 //@Headers("Content-Type:application/json")
 @POST("random_object.php")
-    Call<UserData> getFollower(@Body Map<String, String> body);
+    Call<UserData> getFollower
+(@Body Map<String, String> body);
 
     //fetchProfile
 //    @Headers("Content-Type:application/json")
     @POST("upload_object.php")
-    Call<API_Response> getProfile(@Body Map<String, String> body);
+    Call<API_Response> getProfile
+    (@Body Map<String, String> body);
 
     //fetchProfile
 //    @Headers("Content-Type:application/json")
     @POST("upload_object.php")
-    Call<UserData> FetchProfile(@Body Map<String, String> body);
+    Call<UserData> FetchProfile
+    (@Body Map<String, String> body);
 
     //overall_stats,overall ranking,userRanking,breakdownStats,addSettings,getSettings,total points
 //    @Headers("Content-Type:application/json")
     @POST("ranking_object.php")
-    Call<API_Response> rankingRelated(@Body Map<String, String> body);
+    Call<API_Response> rankingRelated
+    (@Body Map<String, String> body);
 
     //get Settings, get follower ranking
 //    @Headers("Content-Type:application/json")
     @POST("ranking_object.php")
-    Call<UserData> Settings(@Body Map<String, String> body);
+    Call<UserData> Settings
+    (@Body Map<String, String> body);
 
     //likepost, comment,repost,fetch_comments,likecomment
 //    @Headers("Content-Type:application/json")
     @POST("post_object.php")
-    Call<API_Response> getPostActionResponse(@Body Map<String, String> body);
+    Call<API_Response> getPostActionResponse
+    (@Body Map<String, String> body);
 
     //getFollowers,restriction,getfollowing,unfollow,random posts,delete_comment,delete post
     //searchLocation,requestFriend,open photo,fetch another_userProfile,another Follower/Following, all users
     //post details, commentliked list, respondRequest
 //    @Headers("Content-Type:application/json")
     @POST("random_object.php")
-    Call<API_Response> FriendsWork(@Body Map<String, String> body);
+    Call<API_Response> FriendsWork
+    (@Body Map<String, String> body);
 
     //fetchTimeline, notification
 //    @Headers("Content-Type:application/json")
     @POST("timeline_object.php")
-    Call<API_Response> getTimeline(@Body Map<String, String> body);
+    Call<API_Response> getTimeline
+    (@Body Map<String, String> body);
 
 //    @Headers("Content-Type:application/json")
     @Multipart

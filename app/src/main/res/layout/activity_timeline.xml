@@ -241,7 +241,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8.9"
-
             android:visibility="gone">
 
             <ProgressBar
@@ -291,14 +290,7 @@
                 android:textAlignment="center"
                 android:textSize="16dp" />
 
-            <include
-                android:id="@+id/timeline_menu_open"
-                layout="@layout/design_menu"
-                android:layout_width="150dp"
-                android:visibility="gone"
-                android:layout_height="250dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"></include>
+
 
         </RelativeLayout>
 
@@ -336,6 +328,17 @@
 
     </LinearLayout>
 
+   <!-- <ImageView
+        android:id="@+id/timeline_menu_click"
+        android:layout_width="35dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="45dp"
+        android:background="@drawable/menu_icon" />
+
+-->
+
     <ImageView
         android:id="@+id/timeline_menu_click"
         android:layout_width="35dp"
@@ -344,5 +347,16 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="45dp"
         android:background="@drawable/menu_icon" />
+
+    <include
+        android:id="@+id/timeline_menu_open"
+        layout="@layout/design_menu"
+        android:layout_width="150dp"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+    </include>
+
 
 </RelativeLayout>

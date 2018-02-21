@@ -348,7 +348,9 @@
         layout="@layout/design_menu"
         android:layout_width="150dp"
         android:layout_height="250dp"
-        android:layout_alignParentBottom="true"></include>
+        android:layout_alignParentBottom="true">
+
+    </include>
 
     <RelativeLayout
         android:id="@+id/upload_progresslayout"

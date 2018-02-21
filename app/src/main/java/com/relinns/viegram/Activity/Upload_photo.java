@@ -104,7 +104,7 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
     VideoView upload_video_view;
     LinearLayout tag_people, working_layout, add_location;
-    RelativeLayout  uploadprogressLayout,badgeLayout,progress_layout, restrict_layout, back, activity_layout, upload_edit_photo, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, imageHolder, menu_camera;
+    RelativeLayout uploadprogressLayout, badgeLayout, progress_layout, restrict_layout, back, activity_layout, upload_edit_photo, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, imageHolder, menu_camera;
     ImageView play_video, menu_click_view, upload_image_view, inital_image;
     Button upload_photo;
     private final int PICK_VIDEOIMAGE = 5;
@@ -122,7 +122,7 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
     String result_id = "";
     String x_value_result = "";
     String y_value_result = "";
-    TextView badgeText , upload_header ,location , tag_text ,  add_caption_textbt;
+    TextView badgeText, upload_header, location, tag_text, add_caption_textbt;
 
     Uri fileUri;
     SharedPreferences preferences;
@@ -290,9 +290,9 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
             case READ_PERMISSION_CODE: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent =  new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("*/*");
-                    intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] {"image/*", "video/*"});
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/*", "video/*"});
 
                     //     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     //  intent.setType("video/*, image/*");
@@ -325,7 +325,7 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
                 filetype = "image";
                 onImageSet(result.getUri());
                 setImagesize(result.getUri());
-                upload_image_path = FileUtils.getInstance().compressImage(result.getUri(),this);
+                upload_image_path = FileUtils.getInstance().compressImage(result.getUri(), this);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
                 Log.d("Screen_Upload_Photo", "Crop Error : " + error);
@@ -722,13 +722,13 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
                         ActivityCompat.requestPermissions(Upload_photo.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION_CODE);
                     } else {
 
-                        Intent intent =  new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         intent.setType("*/*");
-                        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] {"image/*", "video/*"});
+                        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/*", "video/*"});
 
-                   //     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                      //  intent.setType("video/*, image/*");
-                   //     intent.setType("*/*");
+                        //     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        //  intent.setType("video/*, image/*");
+                        //     intent.setType("*/*");
                         startActivityForResult(intent, PICK_VIDEOIMAGE);
                         requestStoragePermission();
                         return;

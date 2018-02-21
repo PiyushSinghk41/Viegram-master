@@ -127,7 +127,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.Timeline"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+
+            />
         <activity
             android:name=".Activity.Forgot_password"
             android:screenOrientation="portrait" />

@@ -299,7 +299,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1.3"
             android:text="By Signing up you agree to our "
-            android:textAlignment="viewEnd"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="14dp" />
 
