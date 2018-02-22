@@ -46,6 +46,7 @@ public class Follower_ranking_Adapter extends RecyclerView.Adapter<Follower_rank
 
     @Override
     public Viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rank_view, parent, false);
         return new Viewholder(v);
     }
@@ -74,12 +75,14 @@ public class Follower_ranking_Adapter extends RecyclerView.Adapter<Follower_rank
                 .into(holder.image_view);*/
        /* holder.text_rank.setText(data_list.get(position).getRank());
         holder.text_name.setText(data_list.get(position).getDisplayName());*/
+
         holder.text_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 open_profile(position);
             }
         });
+
         holder.image_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,10 +92,15 @@ public class Follower_ranking_Adapter extends RecyclerView.Adapter<Follower_rank
     }
 
     private void open_profile(int position) {
+
         SharedPreferences.Editor editor = preferences.edit();
+
         editor.putString("another_user", data_list.get(position).getUserId());
+
         editor.commit();
+
         Intent i = new Intent(context, Another_user.class);
+
         context.startActivity(i);
     }
 
@@ -104,13 +112,16 @@ public class Follower_ranking_Adapter extends RecyclerView.Adapter<Follower_rank
     public class Viewholder extends RecyclerView.ViewHolder {
 
         ImageView image_view;
+
         TextView text_name, text_rank;
 
         public Viewholder(View itemView) {
             super(itemView);
 
             image_view = (ImageView) itemView.findViewById(R.id.prfl_img);
+
             text_name = (TextView) itemView.findViewById(R.id.user_text);
+
             text_rank = (TextView) itemView.findViewById(R.id.rank_text);
 
         }

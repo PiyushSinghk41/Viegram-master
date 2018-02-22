@@ -43,16 +43,14 @@ import retrofit2.Callback;
 @SuppressWarnings("ALL")
 public class Signup extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, View.OnFocusChangeListener, View.OnTouchListener {
 
-    private Button signup_;
-    private TextView terms_o_s;
-    private AutoCompleteTextView country_signUp;
-    private ArrayList<String> country_name;
-    private ArrayList<String> country_id;
-    private ArrayAdapter country_adapter;
-    private EditText_cursor email_signUp;
-    private EditText_cursor password_signUp;
-    private EditText_cursor name_signUp;
-    private EditText_cursor userName_signUp;
+     Button signup_;
+     TextView terms_o_s;
+     AutoCompleteTextView country_signUp;
+     ArrayList<String> country_name;
+     ArrayList<String> country_id;
+     ArrayAdapter country_adapter;
+     EditText_cursor email_signUp , password_signUp , name_signUp , userName_signUp;
+
     private ProgressDialog progress_Dialog;
     private String countryId;
     private String deviceId;

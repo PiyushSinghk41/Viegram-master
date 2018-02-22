@@ -8,27 +8,36 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Pojo.IconDetail;
 import com.relinns.viegram.R;
+
 import java.util.List;
 
 public class Icon_guide_Adapter extends RecyclerView.Adapter<Icon_guide_Adapter.View_holder> {
 
-     Context context;
-     List<IconDetail> icon_data;
+    Context context;
+
+    List<IconDetail> icon_data;
+
+
     public Icon_guide_Adapter(Context options, List<IconDetail> list) {
-        this.context=options;
-        this.icon_data=list;
+
+
+        this.context = options;
+        this.icon_data = list;
+
     }
 
     @Override
     public View_holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.guide_list,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.guide_list, parent, false);
         return new View_holder(v);
+
     }
 
     @Override
@@ -38,7 +47,7 @@ public class Icon_guide_Adapter extends RecyclerView.Adapter<Icon_guide_Adapter.
                 cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
 
         ImageLoader loader = ImageLoader.getInstance();
-        loader.displayImage(icon_data.get(position).getIcons() , holder.icon_view , options);
+        loader.displayImage(icon_data.get(position).getIcons(), holder.icon_view, options);
 
 
 
@@ -55,14 +64,19 @@ public class Icon_guide_Adapter extends RecyclerView.Adapter<Icon_guide_Adapter.
     public class View_holder extends RecyclerView.ViewHolder {
 
         ImageView icon_view;
+
         TextView guide_text;
+
         RelativeLayout guide_layout;
 
         public View_holder(View itemView) {
             super(itemView);
-            icon_view=(ImageView)itemView.findViewById(R.id.guide_icon);
-            guide_text=(TextView)itemView.findViewById(R.id.guide_text);
-            guide_layout=(RelativeLayout)itemView.findViewById(R.id.guide_layout);
+
+            icon_view = (ImageView) itemView.findViewById(R.id.guide_icon);
+
+            guide_text = (TextView) itemView.findViewById(R.id.guide_text);
+
+            guide_layout = (RelativeLayout) itemView.findViewById(R.id.guide_layout);
         }
     }
 }

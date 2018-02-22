@@ -28,50 +28,47 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 public class Stats extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
-    private RelativeLayout badgeLayout;
-    private RelativeLayout back;
-    private RelativeLayout my_stats;
-    private RelativeLayout status_scores;
-    private RelativeLayout earning_points;
-    private TextView stats_text;
-    private TextView badgeText;
-    private TextView score_text;
-    private TextView earning_text;
-    private TextView stats_header;
-    private FrameLayout layout;
-    private LinearLayout butn_layout;
-    private RelativeLayout activity_layout;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click_view;
-    private String value;
-    private String header_text;
-    private String stats_id;
-    private ViewPager mStatsPager;
-    private SharedPreferences preferences;
+
+    TextView stats_text, badgeText, score_text, earning_text, stats_header;
+
+    FrameLayout layout;
+
+    LinearLayout butn_layout;
+
+    RelativeLayout activity_layout, menu_home, menu_open_layout, menu_close,
+            menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings,
+            menu_search, menu_ranking, menu_camera, badgeLayout, back, my_stats, status_scores, earning_points;
+
+    ImageView menu_click_view;
+    String value;
+    String header_text;
+    String stats_id;
+    ViewPager mStatsPager;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
+
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
+
         stats_header = (TextView) findViewById(R.id.stats_header);
+
         menu_home = (RelativeLayout) findViewById(R.id.menu_home);
+
         back = (RelativeLayout) findViewById(R.id.back);
+
         mStatsPager = (ViewPager) findViewById(R.id.stats_pager);
+
         my_stats = (RelativeLayout) findViewById(R.id.my_stats);
+
         status_scores = (RelativeLayout) findViewById(R.id.status_score);
+
         earning_points = (RelativeLayout) findViewById(R.id.earning_points);
+
         butn_layout = (LinearLayout) findViewById(R.id.layout);
+
         Intent intent = getIntent();
 // Get the extras (if there are any)
         Bundle extras = intent.getExtras();
@@ -88,43 +85,79 @@ public class Stats extends AppCompatActivity implements View.OnClickListener, Vi
             stats_header.setText(header_text);
         }
         activity_layout = (RelativeLayout) findViewById(R.id.activity_layout);
+
         layout = (FrameLayout) findViewById(R.id.show_stats);
+
         stats_text = (TextView) findViewById(R.id.stats_text);
+
         score_text = (TextView) findViewById(R.id.scores_text);
+
         earning_text = (TextView) findViewById(R.id.earning_text);
+
         menu_open_layout = (RelativeLayout) findViewById(R.id.stat_menu_open);
+
         menu_click_view = (ImageView) findViewById(R.id.stat_menu_click);
+
         menu_profile = (RelativeLayout) findViewById(R.id.menu_profile);
+
         menu_stat = (RelativeLayout) findViewById(R.id.menu_stat);
+
         menu_follow = (RelativeLayout) findViewById(R.id.menu_follow_following);
+
         menu_notifications = (RelativeLayout) findViewById(R.id.menu_notification);
+
         menu_settings = (RelativeLayout) findViewById(R.id.menu_settings);
+
         menu_search = (RelativeLayout) findViewById(R.id.menu_search);
+
         menu_ranking = (RelativeLayout) findViewById(R.id.menu_ranking);
+
         menu_camera = (RelativeLayout) findViewById(R.id.menu_camera);
+
         menu_close = (RelativeLayout) findViewById(R.id.menu_close);
+
         badgeLayout = (RelativeLayout) findViewById(R.id.badge_layout);
+
         badgeText = (TextView) findViewById(R.id.badge_text);
 
         menu_open_layout.setVisibility(View.GONE);
+
         activity_layout.setOnClickListener(this);
+
         menu_home.setOnClickListener(this);
+
         back.setOnClickListener(this);
+
         menu_follow.setOnClickListener(this);
+
         menu_ranking.setOnClickListener(this);
+
         menu_open_layout.setOnClickListener(this);
+
         menu_search.setOnClickListener(this);
+
         menu_notifications.setOnClickListener(this);
+
         menu_profile.setOnClickListener(this);
+
         menu_camera.setOnClickListener(this);
+
         menu_click_view.setOnClickListener(this);
+
         menu_close.setOnClickListener(this);
+
         menu_settings.setOnClickListener(this);
+
         menu_stat.setOnClickListener(this);
+
         my_stats.setOnClickListener(this);
+
         status_scores.setOnClickListener(this);
+
         earning_points.setOnClickListener(this);
+
         mStatsPager.setOnPageChangeListener(this);
+
         setUpViewPager(mStatsPager);
 //        Fragment stats = new My_stats(stats_id, header_text);
 //        FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();

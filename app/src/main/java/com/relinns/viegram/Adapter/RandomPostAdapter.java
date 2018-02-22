@@ -19,6 +19,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Open_photo;
 import com.relinns.viegram.Activity.Search;
 import com.relinns.viegram.Modal.TimelinePost;
@@ -60,7 +62,18 @@ public class RandomPostAdapter extends RecyclerView.Adapter<RandomPostAdapter.Vi
             mImageUrl = posts.get(position).getPhoto();
         }
 
-        Glide.with(context).load(mImageUrl)
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(mImageUrl, holder.img_view, options);
+
+
+
+
+       /* Glide.with(context).load(mImageUrl)
                 //  .thumbnail(0.01f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .listener(new RequestListener<String, GlideDrawable>() {
@@ -76,12 +89,18 @@ public class RandomPostAdapter extends RecyclerView.Adapter<RandomPostAdapter.Vi
                         return false;
                     }
                 })
-                .into(holder.img_view);
+                .into(holder.img_view);*/
         if (posts.get(position).getRandomtype().equals("video")) {
+
             holder.playIcon.setVisibility(View.VISIBLE);
-        } else {
-            holder.playIcon.setVisibility(View.GONE);
+
         }
+        else {
+
+            holder.playIcon.setVisibility(View.GONE);
+
+        }
+
         holder.img_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,21 +120,32 @@ public class RandomPostAdapter extends RecyclerView.Adapter<RandomPostAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         ImageView img_view, playIcon;
+
         RelativeLayout card_view;
+
         ProgressBar progress;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             img_view = itemView.findViewById(R.id.img_view);
+
             progress = itemView.findViewById(R.id.progress);
+
             playIcon = itemView.findViewById(R.id.play_icon);
+
             card_view = itemView.findViewById(R.id.card_view);
+
             card_view.setLayoutParams(new LinearLayout.LayoutParams((getScreenWidth() / 4), (getScreenWidth() / 4)));
+
         }
     }
 
     private int getScreenWidth() {
+
         return Resources.getSystem().getDisplayMetrics().widthPixels;
 
     }

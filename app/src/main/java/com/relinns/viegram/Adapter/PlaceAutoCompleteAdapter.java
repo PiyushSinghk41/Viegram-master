@@ -18,15 +18,21 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class PlaceAutoCompleteAdapter extends ArrayAdapter<String> implements Filterable {
+
+
     private static ArrayList<String> resultList;
     private String place_id;
     private SharedPreferences preferences;
     private String location = "";
     private String address = "";
 
+
+
     public PlaceAutoCompleteAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
+
         preferences = context.getSharedPreferences("Viegram", Context.MODE_PRIVATE);
+
     }
 
     @Override

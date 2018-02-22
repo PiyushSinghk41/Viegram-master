@@ -31,70 +31,112 @@ import retrofit2.Callback;
 
 public class Stats_Details extends AppCompatActivity implements View.OnClickListener {
     RecyclerView detail_stat;
+
     StatDetailAdapter adapter;
+
     TextView badgeText, stat_type, stat_title;
 
-    RelativeLayout badgeLayout, progress_layout, back,
-            activity_layout, menu_home, menu_open_layout,
-            menu_close, menu_profile, menu_stat, menu_follow,
-            menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+    RelativeLayout badgeLayout, progress_layout, back, activity_layout, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
 
     ImageView menu_click_view;
-    ProgressBar progress;
-    SharedPreferences preferences;
-    String stats_id;
-    String type;
-    String header_text;
 
+    ProgressBar progress;
+
+    SharedPreferences preferences;
+
+    String stats_id;
+
+    String type;
+
+    String header_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats__details);
+
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
 
         progress_layout = (RelativeLayout) findViewById(R.id.progress_layout);
+
         progress = (ProgressBar) findViewById(R.id.progress);
+
         activity_layout = (RelativeLayout) findViewById(R.id.activity_layout);
+
         menu_home = (RelativeLayout) findViewById(R.id.menu_home);
+
         back = (RelativeLayout) findViewById(R.id.back);
+
         detail_stat = (RecyclerView) findViewById(R.id.stats_detail);
+
         stat_type = (TextView) findViewById(R.id.stat_type);
+
         stat_title = (TextView) findViewById(R.id.stat_title);
+
         menu_open_layout = (RelativeLayout) findViewById(R.id.detail_menu_open);
+
         menu_click_view = (ImageView) findViewById(R.id.detail_menu_click);
+
         menu_profile = (RelativeLayout) findViewById(R.id.menu_profile);
+
         menu_stat = (RelativeLayout) findViewById(R.id.menu_stat);
+
         menu_follow = (RelativeLayout) findViewById(R.id.menu_follow_following);
+
         menu_notifications = (RelativeLayout) findViewById(R.id.menu_notification);
+
         menu_settings = (RelativeLayout) findViewById(R.id.menu_settings);
+
         menu_search = (RelativeLayout) findViewById(R.id.menu_search);
+
         menu_ranking = (RelativeLayout) findViewById(R.id.menu_ranking);
+
         menu_camera = (RelativeLayout) findViewById(R.id.menu_camera);
+
         menu_close = (RelativeLayout) findViewById(R.id.menu_close);
+
         badgeLayout = (RelativeLayout) findViewById(R.id.badge_layout);
+
         badgeText = (TextView) findViewById(R.id.badge_text);
 
         menu_open_layout.setVisibility(View.GONE);
+
         activity_layout.setOnClickListener(this);
+
         menu_follow.setOnClickListener(this);
+
         menu_ranking.setOnClickListener(this);
+
         menu_open_layout.setOnClickListener(this);
+
         menu_search.setOnClickListener(this);
+
         menu_notifications.setOnClickListener(this);
+
         menu_profile.setOnClickListener(this);
+
         menu_camera.setOnClickListener(this);
+
         menu_click_view.setOnClickListener(this);
+
         menu_close.setOnClickListener(this);
+
         menu_settings.setOnClickListener(this);
+
         menu_stat.setOnClickListener(this);
+
         menu_home.setOnClickListener(this);
+
         back.setOnClickListener(this);
 
         stats_id = getIntent().getStringExtra("stats_id");
+
         header_text = getIntent().getStringExtra("header_text");
+
         stat_title.setText(header_text);
+
         type = getIntent().getStringExtra("type");
+
         if (type.equals("today")) {
             stat_type.setText("Points earned today");
         } else if (type.equals("weekly")) {

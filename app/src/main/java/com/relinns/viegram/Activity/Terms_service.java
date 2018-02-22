@@ -11,54 +11,67 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.relinns.viegram.R;
 
 @SuppressWarnings({"ALL", "WeakerAccess"})
 public class Terms_service extends AppCompatActivity implements View.OnClickListener {
 
-    private RelativeLayout badgeLayout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click_view;
-    private TextView badgeText;
-    private ProgressBar progress;
-    private WebView webView;
-    private String url = "http://www.viegram.com/viegram_pages/terms_condition.html";
-    private SharedPreferences preferences;
+    RelativeLayout badgeLayout, back, activity_layout, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+
+    ImageView menu_click_view;
+
+    TextView badgeText;
+
+    ProgressBar progress;
+
+    WebView webView;
+
+    String url = "http://www.viegram.com/viegram_pages/terms_condition.html";
+
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_service);
+
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
+
         activity_layout = (RelativeLayout) findViewById(R.id.activity_layout);
+
         webView = (WebView) findViewById(R.id.web_service);
+
         progress = (ProgressBar) findViewById(R.id.progress_service);
+
         menu_home = (RelativeLayout) findViewById(R.id.menu_home);
+
         back = (RelativeLayout) findViewById(R.id.back);
+
         menu_open_layout = (RelativeLayout) findViewById(R.id.terms_menu_open);
+
         menu_click_view = (ImageView) findViewById(R.id.terms_menu_click);
+
         menu_profile = (RelativeLayout) findViewById(R.id.menu_profile);
+
         menu_stat = (RelativeLayout) findViewById(R.id.menu_stat);
+
         menu_follow = (RelativeLayout) findViewById(R.id.menu_follow_following);
+
         menu_notifications = (RelativeLayout) findViewById(R.id.menu_notification);
+
         menu_settings = (RelativeLayout) findViewById(R.id.menu_settings);
+
         menu_search = (RelativeLayout) findViewById(R.id.menu_search);
+
         menu_ranking = (RelativeLayout) findViewById(R.id.menu_ranking);
+
         menu_camera = (RelativeLayout) findViewById(R.id.menu_camera);
+
         menu_close = (RelativeLayout) findViewById(R.id.menu_close);
+
         badgeLayout = (RelativeLayout) findViewById(R.id.badge_layout);
+
         badgeText = (TextView) findViewById(R.id.badge_text);
 
         if (getIntent().getExtras() != null) {
@@ -66,22 +79,39 @@ public class Terms_service extends AppCompatActivity implements View.OnClickList
             menu_open_layout.setVisibility(View.GONE);
         }
         menu_open_layout.setVisibility(View.GONE);
+
         activity_layout.setOnClickListener(this);
+
         menu_home.setOnClickListener(this);
+
         back.setOnClickListener(this);
+
         menu_follow.setOnClickListener(this);
+
         menu_ranking.setOnClickListener(this);
+
         menu_open_layout.setOnClickListener(this);
+
         menu_search.setOnClickListener(this);
+
         menu_notifications.setOnClickListener(this);
+
         menu_profile.setOnClickListener(this);
+
         menu_camera.setOnClickListener(this);
+
         menu_click_view.setOnClickListener(this);
+
         menu_close.setOnClickListener(this);
+
         menu_settings.setOnClickListener(this);
+
         menu_stat.setOnClickListener(this);
+
         webView.loadUrl(url);
+
         webView.getSettings().setJavaScriptEnabled(true);
+
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {

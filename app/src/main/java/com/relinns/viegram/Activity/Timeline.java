@@ -19,6 +19,15 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.relinns.viegram.Adapter.Timeline_Adapter;
@@ -57,60 +66,109 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
 
     Timeline_Adapter adapter;
 
+    SimpleExoPlayer player;
+
     RelativeLayout badgeLayout, progress_layout, activity_layout, no_posts, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
 
     ImageView menu_click_view;
+
     SharedPreferences preferences;
+
     ProgressBar progress;
+
     List<TimelinePost> list;
+
     LinearLayoutManager layoutManager;
+
     private Boolean loading = true;
+
     private int index = 1;
+
     private int total_posts = 0;
+
     private int offlineposts = 0;
+
     private int value = 0;
+
     private LinearLayout load_moreData;
+
     private TextView badgeText;
+
     public static ResultPojo resultp;
+
     public static List<LeaderData> rankingDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
+
         list = new ArrayList<>();
+
         rankingDetail = new ArrayList<>();
+
         timeline = findViewById(R.id.timeline);
+
         point1 = findViewById(R.id.point1);
+
         point2 = findViewById(R.id.point2);
+
         point3 = findViewById(R.id.point3);
+
         point4 = findViewById(R.id.point4);
+
         point5 = findViewById(R.id.point5);
+
         point6 = findViewById(R.id.point6);
+
         point7 = findViewById(R.id.point7);
+
         point8 = findViewById(R.id.point8);
+
         point9 = findViewById(R.id.point9);
+
         no_posts = findViewById(R.id.no_post);
+
         load_moreData = findViewById(R.id.load_moreData);
+
         progress = findViewById(R.id.progress);
+
         progress_layout = findViewById(R.id.progress_layout);
+
         activity_layout = findViewById(R.id.activity_layout);
+
         swipe_refresh = findViewById(R.id.swipe_refresh);
+
         menu_home = findViewById(R.id.menu_home);
+
         menu_open_layout = findViewById(R.id.timeline_menu_open);
+
         menu_click_view = (ImageView) findViewById(R.id.timeline_menu_click);
+
         menu_profile = findViewById(R.id.menu_profile);
+
         menu_stat = findViewById(R.id.menu_stat);
+
         menu_follow = findViewById(R.id.menu_follow_following);
+
         menu_notifications = findViewById(R.id.menu_notification);
+
         menu_settings = findViewById(R.id.menu_settings);
+
         menu_search = findViewById(R.id.menu_search);
+
         menu_ranking = findViewById(R.id.menu_ranking);
+
         menu_camera = findViewById(R.id.menu_camera);
+
         menu_close = findViewById(R.id.menu_close);
+
         badgeLayout = findViewById(R.id.badge_layout);
+
         badgeText = findViewById(R.id.badge_text);
+
         updatePoints(preferences.getString("total_points", "000000000"));
 
         WeakInstanceClass.getInstance().updateReference(this);
@@ -168,20 +226,35 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
                 editor.apply();
             }
         }
+
         activity_layout.setOnClickListener(this);
+
         menu_follow.setOnClickListener(this);
+
         menu_ranking.setOnClickListener(this);
+
         menu_open_layout.setOnClickListener(this);
+
         menu_search.setOnClickListener(this);
+
         menu_notifications.setOnClickListener(this);
+
         menu_profile.setOnClickListener(this);
+
         menu_camera.setOnClickListener(this);
+
         menu_click_view.setOnClickListener(this);
+
         menu_close.setOnClickListener(this);
+
         menu_settings.setOnClickListener(this);
+
         menu_stat.setOnClickListener(this);
+
         menu_home.setOnClickListener(this);
+
         swipe_refresh.setOnRefreshListener(this);
+
         timeline.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -236,7 +309,6 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         Map<String, String> postParams = new HashMap<>();
         postParams.put("action", "all_data");
         postParams.put("userid", preferences.getString("user_id", ""));
-
 
 
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
@@ -304,27 +376,49 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         if (!list.isEmpty()) {
             list.clear();
         }
+
         String[] videoArray = video.split(",");
+
         String[] image = profileimage.split(",");
+
         String[] name = firstname.split(",");
+
         String[] secondName = secondname.split(",");
+
         String[] firstid = firstuserid.split(",");
+
         String[] secondid = seconduserid.split(",");
+
         String[] locationArray = location.split("/");
+
         String[] time_Ago = timeago.split("/");
+
         String[] photo = postimage.split(",");
+
         String[] photoid = postid.split(",");
+
         String[] type = posttype.split(",");
+
         String[] file = filetype.split(",");
+
         String[] like = postlike.split(",");
+
         String[] points = postpoints.split(",");
+
         String[] repost_id = repostid.split(",");
+
         String[] captiontext = caption.split("\\^");
+
         String[] temptagname = tagpeoplename.split("/,");
+
         String[] temptagid = tagpeopleid.split("/,");
+
         String[] temptag_x = tagx.split("/,");
+
         String[] temptag_y = tagy.split("/,");
+
         String[] height = imageheight.split(",");
+
         String[] width = imagewidth.split(",");
 
         for (int m = 0; m < captiontext.length; m++) {
@@ -357,10 +451,17 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
 
             @Override
             public void onChildViewDetachedFromWindow(View view) {
-                JZVideoPlayer jzvd = view.findViewById(R.id.player);
-                if (jzvd != null && jzvd.dataSourceObjects != null)
-                    if (JZUtils.dataSourceObjectsContainsUri(jzvd.dataSourceObjects, JZMediaManager.getCurrentDataSource()))
-                        JZVideoPlayer.releaseAllVideos();
+
+                SimpleExoPlayerView simpleExoPlayerView = view.findViewById(R.id.player);
+
+                simpleExoPlayerView.setPlayer(player);
+
+                simpleExoPlayerView.setUseController(false);
+
+                // JZVideoPlayer jzvd = view.findViewById(R.id.player);
+                // if (jzvd != null && jzvd.dataSourceObjects != null)
+                // if (JZUtils.dataSourceObjectsContainsUri(jzvd.dataSourceObjects, JZMediaManager.getCurrentDataSource()))
+                //JZVideoPlayer.releaseAllVideos();
             }
         });
 
@@ -458,8 +559,8 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         postParam.put("userid", preferences.getString("user_id", ""));
         postParam.put("page", index + "");
 
-        Log.d("nisha" , preferences.getString("user_id", ""));
-        Log.d("nisha" , index + "");
+        Log.d("nisha", preferences.getString("user_id", ""));
+        Log.d("nisha", index + "");
 
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
 
@@ -535,10 +636,18 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
 
                 @Override
                 public void onChildViewDetachedFromWindow(View view) {
-                    JZVideoPlayer jzvd = view.findViewById(R.id.player);
+
+
+                    SimpleExoPlayerView simpleExoPlayerView = view.findViewById(R.id.player);
+                    simpleExoPlayerView.removeAllViews();
+                    //simpleExoPlayerView.setPlayer(player);
+                    //simpleExoPlayerView.setUseController(false);
+
+
+                   /* JZVideoPlayer jzvd = view.findViewById(R.id.player);
                     if (jzvd != null && jzvd.dataSourceObjects != null)
                         if (JZUtils.dataSourceObjectsContainsUri(jzvd.dataSourceObjects, JZMediaManager.getCurrentDataSource()))
-                            JZVideoPlayer.releaseAllVideos();
+                            JZVideoPlayer.releaseAllVideos();*/
                 }
             });
 
@@ -685,7 +794,6 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         edit.putString("postwidth", imagewidth.replaceFirst(",", ""));
         edit.putBoolean("timelinecache", true);
         edit.apply();
-
 
     }
 

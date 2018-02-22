@@ -25,21 +25,24 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class RepostAdapter extends RecyclerView.Adapter<RepostAdapter.ViewHolder> {
 
-    private Context context;
-    private List<RepostPost> list;
-    private SharedPreferences preferences;
+    Context context;
+    List<RepostPost> list;
+    SharedPreferences preferences;
 
     public RepostAdapter(Context activity, List<RepostPost> list_data) {
 
         this.context = activity;
         this.list = list_data;
         preferences = context.getSharedPreferences("Viegram", Context.MODE_PRIVATE);
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(context).inflate(R.layout.design_results_name, parent, false);
         return new ViewHolder(v);
+
     }
 
     @Override
@@ -54,9 +57,7 @@ public class RepostAdapter extends RecyclerView.Adapter<RepostAdapter.ViewHolder
                 cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
 
         ImageLoader loader = ImageLoader.getInstance();
-        loader.displayImage(item.getProfileImage() , holder.display_image , options);
-
-
+        loader.displayImage(item.getProfileImage(), holder.display_image, options);
 
 
         //holder.name_text.setText(list.get(position).getDisplayName());
@@ -82,7 +83,9 @@ public class RepostAdapter extends RecyclerView.Adapter<RepostAdapter.ViewHolder
 
     private void open_profile(int position) {
         if (list.get(position).getId().equals(preferences.getString("user_id", ""))) {
+
             Intent intent = new Intent(context, Profile.class);
+
             context.startActivity(intent);
         } else {
             SharedPreferences.Editor editor = preferences.edit();
@@ -107,6 +110,7 @@ public class RepostAdapter extends RecyclerView.Adapter<RepostAdapter.ViewHolder
             super(v);
 
             name_text = (TextView) itemView.findViewById(R.id.name_text);
+
             display_image = (ImageView) itemView.findViewById(R.id.display_image);
         }
     }

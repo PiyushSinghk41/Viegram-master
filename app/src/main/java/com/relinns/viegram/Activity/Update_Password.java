@@ -12,55 +12,68 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
 import com.google.gson.Gson;
 import com.relinns.viegram.Modal.API_Response;
 import com.relinns.viegram.R;
 import com.relinns.viegram.network.GetViegramData;
 import com.relinns.viegram.network.RetrofitInstance;
 import com.tapadoo.alerter.Alerter;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Update_Password extends AppCompatActivity implements View.OnClickListener {
-private RelativeLayout back;
-    private Button update;
-    private EditText new_update;
-    private EditText confirm_update;
-    private ProgressDialog progressDialog;
-    private SharedPreferences preferences;
+
+    RelativeLayout back;
+
+    Button update;
+
+    EditText new_update , confirm_update;
+
+    ProgressDialog progressDialog;
+
+    SharedPreferences preferences;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update__password);
-        back= (RelativeLayout) findViewById(R.id.back);
-        new_update=(EditText)findViewById(R.id.new_update);
-        confirm_update=(EditText)findViewById(R.id.confirm_update);
-        update=(Button)findViewById(R.id.update);
+
+        back = (RelativeLayout) findViewById(R.id.back);
+
+        new_update = (EditText) findViewById(R.id.new_update);
+
+        confirm_update = (EditText) findViewById(R.id.confirm_update);
+
+        update = (Button) findViewById(R.id.update);
+
         progressDialog = new ProgressDialog(this);
+
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
+
         back.setOnClickListener(this);
+
         update.setOnClickListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        Intent i= new Intent(Update_Password.this,Otp_Screen.class);
+        Intent i = new Intent(Update_Password.this, Otp_Screen.class);
         startActivity(i);
     }
 
     @Override
     public void onClick(View v) {
-        if(v==back)
-        {
-            Intent i= new Intent(Update_Password.this,Otp_Screen.class);
+        if (v == back) {
+            Intent i = new Intent(Update_Password.this, Otp_Screen.class);
             startActivity(i);
         }
-        if(v==update)
-        {
+        if (v == update) {
             if (!new_update.getText().toString().equals(confirm_update.getText().toString())) {
                 Alerter.create(Update_Password.this)
                         .setText("Password does not match")
@@ -74,13 +87,19 @@ private RelativeLayout back;
     }
 
     private void update_password() {
+
         Map<String, String> postParams = new HashMap<>();
+
         postParams.put("action", "reset_password");
+
         postParams.put("email", preferences.getString("email_id", ""));
+
         postParams.put("new_password", new_update.getText().toString());
 
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
+
         Log.d("API_Parameters", "reset_password parameters :" + postParams.toString());
+
         Call<API_Response> call = service.accountWork(postParams);
         call.enqueue(new Callback<API_Response>() {
             @Override
@@ -119,14 +138,15 @@ private RelativeLayout back;
                     Log.e("API_Response", "reset_password Response : " + new Gson().toJson(response.errorBody()));
                 }
             }
+
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
                 progressDialog.dismiss();
 
-                    Alerter.create(Update_Password.this)
-                            .setText(R.string.network_error)
-                            .setBackgroundColor(R.color.red)
-                            .show();
+                Alerter.create(Update_Password.this)
+                        .setText(R.string.network_error)
+                        .setBackgroundColor(R.color.red)
+                        .show();
             }
         });
     }

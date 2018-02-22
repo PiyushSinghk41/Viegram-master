@@ -41,115 +41,169 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Tag_photo extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
-    private RelativeLayout badgeLayout;
-    private RelativeLayout search_friend_layout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout search_friend;
-    private RelativeLayout tag_photo_layout;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
-    private ImageView menu_click_view;
-    private ImageView tag_image;
-    private TextView badgeText;
-    private Button done;
-    private AutoCompleteTextView search_tag_friend;
-    private int key;
-    private int data;
-    private SharedPreferences preferences;
-    private List<CommentPost> name_data;
-    private List<CommentPost> temp_data;
+
+    RelativeLayout badgeLayout, search_friend_layout, back, activity_layout, search_friend, tag_photo_layout, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+
+    ImageView menu_click_view, tag_image;
+
+    TextView badgeText;
+
+    Button done;
+
+    SharedPreferences preferences;
+
+    AutoCompleteTextView search_tag_friend;
+
+    int key;
+
+    int data;
+
+    List<CommentPost> name_data;
+
+    List<CommentPost> temp_data;
+
+    List<TagPerson> tag_list;
+
     private Search_Adapter search_adapter;
+
     private View who_this;
 
-    private List<TagPerson> tag_list;
-    private float tempWidth;
-    private float tempHeight;
-    private float image_width;
-    private float image_height;
-    private float endWidth;
-    private float endHeight;
-    private float x_value;
-    private float y_value;
-    private Result result;
-    private DisplayMetrics displayMetrics;
+     float tempWidth;
+     float tempHeight;
+     float image_width;
+     float image_height;
+     float endWidth;
+     float endHeight;
+     float x_value;
+     float y_value;
+     Result result;
+     DisplayMetrics displayMetrics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_photo);
+
         name_data = new ArrayList<>();
+
         tag_list = new ArrayList<>();
+
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
+
         search_friend_layout = (RelativeLayout) findViewById(R.id.search_friend_layout);
+
         search_friend_layout.setVisibility(View.GONE);
+
         menu_home = (RelativeLayout) findViewById(R.id.menu_home);
+
         tag_image = (ImageView) findViewById(R.id.tag_image);
+
         done = (Button) findViewById(R.id.done);
+
         back = (RelativeLayout) findViewById(R.id.back);
+
         activity_layout = (RelativeLayout) findViewById(R.id.activity_layout);
+
         menu_open_layout = (RelativeLayout) findViewById(R.id.tag_menu_open);
+
         menu_click_view = (ImageView) findViewById(R.id.tag_menu_click);
+
         menu_profile = (RelativeLayout) findViewById(R.id.menu_profile);
+
         menu_stat = (RelativeLayout) findViewById(R.id.menu_stat);
+
         menu_follow = (RelativeLayout) findViewById(R.id.menu_follow_following);
+
         menu_notifications = (RelativeLayout) findViewById(R.id.menu_notification);
+
         menu_settings = (RelativeLayout) findViewById(R.id.menu_settings);
+
         menu_search = (RelativeLayout) findViewById(R.id.menu_search);
+
         menu_ranking = (RelativeLayout) findViewById(R.id.menu_ranking);
+
         menu_camera = (RelativeLayout) findViewById(R.id.menu_camera);
+
         menu_close = (RelativeLayout) findViewById(R.id.menu_close);
+
         tag_photo_layout = (RelativeLayout) findViewById(R.id.tag_photo_layout);
+
         search_tag_friend = (AutoCompleteTextView) findViewById(R.id.search_tag_friend);
+
         search_friend = (RelativeLayout) findViewById(R.id.search_friend);
+
         badgeLayout = (RelativeLayout) findViewById(R.id.badge_layout);
+
         badgeText = (TextView) findViewById(R.id.badge_text);
 
         BitmapFactory.Options options = new BitmapFactory.Options();
+
         options.inSampleSize = 8;
+
         tempWidth = Float.parseFloat(getIntent().getStringExtra("image_width"));
+
         tempHeight = Float.parseFloat(getIntent().getStringExtra("image_height"));
+
         tag_image.setImageBitmap(BitmapFactory.decodeFile(getIntent().getStringExtra("image_path")));
 
         displayMetrics = new DisplayMetrics();
+
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
         image_width = displayMetrics.widthPixels;
+
         float aspectRatio = tempWidth / tempHeight;
+
         image_height = image_width / aspectRatio;
+
         tag_image.setLayoutParams(new RelativeLayout.LayoutParams((int) image_width, (int) (image_height)));
+
         tag_image.measure(0, 0);
+
         endWidth = image_width - ((image_width * 30) / 100);
+
         endHeight = image_height - ((image_height * 10) / 100);
 
         search_tag_friend.setThreshold(0);
+
         menu_open_layout.setVisibility(View.GONE);
+
         tag_image.setOnTouchListener(this);
+
         menu_home.setOnClickListener(this);
+
         back.setOnClickListener(this);
+
         done.setOnClickListener(this);
+
         activity_layout.setOnClickListener(this);
+
         menu_follow.setOnClickListener(this);
+
         menu_ranking.setOnClickListener(this);
+
         menu_open_layout.setOnClickListener(this);
+
         menu_search.setOnClickListener(this);
+
         menu_notifications.setOnClickListener(this);
+
         menu_profile.setOnClickListener(this);
+
         menu_camera.setOnClickListener(this);
+
         menu_click_view.setOnClickListener(this);
+
         menu_close.setOnClickListener(this);
+
         get_friend_list();
+
         menu_settings.setOnClickListener(this);
+
         menu_stat.setOnClickListener(this);
+
         search_friend.setOnClickListener(this);
+
         search_tag_friend.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -191,7 +245,7 @@ public class Tag_photo extends AppCompatActivity implements View.OnClickListener
                 float new_width = (x_value * 100) / image_width;
                 float new_height = (y_value * 100) / image_height;
                 tag_list.add(new TagPerson(name_data.get(i).getUserid(), search_tag_friend.getText().toString(), new_width + "", new_height + ""));
-                Log.d("Tag","click id :"+name_data.get(i).getUserid());
+                Log.d("Tag", "click id :" + name_data.get(i).getUserid());
                 addname(x_value, y_value, search_tag_friend.getText().toString());
                 key = 0;
             }
@@ -231,15 +285,16 @@ public class Tag_photo extends AppCompatActivity implements View.OnClickListener
                     if (result.getMsg().equals("201")) {
                         name_data = new ArrayList<CommentPost>();
                         for (int i = 0; i < result.getFollowingList().size(); i++) {
-                            Log.d("Tag","follower id :"+result.getFollowingList().get(i).getUserId());
+                            Log.d("Tag", "follower id :" + result.getFollowingList().get(i).getUserId());
                             name_data.add(new CommentPost(result.getFollowingList().get(i).getUserId(), result.getFollowingList().get(i).getDisplayName(), result.getFollowingList().get(i).getProfileImage()));
-                            Log.d("Tag","name id : "+name_data.get(i).getId());
-                            Log.d("Tag","name user id :"+name_data.get(i).getUserid());
+                            Log.d("Tag", "name id : " + name_data.get(i).getId());
+                            Log.d("Tag", "name user id :" + name_data.get(i).getUserid());
                         }
                     }
                 } else
                     Log.e("API_Response", "following_list Response : " + new Gson().toJson(response.errorBody()));
             }
+
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
                 Log.d("API_Error", "following_list Error : " + t.getMessage());

@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Modal.CommentPost;
 import com.relinns.viegram.R;
 
@@ -24,16 +26,19 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class Search_Adapter extends BaseAdapter implements Filterable {
-    private Context context;
-    private List<CommentPost> data;
+
+    Context context;
+    List<CommentPost> data;
     private int designed_layout;
-    private Filter filter = new CustomFilter();
-    private List<CommentPost> new_list = new ArrayList<>();
+    Filter filter = new CustomFilter();
+    List<CommentPost> new_list = new ArrayList<>();
 
     public Search_Adapter(Context search, int design_results_name, List<CommentPost> name_data) {
+
         context = search;
         designed_layout = design_results_name;
         data = name_data;
+
     }
 
     @Override
@@ -41,33 +46,56 @@ public class Search_Adapter extends BaseAdapter implements Filterable {
         return data.size();
     }
 
+
     @Override
     public CommentPost getItem(int i) {
         return data.get(i);
     }
+
 
     @Override
     public long getItemId(int i) {
         return i;
     }
 
+
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
         View v = view;
+
         if (v == null) {
+
             LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
             v = vi.inflate(designed_layout, null);
         }
+
         RelativeLayout layout = (RelativeLayout) v.findViewById(R.id.searched_user);
+
         ImageView display_image = (ImageView) v.findViewById(R.id.display_image);
+
         TextView searched_name = (TextView) v.findViewById(R.id.name_text);
+
         searched_name.setText(data.get(i).getDisplayName());
-        Glide.with(context).load(data.get(i).getProfileImage())
+
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(data.get(i).getProfileImage(),display_image, options);
+
+
+        /*Glide.with(context).load(data.get(i).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .into(display_image);
+                .into(display_image);*/
         return v;
+
     }
 
     @Override

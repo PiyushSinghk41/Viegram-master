@@ -48,9 +48,11 @@ import retrofit2.Callback;
 @SuppressWarnings("ALL")
 public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follower_Adapter.View_Holder> {
 
-    private SharedPreferences preferences;
-    private List<FollowerList_Model> listData = new ArrayList<>();
-    private Another_follower_following activity;
+     SharedPreferences preferences;
+
+     List<FollowerList_Model> listData = new ArrayList<>();
+
+     Another_follower_following activity;
 
     public Another_Follower_Adapter(Another_follower_following followers, List<FollowerList_Model> list) {
 
@@ -61,8 +63,10 @@ public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follo
 
     @Override
     public View_Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.follower, parent, false);
         return new View_Holder(v);
+
     }
 
     @SuppressLint("RecyclerView")
@@ -109,13 +113,17 @@ public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follo
                 holder.unfollow_button.setVisibility(View.VISIBLE);
 
                 if (listData.get(position).getFollowStatus().equals("1")) {
+
                     holder.unfollow_button.setBackground(activity.getResources().getDrawable(R.drawable.login_bg));
                     holder.unfollow_text.setText("Unfollow");
                     holder.unfollow_text.setTextColor(activity.getResources().getColor(R.color.white));
+
                 } else if (listData.get(position).getFollowStatus().equals("0")) {
+
                     holder.unfollow_button.setBackground(activity.getResources().getDrawable(R.drawable.stats_bg));
                     holder.unfollow_text.setText("Follow");
                     holder.unfollow_text.setTextColor(activity.getResources().getColor(R.color.login_bg));
+
                 } else if (listData.get(position).getFollowStatus().equals("2")) {
                     holder.unfollow_button.setBackground(activity.getResources().getDrawable(R.drawable.login_bg));
                     holder.unfollow_text.setText("Requested");
@@ -138,25 +146,49 @@ public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follo
         holder.unfollow_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (holder.unfollow_text.getText().toString().equals("Follow")) {
+
                     holder.unfollow_text.setVisibility(View.GONE);
+
                     holder.following_progress.setVisibility(View.VISIBLE);
+
                     holder.following_progress.getIndeterminateDrawable().setColorFilter(activity.getResources().getColor(R.color.login_bg), PorterDuff.Mode.MULTIPLY);
+
                     follow_user(holder.getAdapterPosition(), holder);
-                } else if (holder.unfollow_text.getText().toString().equals("Requested")) {
+
+
+                }
+
+                else if (holder.unfollow_text.getText().toString().equals("Requested")) {
+
                     holder.unfollow_text.setVisibility(View.GONE);
+
                     holder.following_progress.setVisibility(View.VISIBLE);
+
                     holder.following_progress.getIndeterminateDrawable().setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
+
                     follow_user(holder.getAdapterPosition(), holder);
-                } else {
+
+                }
+                else {
+
                     final Dialog dialog = new Dialog(activity);
+
                     dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
                     dialog.setContentView(R.layout.unfollow_dialog);
+
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
                     TextView unfollow_popup_text = (TextView) dialog.findViewById(R.id.unfollow_popup_text);
+
                     unfollow_popup_text.setText(activity.getResources().getString(R.string.unfollow_pop) + " " + listData.get(holder.getAdapterPosition()).getDisplayName() + " ?");
+
                     RelativeLayout cancel = (RelativeLayout) dialog.findViewById(R.id.cancel);
+
                     final RelativeLayout unfollow_user = (RelativeLayout) dialog.findViewById(R.id.unfollow_user);
+
                     unfollow_user.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -173,6 +205,7 @@ public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follo
                             dialog.dismiss();
                         }
                     });
+
                     dialog.show();
                 }
             }
@@ -206,43 +239,75 @@ public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follo
         call.enqueue(new Callback<API_Response>() {
             @Override
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+
                 holder.unfollow_text.setVisibility(View.VISIBLE);
+
                 holder.following_progress.setVisibility(View.GONE);
+
                 if (response.isSuccessful()) {
+
                     Log.d("API_Response", "follow_request Response : " + new Gson().toJson(response.body()));
+
                     if (response.body().getResult().getMsg().equals("201")) {
+
                         String reason = response.body().getResult().getReason();
+
                         if (reason.equals("Following successfully")) {
+
                             holder.unfollow_button.setBackground(activity.getResources().getDrawable(R.drawable.login_bg));
+
                             holder.unfollow_text.setText("Unfollow");
+
                             holder.unfollow_text.setTextColor(activity.getResources().getColor(R.color.white));
+
                             listData.get(position).setFollowStatus("1");
 
-                        } else if (reason.equals("Following request send successfully")) {
+
+                        }
+                        else if (reason.equals("Following request send successfully")) {
+
                             holder.unfollow_button.setBackground(activity.getResources().getDrawable(R.drawable.login_bg));
+
                             holder.unfollow_text.setText("Requested");
+
                             holder.unfollow_text.setTextColor(activity.getResources().getColor(R.color.white));
+
                             listData.get(position).setFollowStatus("2");
-                        } else {
+                        }
+                        else {
+
                             holder.unfollow_button.setBackground(activity.getResources().getDrawable(R.drawable.stats_bg));
+
                             holder.unfollow_text.setText("Follow");
+
                             holder.unfollow_text.setTextColor(activity.getResources().getColor(R.color.login_bg));
+
                             listData.get(position).setFollowStatus("0");
                         }
-                    } else {
+                    }
+                    else {
+
                         String reason = response.body().getResult().getReason();
+
                         if (reason.equals("request already send to this user")) {
+
                             AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+
                             alert.setMessage("Request already send to this user.");
+
                             alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+
                                     dialogInterface.dismiss();
+
                                 }
                             }).show();
                         }
                     }
-                } else {
+                }
+                else {
+
                     Alerter.create(activity)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.red)
@@ -253,7 +318,9 @@ public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follo
 
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
+
                 holder.unfollow_text.setVisibility(View.VISIBLE);
+
                 holder.following_progress.setVisibility(View.GONE);
 
                     Alerter.create(activity)
@@ -266,32 +333,52 @@ public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follo
     }
 
     private void unfollow_user(final int position, final View_Holder holder) {
+
         Map<String, String> postParams = new HashMap<>();
+
         postParams.put("action", "unfollow_user");
+
         postParams.put("userid", preferences.getString("user_id", ""));
+
         postParams.put("following_userid", listData.get(position).getUserId());
+
         Log.d("API_Parameters", " unfollow_user params : " + postParams.toString());
+
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
+
         Call<API_Response> call = service.FriendsWork(postParams);
+
         call.enqueue(new Callback<API_Response>() {
             @Override
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+
                 holder.unfollow_text.setVisibility(View.VISIBLE);
+
                 holder.following_progress.setVisibility(View.GONE);
+
                 if (response.isSuccessful()) {
+
                     Log.d("API_Response", "unfollow_user Response : " + new Gson().toJson(response.body()));
+
                     if (response.body().getResult().getMsg().equals("201")) {
+
                         holder.unfollow_button.setBackground(activity.getResources().getDrawable(R.drawable.stats_bg));
+
                         holder.unfollow_text.setText("Follow");
+
                         holder.unfollow_text.setTextColor(activity.getResources().getColor(R.color.login_bg));
+
                         listData.get(position).setFollowStatus("0");
-                    } else {
+                    }
+                    else {
+
                         Alerter.create(activity)
                                 .setText("Something went wrong. Please try again after sometime!!")
                                 .setBackgroundColor(R.color.red)
                                 .show();
                     }
-                } else {
+                }
+                else {
                     Alerter.create(activity)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.red)
@@ -303,7 +390,9 @@ public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follo
 
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
+
                 holder.unfollow_text.setVisibility(View.VISIBLE);
+
                 holder.following_progress.setVisibility(View.GONE);
 
                     Alerter.create(activity)
@@ -321,19 +410,30 @@ public class Another_Follower_Adapter extends RecyclerView.Adapter<Another_Follo
     }
 
     public class View_Holder extends RecyclerView.ViewHolder {
+
         ImageView following_image;
+
         TextView following_name, following_text, unfollow_text;
+
         RelativeLayout following_button, unfollow_button;
+
         ProgressBar following_progress;
 
         public View_Holder(View itemView) {
             super(itemView);
+
             following_image = (ImageView) itemView.findViewById(R.id.follower_image);
+
             following_name = (TextView) itemView.findViewById(R.id.follower_name);
+
             following_text = (TextView) itemView.findViewById(R.id.follow_text);
+
             unfollow_text = (TextView) itemView.findViewById(R.id.restrict_text);
+
             following_button = (RelativeLayout) itemView.findViewById(R.id.follow_button);
+
             unfollow_button = (RelativeLayout) itemView.findViewById(R.id.restrict);
+
             following_progress = (ProgressBar) itemView.findViewById(R.id.following_progress);
         }
     }

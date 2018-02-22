@@ -45,36 +45,16 @@ import retrofit2.Callback;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    private LinearLayout logout;
-    private LinearLayout change_password;
-    private LinearLayout viegram_works;
-    private LinearLayout terms_service;
-    private LinearLayout icon_guide;
-    private LinearLayout edit_profile;
-    private LinearLayout invite_friends;
-    private RelativeLayout badgeLayout;
-    private RelativeLayout back;
-    private RelativeLayout activity_layout;
-    private RelativeLayout support;
-    private RelativeLayout follow_people_button;
-    private RelativeLayout menu_home;
-    private RelativeLayout menu_open_layout;
-    private RelativeLayout menu_close;
-    private RelativeLayout menu_profile;
-    private RelativeLayout menu_stat;
-    private RelativeLayout menu_follow;
-    private RelativeLayout menu_notifications;
-    private RelativeLayout menu_settings;
-    private RelativeLayout menu_search;
-    private RelativeLayout menu_ranking;
-    private RelativeLayout menu_camera;
+    private LinearLayout logout , change_password ,viegram_works,terms_service , icon_guide , edit_profile , invite_friends  ;
+
+    private RelativeLayout badgeLayout , back , activity_layout ,support ,
+            follow_people_button , menu_home ,menu_open_layout ,  menu_close ,
+    menu_profile , menu_stat ,menu_follow , menu_notifications , menu_settings ,menu_search , menu_ranking , menu_camera ;
+
     private ImageView menu_click_view;
     private Switch private_account;
-    private CheckBox like_box;
-    private CheckBox comment_box;
-    private CheckBox tag_box;
-    private CheckBox follow_request_box;
-    private CheckBox repost_box;
+    private CheckBox like_box , comment_box ,tag_box , follow_request_box , repost_box ;
+
     private String privacy = "0";
     private String likes = "0";
     private String comments = "0";

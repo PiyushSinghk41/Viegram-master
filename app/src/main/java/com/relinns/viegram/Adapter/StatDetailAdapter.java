@@ -19,20 +19,31 @@ public class StatDetailAdapter extends RecyclerView.Adapter<StatDetailAdapter.Vi
     private List<Point_Model> data_point;
 
     public StatDetailAdapter(Stats_Details stats_details, List<Point_Model> points) {
+
+
         this.context = stats_details;
         this.data_point = points;
+
+
     }
 
     @Override
     public View_holder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.earning_hint, parent, false);
         return new View_holder(v);
+
+
     }
 
     @Override
     public void onBindViewHolder(View_holder holder, int position) {
+
         holder.name.setText(data_point.get(position).getEarningHints());
         holder.points.setText(data_point.get(position).getPoints());
+
+
     }
 
     @Override
@@ -41,12 +52,16 @@ public class StatDetailAdapter extends RecyclerView.Adapter<StatDetailAdapter.Vi
     }
 
     public class View_holder extends RecyclerView.ViewHolder {
+
         TextView name, points, hint;
 
         public View_holder(View itemView) {
             super(itemView);
+
             name = (TextView) itemView.findViewById(R.id.name);
+
             points = (TextView) itemView.findViewById(R.id.points);
+
             hint = (TextView) itemView.findViewById(R.id.name_hint);
         }
     }

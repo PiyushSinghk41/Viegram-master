@@ -49,28 +49,37 @@ import retrofit2.Callback;
 @SuppressWarnings("ALL")
 public class Follower_following extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView badgeText , follower_text , following_text , full_name ,no_follower_text ;
+     TextView badgeText , follower_text , following_text , full_name ,no_follower_text ;
 
-    private RelativeLayout badgeLayout , progress_layout ,back  ,
-            activity_layout , search_follower_view ,followers ,
-    following ,menu_home , menu_open_layout , menu_close , menu_profile ,
-            menu_stat , menu_follow , menu_notifications  , menu_settings , menu_search ,  menu_ranking ,menu_camera ;
+     RelativeLayout badgeLayout , progress_layout ,back  , activity_layout , search_follower_view ,followers , following ,menu_home , menu_open_layout , menu_close , menu_profile , menu_stat , menu_follow , menu_notifications  , menu_settings , menu_search ,  menu_ranking ,menu_camera ;
 
-    private ImageView menu_click_view , profile_image ,cover_image ;
+     ImageView menu_click_view , profile_image ,cover_image ;
 
-    private List<FollowerList> temp_data;
-    private List<FollowerList> followerList;
-    private List<FollowingList> followingList, tempFollowing;
-    private LinearLayout no_follower;
-    private SharedPreferences preferences;
-    private ProgressBar progress;
-    private RecyclerView follower_list, followingRV;
-    private Follower_Adapter follower_adapter;
-    private Following_Adapter following_adapter;
-    private String follow_code;
-    private EditText search_follower;
-    private Result result;
-    private String totalFollower = "", totalFollowing = "";
+     List<FollowerList> temp_data;
+
+     List<FollowerList> followerList;
+
+     List<FollowingList> followingList, tempFollowing;
+
+     LinearLayout no_follower;
+
+     SharedPreferences preferences;
+
+     ProgressBar progress;
+
+     RecyclerView follower_list, followingRV;
+
+     Follower_Adapter follower_adapter;
+
+     Following_Adapter following_adapter;
+
+     String follow_code;
+
+     EditText search_follower;
+
+     Result result;
+
+     String totalFollower = "", totalFollowing = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +87,19 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_follower_following);
 
         followerList = new ArrayList<>();
+
         followingList = new ArrayList<>();
+
         temp_data = new ArrayList<>();
+
         tempFollowing = new ArrayList<>();
+
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
 
         follow_code = "0";
+
         follower_list = (RecyclerView) findViewById(R.id.follower_list);
+
         followingRV = (RecyclerView) findViewById(R.id.following_list);
 
         no_follower = (LinearLayout) findViewById(R.id.no_follower);
@@ -229,34 +244,52 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
         menu_open_layout.setVisibility(View.GONE);
         no_follower.setVisibility(View.GONE);
         if (Timeline.resultp != null) {
+
             progress_layout.setVisibility(View.GONE);
+
             followerList = Timeline.resultp.getFollowerList();
+
             totalFollowing = Timeline.resultp.getTotalFollowings();
+
             totalFollower = Timeline.resultp.getTotalFollowers();
+
             followingList = Timeline.resultp.getFollowingList();
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Follower_following.this);
+
             follower_list.setLayoutManager(mLayoutManager);
+
             follower_adapter = new Follower_Adapter(Follower_following.this, followerList);
+
             follower_list.setAdapter(follower_adapter);
 
             RecyclerView.LayoutManager mManager = new LinearLayoutManager(Follower_following.this);
+
             followingRV.setLayoutManager(mManager);
+
             following_adapter = new Following_Adapter(Follower_following.this, followingList);
+
             followingRV.setAdapter(following_adapter);
+
             setData();
 //            setFollowerData();
 
         } else {
+
             progress_layout.setVisibility(View.VISIBLE);
+
             follower_list.setVisibility(View.GONE);
             try {
 //                get_follower();
                 getData();
             } catch (TimeoutException e) {
+
                 follower_list.setVisibility(View.GONE);
+
                 no_follower.setVisibility(View.GONE);
+
                 progress_layout.setVisibility(View.VISIBLE);
+
                 progress.setVisibility(View.GONE);
                 Alerter.create(Follower_following.this)
                         .setText(R.string.network_error)
@@ -269,8 +302,11 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
     }
 
     private void setData() {
+
         follower_text.setText("Followers (" + totalFollower + ")");
+
         following_text.setText("Following (" + totalFollowing + ")");
+
         if (follow_code.equals("0")) {
             followingRV.setVisibility(View.GONE);
             if (followerList.size() != 0) {

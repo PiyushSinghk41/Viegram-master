@@ -101,25 +101,42 @@ import retrofit2.Callback;
 @SuppressWarnings("ALL")
 public class Upload_photo extends AppCompatActivity implements View.OnClickListener, ProgressRequestBody.Listener {
 
-
     VideoView upload_video_view;
+
     LinearLayout tag_people, working_layout, add_location;
+
     RelativeLayout uploadprogressLayout, badgeLayout, progress_layout, restrict_layout, back, activity_layout, upload_edit_photo, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, imageHolder, menu_camera;
+
     ImageView play_video, menu_click_view, upload_image_view, inital_image;
+
     Button upload_photo;
+
     private final int PICK_VIDEOIMAGE = 5;
+
     private final int STORAGE_PERMISSION_CODE = 23;
+
     private final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 2;
+
     private final int TAG_CODE = 1;
+
     private final int LOCATION_CODE = 3;
+
     private final int CAPTURE_PERMISSION_CODE = 5;
+
     private final int READ_PERMISSION_CODE = 10;
+
     String type;
+
     String upload_image_path = "";
+
     String check_value = "0";
+
     String filetype = "";
+
     String location_result = "";
+
     String result_id = "";
+
     String x_value_result = "";
     String y_value_result = "";
     TextView badgeText, upload_header, location, tag_text, add_caption_textbt;
@@ -147,52 +164,99 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_upload_photo);
 
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
+
         imageHolder = (RelativeLayout) findViewById(R.id.upload_image_holder);
+
         progressDialog = new ProgressDialog(this);
+
         check = (CheckBox) findViewById(R.id.check);
+
         upload_video_view = (VideoView) findViewById(R.id.upload_video_view);
+
         play_video = (ImageView) findViewById(R.id.play_video);
+
         activity_layout = (RelativeLayout) findViewById(R.id.activity_layout);
+
         upload_edit_photo = (RelativeLayout) findViewById(R.id.upload_edit_photo);
+
         upload_photo = (Button) findViewById(R.id.upload_photo);
+
         back = (RelativeLayout) findViewById(R.id.back);
+
         uploadprogressLayout = (RelativeLayout) findViewById(R.id.upload_progresslayout);
+
         circleProgress = (CircleProgress) findViewById(R.id.circle_progress);
+
         restrict_layout = (RelativeLayout) findViewById(R.id.restrict_layout);
+
         working_layout = (LinearLayout) findViewById(R.id.working_layout);
+
         progress_layout = (RelativeLayout) findViewById(R.id.progress_layout);
+
         upload_header = (TextView) findViewById(R.id.upload_header);
+
         add_caption_textbt = (TextView) findViewById(R.id.add_caption_textbt);
+
         caption_text = (EditText) findViewById(R.id.caption_text);
+
         menu_home = (RelativeLayout) findViewById(R.id.menu_home);
+
         add_location = (LinearLayout) findViewById(R.id.add_location);
+
         tag_people = (LinearLayout) findViewById(R.id.tag_people);
+
         menu_open_layout = (RelativeLayout) findViewById(R.id.upload_menu_open);
+
         menu_click_view = (ImageView) findViewById(R.id.upload_menu_click);
+
         menu_profile = (RelativeLayout) findViewById(R.id.menu_profile);
+
         menu_stat = (RelativeLayout) findViewById(R.id.menu_stat);
+
         menu_follow = (RelativeLayout) findViewById(R.id.menu_follow_following);
+
         menu_notifications = (RelativeLayout) findViewById(R.id.menu_notification);
+
         menu_settings = (RelativeLayout) findViewById(R.id.menu_settings);
+
         menu_search = (RelativeLayout) findViewById(R.id.menu_search);
+
         menu_ranking = (RelativeLayout) findViewById(R.id.menu_ranking);
+
         menu_camera = (RelativeLayout) findViewById(R.id.menu_camera);
+
         menu_close = (RelativeLayout) findViewById(R.id.menu_close);
+
         upload_image_view = (ImageView) findViewById(R.id.upload_image_view);
+
         inital_image = (ImageView) findViewById(R.id.inital_image);
+
         badgeLayout = (RelativeLayout) findViewById(R.id.badge_layout);
+
         badgeText = (TextView) findViewById(R.id.badge_text);
+
         location = (TextView) findViewById(R.id.location);
+
         tag_text = (TextView) findViewById(R.id.tag_text);
+
         uploadprogressLayout.setVisibility(View.GONE);
+
         menu_open_layout.setVisibility(View.GONE);
+
         tag_people.setVisibility(View.GONE);
+
         SharedPreferences.Editor editor = preferences.edit();
+
         editor.putString("result_name", "");
+
         editor.putString("result_id", "");
+
         editor.putString("x_value_result", "");
+
         editor.putString("y_value_result", "");
+
         editor.putString("result_size", "");
+
         editor.commit();
 
         Bundle extras = getIntent().getExtras();
@@ -208,27 +272,49 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
             add_location.setEnabled(false);
         }
         play_video.setOnClickListener(this);
+
         upload_image_view.setOnClickListener(this);
+
         activity_layout.setOnClickListener(this);
+
         upload_photo.setOnClickListener(this);
+
         back.setOnClickListener(this);
+
         menu_home.setOnClickListener(this);
+
         menu_follow.setOnClickListener(this);
+
         menu_ranking.setOnClickListener(this);
+
         menu_open_layout.setOnClickListener(this);
+
         menu_search.setOnClickListener(this);
+
         menu_notifications.setOnClickListener(this);
+
         menu_profile.setOnClickListener(this);
+
         menu_camera.setOnClickListener(this);
+
         menu_click_view.setOnClickListener(this);
+
         menu_close.setOnClickListener(this);
+
         menu_settings.setOnClickListener(this);
+
         menu_stat.setOnClickListener(this);
+
         add_location.setOnClickListener(this);
+
         tag_people.setOnClickListener(this);
+
         upload_edit_photo.setOnClickListener(this);
+
         imageHolder.setOnClickListener(this);
+
         add_caption_textbt.setOnClickListener(this);
+
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -243,17 +329,29 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
     //repost post set data
     private void repostWork(String photo, String caption) {
+
         upload_edit_photo.setVisibility(View.GONE);
+
         inital_image.setVisibility(View.GONE);
+
         upload_image_view.setVisibility(View.VISIBLE);
+
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) getIntent().getFloatExtra("width", 0.0f), (int) getIntent().getFloatExtra("height", 0.0f));
+
         upload_image_view.setLayoutParams(params);
+
         add_location.setVisibility(View.GONE);
+
         restrict_layout.setVisibility(View.GONE);
+
         upload_image_view.setEnabled(false);
+
         upload_header.setText("Repost Photo");
+
         caption_text.setText(caption);
+
         upload_photo.setText("Repost");
+
         Glide.with(Upload_photo.this).load(photo)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override

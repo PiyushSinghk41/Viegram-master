@@ -18,6 +18,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.relinns.viegram.Activity.Open_photo;
 import com.relinns.viegram.Modal.Photo_Model;
 import com.relinns.viegram.Pojo.Post;
@@ -26,29 +28,48 @@ import com.relinns.viegram.R;
 import java.util.List;
 
 public class Photo_Adapter extends RecyclerView.Adapter<Photo_Adapter.View_Holder> {
-    private Context context;
-    private SharedPreferences preferences;
-    private List<Post> posts;
+
+    Context context;
+    SharedPreferences preferences;
+    List<Post> posts;
+
 
     public Photo_Adapter(Context activity, List<Post> posts) {
+
         this.context = activity;
+
         this.posts = posts;
+
         preferences = context.getSharedPreferences("Viegram", Context.MODE_PRIVATE);
+
     }
 
 
     @Override
     public View_Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.design_photo, parent, false);
 
         return new View_Holder(v);
+
     }
 
     @Override
     public void onBindViewHolder(final View_Holder holder, final int position) {
+
         holder.setIsRecyclable(false);
+
         holder.progress.setVisibility(View.VISIBLE);
-        Glide.with(context).load(posts.get(position).getPhoto())
+
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader = ImageLoader.getInstance();
+        loader.displayImage(posts.get(position).getPhoto(), holder.img_view, options);
+
+
+        /*Glide.with(context).load(posts.get(position).getPhoto())
                 .centerCrop()
                 .override(100, 100)
                 //   .thumbnail(0.01f)
@@ -65,16 +86,21 @@ public class Photo_Adapter extends RecyclerView.Adapter<Photo_Adapter.View_Holde
                         return false;
                     }
                 })
-                .into(holder.img_view);
+                .into(holder.img_view);*/
 
         if (posts.get(position).getType().equals("video")) {
+
             holder.play_icon.setVisibility(View.VISIBLE);
+
         } else {
+
             holder.play_icon.setVisibility(View.GONE);
+
         }
         holder.img_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("post_id", posts.get(position).getPostId());
                 editor.apply();
@@ -90,17 +116,26 @@ public class Photo_Adapter extends RecyclerView.Adapter<Photo_Adapter.View_Holde
     }
 
     public class View_Holder extends RecyclerView.ViewHolder {
+
         ImageView img_view, play_icon;
+
         RelativeLayout card_view;
+
         ProgressBar progress;
 
         public View_Holder(View itemView) {
             super(itemView);
+
             img_view = (ImageView) itemView.findViewById(R.id.img_view);
+
             play_icon = (ImageView) itemView.findViewById(R.id.play_icon);
+
             card_view = (RelativeLayout) itemView.findViewById(R.id.card_view);
+
             progress = (ProgressBar) itemView.findViewById(R.id.progress);
+
             card_view.setLayoutParams(new LinearLayout.LayoutParams((getScreenWidth() / 4), (getScreenWidth() / 4)));
+
         }
     }
 

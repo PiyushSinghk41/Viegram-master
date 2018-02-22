@@ -28,20 +28,27 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adapter.ViewHolder> {
 
-    private SharedPreferences preferences;
-    private List<Notification> listData;
-    private NotificationFragment fragment;
+     SharedPreferences preferences;
+     List<Notification> listData;
+     NotificationFragment fragment;
 
     public Notification_Adapter(List<Notification> notification, NotificationFragment notificationFragment) {
+
         this.fragment = notificationFragment;
+
         this.listData = notification;
+
         preferences = fragment.getActivity().getSharedPreferences("Viegram", Context.MODE_PRIVATE);
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification, parent, false);
+
         return new ViewHolder(v);
+
     }
 
     @Override
@@ -50,7 +57,9 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
 
 
         Notification item = listData.get(position);
+
         holder.request_layout.setVisibility(View.GONE);
+
         holder.notification_layout.setVisibility(View.VISIBLE);
 
         DisplayImageOptions options = new DisplayImageOptions.Builder().
@@ -60,8 +69,11 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
         loader.displayImage(item.getProfileImage() , holder.user_image , options);
 
         holder.notify_name.setText(item.getDisplayName());
+
         holder.notify_time.setText(item.getTimeAgo());
+
         holder.notify_text.setText(item.getPurpose());
+
         holder.notify_name.setText(item.getDisplayName());
 
 
@@ -75,9 +87,13 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
         //holder.notify_time.setText(listData.get(position).getTimeAgo());
         //holder.notify_text.setText(listData.get(position).getPurpose());
         //holder.notify_name.setText(listData.get(position).getDisplayName());
+
         if (listData.get(position).getPurpose().contains("follow")) {
+
             holder.post_image.setVisibility(View.GONE);
-        } else {
+
+        }
+        else {
 
             holder.post_image.setVisibility(View.VISIBLE);
 
@@ -93,8 +109,6 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
             ImageLoader loader1 = ImageLoader.getInstance();
             loader1.displayImage(item.getProfileImage() , holder.post_image , options1);
 
-
-
         }
 
         holder.post_image.setOnClickListener(new View.OnClickListener() {
@@ -102,18 +116,28 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
             public void onClick(View view) {
 
                 SharedPreferences.Editor editor = preferences.edit();
+
                 editor.putString("post_id", listData.get(position).getPostId());
+
                 editor.commit();
+
                 if (listData.get(position).getStatus().equals("2") || listData.get(position).getStatus().equals("8"))
                 {
+
                     Intent i = new Intent(fragment.getActivity(), Comments.class);
+
                     fragment.getActivity().startActivity(i);
+
                     fragment.getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);}
 
                 else {
-                Intent i = new Intent(fragment.getActivity(), Open_photo.class);
-                fragment.getActivity().startActivity(i);
-                fragment.getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);}
+
+                    Intent i = new Intent(fragment.getActivity(), Open_photo.class);
+
+                    fragment.getActivity().startActivity(i);
+
+                    fragment.getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);}
+
             }
         });
 
@@ -130,15 +154,23 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
                open_profile(position);
             }
         });
+
     }
 
     private void open_profile(int position) {
+
         SharedPreferences.Editor editor = preferences.edit();
+
         editor.putString("another_user", listData.get(position).getUserId());
+
         editor.commit();
+
         Intent i = new Intent(fragment.getActivity(), Another_user.class);
+
         fragment.getActivity().startActivity(i);
+
         fragment.getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
+
     }
 
 
@@ -148,18 +180,28 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         ImageView user_image, post_image;
+
         TextView notify_time, notify_name, notify_text;
+
         RelativeLayout notification_layout, request_layout;
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             user_image = (ImageView) itemView.findViewById(R.id.notify_user);
+
             post_image = (ImageView) itemView.findViewById(R.id.notify_pic);
+
             notify_name = (TextView) itemView.findViewById(R.id.notify_name);
+
             notify_text = (TextView) itemView.findViewById(R.id.notify_text);
+
             notify_time = (TextView) itemView.findViewById(R.id.notify_time);
+
             notification_layout = (RelativeLayout) itemView.findViewById(R.id.notification_layout);
+
             request_layout = (RelativeLayout) itemView.findViewById(R.id.request_layout);
 
         }

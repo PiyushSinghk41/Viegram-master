@@ -75,6 +75,8 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.afollestad:easyvideoplayer:0.3.0'
+    compile 'com.google.android.exoplayer:exoplayer:r2.5.1'
+    compile 'com.google.android.exoplayer:extension-rtmp:r2.5.1'
     implementation 'net.gotev:uploadservice:3.4.1'
     implementation 'net.gotev:uploadservice-okhttp:3.4.1'
 }

@@ -24,20 +24,29 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class TotalCommentAdapter extends RecyclerView.Adapter<TotalCommentAdapter.ViewHolder> {
-    private Context context;
-    private List<CommentPost> list;
-    private SharedPreferences preferences;
+
+
+    Context context;
+    List<CommentPost> list;
+    SharedPreferences preferences;
+
 
     public TotalCommentAdapter(Context activity, List<CommentPost> commentPost) {
+
         this.context = activity;
+
         this.list = commentPost;
+
         preferences = context.getSharedPreferences("Viegram", Context.MODE_PRIVATE);
+
     }
 
     @Override
     public TotalCommentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(context).inflate(R.layout.design_results_name, parent, false);
         return new ViewHolder(v);
+
     }
 
     @Override
@@ -51,41 +60,54 @@ public class TotalCommentAdapter extends RecyclerView.Adapter<TotalCommentAdapte
                 cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
 
         ImageLoader loader = ImageLoader.getInstance();
-        loader.displayImage(item.getProfileImage() , holder.display_image , options);
+        loader.displayImage(item.getProfileImage(), holder.display_image, options);
 
 
-
-
-       // holder.name_text.setText(list.get(position).getDisplayName());
+        // holder.name_text.setText(list.get(position).getDisplayName());
        /* Glide.with(context).load(list.get(position).getProfileImage())
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(holder.display_image);*/
+
         holder.name_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 open_profile(position);
             }
         });
+
         holder.display_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               open_profile(position);
+
+                open_profile(position);
+
             }
         });
+
     }
 
     private void open_profile(int position) {
+
         if (list.get(position).getId().equals(preferences.getString("user_id", ""))) {
+
             Intent intent = new Intent(context, Profile.class);
+
             context.startActivity(intent);
+
         } else {
+
             SharedPreferences.Editor editor = preferences.edit();
+
             editor.putString("another_user", list.get(position).getId());
+
             editor.commit();
+
             Intent intent = new Intent(context, Another_user.class);
+
             context.startActivity(intent);
+
         }
     }
 
@@ -96,12 +118,16 @@ public class TotalCommentAdapter extends RecyclerView.Adapter<TotalCommentAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         ImageView display_image;
+
         TextView name_text;
 
         public ViewHolder(View v) {
             super(v);
+
             name_text = (TextView) v.findViewById(R.id.name_text);
+
             display_image = (ImageView) v.findViewById(R.id.display_image);
         }
     }

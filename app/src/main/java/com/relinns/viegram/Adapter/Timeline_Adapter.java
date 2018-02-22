@@ -3,8 +3,10 @@ package com.relinns.viegram.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -31,9 +33,26 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.ext.rtmp.RtmpDataSourceFactory;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.relinns.viegram.Activity.Another_user;
 import com.relinns.viegram.Activity.Comments;
 import com.relinns.viegram.Activity.Post_points;
@@ -63,68 +82,111 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.ViewHolder> {
-    private ViewGroup group;
-    private Timeline context;
-    private SharedPreferences preferences;
-    private List<TimelinePost> list;
-    private List<TagPerson> tag_list = new ArrayList<>();
+
+    ViewGroup group;
+
+    Timeline context;
+
+    SharedPreferences preferences;
+
+    List<TimelinePost> list;
+
+    List<TagPerson> tag_list = new ArrayList<>();
+
     private int touch = 0;
+
     private int screenValue;
+
     private float width_screen;
+
     private float new_height;
 
+
     public Timeline_Adapter(Timeline timeline, List<TimelinePost> timelinePosts, int value) {
+
         this.context = timeline;
         this.list = timelinePosts;
         screenValue = value;
         preferences = context.getSharedPreferences("Viegram", Context.MODE_PRIVATE);
+
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         group = parent;
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timeline, parent, false);
         return new ViewHolder(v);
+
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
         holder.setIsRecyclable(false);
+
         tag_list = list.get(position).getTagPeople();
 
         //update comment points
         if (preferences.getString("Comment_value", "").equals("1")) {
+
             if (list.get(position).getRepostId().equals(preferences.getString("Comment_post", ""))) {
+
                 list.get(position).setPostPoints(preferences.getString("Comment_points", ""));
+
             }
+
             SharedPreferences.Editor edit = preferences.edit();
+
             edit.putString("Comment_value", "0");
+
             edit.apply();
+
         }
 
         //set data
+
         holder.userName.setText(list.get(position).getDisplayName());
+
         holder.post_points.setText(list.get(position).getPostPoints());
+
         try {
-            if (list.get(position).getLocation()==null || list.get(position).getLocation().equals("null") || list.get(position).getLocation().equals("")) {
+
+            if (list.get(position).getLocation() == null || list.get(position).getLocation().equals("null") || list.get(position).getLocation().equals("")) {
+
                 holder.location_text.setVisibility(View.GONE);
-            } else {
+
+            }
+            else {
+
                 holder.location_text.setVisibility(View.VISIBLE);
+
                 holder.location_text.setText(list.get(position).getLocation());
             }
-        }catch (Exception e){
+        }
+        catch (Exception e) {
+
             e.printStackTrace();
+
             holder.location_text.setVisibility(View.GONE);
         }
         try {
-            if (list.get(position).getCaption().equals("null") || list.get(position).getCaption().equals("")||list.get(position).getCaption()==null) {
+
+            if (list.get(position).getCaption().equals("null") || list.get(position).getCaption().equals("") || list.get(position).getCaption() == null) {
+
                 holder.caption.setVisibility(View.GONE);
-            } else {
+            }
+            else {
+
                 holder.caption.setVisibility(View.VISIBLE);
+
                 holder.caption.setText(list.get(position).getCaption());
 
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
+
             holder.caption.setVisibility(View.GONE);
 
         }
@@ -134,8 +196,7 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
                 cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
 
         ImageLoader loader = ImageLoader.getInstance();
-        loader.displayImage( list.get(position).getProfileImage(),holder.profile_image , options);
-
+        loader.displayImage(list.get(position).getProfileImage(), holder.profile_image, options);
 
 
 //set post image
@@ -150,7 +211,6 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
             holder.errorText.setVisibility(View.GONE);
 
 
-
             DisplayMetrics displayMetrics = new DisplayMetrics();
             context.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             width_screen = displayMetrics.widthPixels;
@@ -160,22 +220,46 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
             RelativeLayout.LayoutParams layoutParams;
             layoutParams = new RelativeLayout.LayoutParams((int) width_screen, (int) new_height);
             holder.post_image.setLayoutParams(layoutParams);
-            holder.player.setLayoutParams(layoutParams);
-            holder.player.setVisibility(View.GONE);
+            holder.playerView.setLayoutParams(layoutParams);
+            holder.playerView.setVisibility(View.GONE);
 
             if (list.get(position).getFileType().equals("video")) {
 
                 holder.showTagLayout.setVisibility(View.GONE);
-                holder.player.setVisibility(View.VISIBLE);
+                holder.playerView.setVisibility(View.VISIBLE);
 
 
                 DisplayImageOptions options1 = new DisplayImageOptions.Builder().
                         cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
 
                 ImageLoader loader1 = ImageLoader.getInstance();
-                loader1.displayImage( list.get(position).getPhoto(),holder.player.thumbImageView , options1);
 
+                loader1.loadImage(list.get(position).getPhoto(), new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
 
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+                        holder.playerView.setBackgroundDrawable(new BitmapDrawable(loadedImage));
+
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+
+                    }
+                });
+                //loader1.displayImage(list.get(position).getPhoto(), holder.player.thumbImageView, options1);
+
+                Log.d("nisha", list.get(position).getPhoto());
 
 
 
@@ -199,7 +283,30 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
                         })
                         .into(holder.player.thumbImageView);
 */
-                holder.player.setUp(list.get(position).getVideo(), JZVideoPlayer.SCREEN_WINDOW_LIST, "");
+                //holder.player.setUp(list.get(position).getVideo(), JZVideoPlayer.SCREEN_WINDOW_LIST, "");
+
+
+                BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+                TrackSelection.Factory videoTrackSelectionFactory =
+                        new AdaptiveTrackSelection.Factory(bandwidthMeter);
+                TrackSelector trackSelector =
+                        new DefaultTrackSelector(videoTrackSelectionFactory);
+                holder.player =
+                        ExoPlayerFactory.newSimpleInstance(context, trackSelector);
+
+                holder.rtmpDataSourceFactory = new RtmpDataSourceFactory();
+                ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+                MediaSource videoSource = new ExtractorMediaSource(Uri.parse(list.get(position).getVideo()),
+                        new DefaultHttpDataSourceFactory("exoplayer-codelab"), extractorsFactory, null, null);
+
+                Log.d("hdfjkhsdf", list.get(position).getVideo());
+
+                holder.playerView.setPlayer(holder.player);
+
+                holder.player.prepare(videoSource);
+
+                holder.player.setPlayWhenReady(true);
+
             } else {
 
                 holder.post_image.setVisibility(View.VISIBLE);
@@ -209,7 +316,7 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
                         cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
 
                 ImageLoader loader2 = ImageLoader.getInstance();
-                loader2.displayImage( list.get(position).getPhoto(),holder.post_image , options2);
+                loader2.displayImage(list.get(position).getPhoto(), holder.post_image, options2);
 
 
                 /*Glide.with(context).load(list.get(position).getPhoto())
@@ -232,7 +339,7 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
                         .into(holder.post_image);
 */
                 //  holder.post_video.setVisibility(View.GONE);
-                holder.player.setVisibility(View.GONE);
+                holder.playerView.setVisibility(View.GONE);
 
                 holder.post_image.setVisibility(View.VISIBLE);
                 holder.showTagLayout.setVisibility(View.GONE);
@@ -486,16 +593,21 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView post_image, like_view;
 
+        RtmpDataSourceFactory rtmpDataSourceFactory;
+
         ImageView profile_image;
         TextView user_name, post_points, caption, userName, post_time, location_text, errorText;
         RelativeLayout like, comment, repost, post_layout, showTagLayout;
         View mPostPointView;
 
-        private cn.jzvd.JZVideoPlayerStandard player;
+        JZVideoPlayer player1;
+        SimpleExoPlayer player;
+        SimpleExoPlayerView playerView;
         ProgressBar progressBar;
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             profile_image = itemView.findViewById(R.id.user_image);
 
             post_image = itemView.findViewById(R.id.post_image);
@@ -516,7 +628,8 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
             userName = itemView.findViewById(R.id.username_post);
             post_time = itemView.findViewById(R.id.post_time);
             location_text = itemView.findViewById(R.id.location_text);
-            player = itemView.findViewById(R.id.player);
+            playerView = itemView.findViewById(R.id.player);
+
             errorText = itemView.findViewById(R.id.image_error_text);
 
             mPostPointView = itemView.findViewById(R.id.post_point_view);

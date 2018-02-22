@@ -15,6 +15,7 @@ import com.relinns.viegram.service.MyFirebaseInstanceIDService;
 import io.fabric.sdk.android.Fabric;
 
 public class Splash_screen extends Activity {
+
     private SharedPreferences preferences;
     private CountDownTimer timer;
 
