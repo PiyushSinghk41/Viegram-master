@@ -30,6 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Stats_Details extends AppCompatActivity implements View.OnClickListener {
+
     RecyclerView detail_stat;
 
     StatDetailAdapter adapter;
@@ -138,52 +139,83 @@ public class Stats_Details extends AppCompatActivity implements View.OnClickList
         type = getIntent().getStringExtra("type");
 
         if (type.equals("today")) {
+
             stat_type.setText("Points earned today");
         } else if (type.equals("weekly")) {
+
             stat_type.setText("Points earned this week");
         } else if (type.equals("monthly")) {
+
             stat_type.setText("Points earned this month");
         } else if (type.equals("yearly")) {
+
             stat_type.setText("Points earned this year");
         } else if (type.equals("overall")) {
+
             stat_type.setText("Overall points earned");
         }
 
         progress_layout.setVisibility(View.VISIBLE);
+
         detail_stat.setVisibility(View.GONE);
+
         stat_detail();
 
     }
 
     private void stat_detail() {
+
         Map<String, String> postParams = new HashMap<>();
+
         postParams.put("action", "breakdown_stats");
+
         postParams.put("userid", stats_id);
+
         postParams.put("breakdown", type);
+
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
+
         Log.d("API_Parameters", "breakdown_stats parameters :" + postParams.toString());
+
         Call<API_Response> call = service.rankingRelated(postParams);
+
         call.enqueue(new Callback<API_Response>() {
             @Override
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+
                 progress_layout.setVisibility(View.GONE);
+
                 if (response.isSuccessful()) {
+
                     Log.e("API_Response", "breakdown_stats Response : " + new Gson().toJson(response.body()));
+
                     Result result = response.body().getResult();
+
                     if (result.getMsg().equals("201")) {
+
                         detail_stat.setVisibility(View.VISIBLE);
+
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+
                         detail_stat.setLayoutManager(layoutManager);
+
                         adapter = new StatDetailAdapter(Stats_Details.this, result.getPoints());
+
                         detail_stat.setAdapter(adapter);
+
                         float offsetPx = getResources().getDimension(R.dimen.below_margin);
+
                         BottomOffsetDecoration bottomOffsetDecoration = new BottomOffsetDecoration((int) offsetPx);
+
                         detail_stat.addItemDecoration(bottomOffsetDecoration);
+
                     } else Alerter.create(Stats_Details.this)
+
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.red)
                             .show();
                 } else {
+
                     Alerter.create(Stats_Details.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.red)
@@ -194,8 +226,11 @@ public class Stats_Details extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
+
                 progress_layout.setVisibility(View.VISIBLE);
+
                 progress.setVisibility(View.GONE);
+
                 Alerter.create(Stats_Details.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.red)
@@ -208,92 +243,166 @@ public class Stats_Details extends AppCompatActivity implements View.OnClickList
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         Stats_Details.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
     }
 
     @Override
     public void onClick(View v) {
+
         if (v == activity_layout) {
+
             if (menu_open_layout.getVisibility() == View.VISIBLE) {
+
                 menu_status();
             }
         }
         if (v == menu_home) {
+
             menu_status();
+
             Intent i = new Intent(Stats_Details.this, Timeline.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == back) {
+
             onBackPressed();
+
         }
+
         if (v == menu_camera) {
+
             menu_status();
+
             Intent i = new Intent(Stats_Details.this, Upload_photo.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
+
         if (v == menu_follow) {
+
             menu_status();
+
             Intent i = new Intent(Stats_Details.this, Follower_following.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
+
         if (v == menu_notifications) {
+
             menu_status();
+
             Intent i = new Intent(Stats_Details.this, Notifications.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
+
         if (v == menu_profile) {
+
             menu_status();
+
             Intent i = new Intent(Stats_Details.this, Profile.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
+
         if (v == menu_ranking) {
+
             menu_status();
+
             Intent i = new Intent(Stats_Details.this, Ranking.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == menu_search) {
+
             menu_status();
+
             Intent i = new Intent(Stats_Details.this, Search.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == menu_settings) {
+
             menu_status();
+
             Intent i = new Intent(Stats_Details.this, Settings.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
+
         if (v == menu_stat) {
+
             menu_status();
+
             Intent i = new Intent(Stats_Details.this, Stats.class);
+
             i.putExtra("stats_header", "My stats");
+
             i.putExtra("stats_id", preferences.getString("user_id", ""));
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == menu_click_view) {
+
             if (preferences.getInt("badge_value", 0) != 0) {
+
                 badgeLayout.setVisibility(View.VISIBLE);
+
                 badgeText.setText(preferences.getInt("badge_value", 0) + "");
-            } else {
-                badgeLayout.setVisibility(View.GONE);
+
             }
+            else {
+
+                badgeLayout.setVisibility(View.GONE);
+
+            }
+
             menu_open_layout.setVisibility(View.VISIBLE);
+
             menu_click_view.setVisibility(View.GONE);
         }
+
+
         if (v == menu_close) {
+
             menu_status();
+
         }
     }
 
     private void menu_status() {
+
         menu_open_layout.setVisibility(View.GONE);
+
         menu_click_view.setVisibility(View.VISIBLE);
     }
 }

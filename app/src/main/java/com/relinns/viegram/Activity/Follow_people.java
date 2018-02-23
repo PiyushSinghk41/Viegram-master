@@ -31,14 +31,17 @@ import retrofit2.Callback;
 
 public class Follow_people extends AppCompatActivity implements View.OnClickListener {
     RecyclerView follow_people_list;
-    RelativeLayout badgeLayout, progress_layout, back,
-            activity_layout, menu_home, menu_open_layout, menu_close,
-            menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
+
+    RelativeLayout badgeLayout, progress_layout, back, activity_layout, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
 
     ImageView menu_click_view;
+
     TextView badgeText;
+
     ProgressBar progress;
+
     SharedPreferences preferences;
+
     LinearLayout noDataLayout;
 
     @Override
@@ -89,35 +92,59 @@ public class Follow_people extends AppCompatActivity implements View.OnClickList
         badgeText = (TextView) findViewById(R.id.badge_text);
 
         menu_home.setOnClickListener(this);
+
         back.setOnClickListener(this);
+
         menu_follow.setOnClickListener(this);
+
         menu_ranking.setOnClickListener(this);
+
         menu_open_layout.setOnClickListener(this);
+
         menu_search.setOnClickListener(this);
+
         menu_notifications.setOnClickListener(this);
+
         menu_profile.setOnClickListener(this);
+
         menu_camera.setOnClickListener(this);
+
         menu_click_view.setOnClickListener(this);
+
         menu_close.setOnClickListener(this);
+
         menu_settings.setOnClickListener(this);
+
         menu_stat.setOnClickListener(this);
+
         activity_layout.setOnClickListener(this);
 
         menu_open_layout.setVisibility(View.GONE);
 
         if (Settings.followPeople.size() != 0) {
+
             follow_people_list.setVisibility(View.VISIBLE);
+
             progress_layout.setVisibility(View.GONE);
+
             noDataLayout.setVisibility(View.GONE);
+
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Follow_people.this);
+
             follow_people_list.setLayoutManager(mLayoutManager);
+
             Follow_people_Adapter adapter = new Follow_people_Adapter(Follow_people.this, Settings.followPeople);
+
             follow_people_list.setAdapter(adapter);
 
         } else {
+
             follow_people_list.setVisibility(View.GONE);
+
             progress_layout.setVisibility(View.VISIBLE);
+
             noDataLayout.setVisibility(View.GONE);
+
             get_people();
         }
 
@@ -125,35 +152,57 @@ public class Follow_people extends AppCompatActivity implements View.OnClickList
 
     //get viegram users
     public void get_people() {
+
         Map<String, String> postParams = new HashMap<>();
+
         postParams.put("action", "all_user_list");
+
         postParams.put("userid", preferences.getString("user_id", ""));
 
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
+
         Log.d("API_Parameters", "all_user_list parameters :" + postParams.toString());
+
         Call<API_Response> call = service.FriendsWork(postParams);
+
         call.enqueue(new Callback<API_Response>() {
+
             @Override
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+
                 Log.e("API_Response", "all_user_list Response : " + new Gson().toJson(response.body()));
+
                 progress_layout.setVisibility(View.GONE);
 
                 if (response.isSuccessful()) {
+
                     if (response.body().getResult().getMsg().equals("201")) {
+
                         follow_people_list.setVisibility(View.VISIBLE);
+
                         noDataLayout.setVisibility(View.GONE);
+
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Follow_people.this);
+
                         follow_people_list.setLayoutManager(mLayoutManager);
+
                         Follow_people_Adapter adapter = new Follow_people_Adapter(Follow_people.this, response.body().getResult().getUserDetails());
+
                         follow_people_list.setAdapter(adapter);
+
+
                     } else {
+
                         noDataLayout.setVisibility(View.VISIBLE);
+
                         follow_people_list.setVisibility(View.GONE);
+
                         Alerter.create(Follow_people.this)
                                 .setText("No People Found")
                                 .setBackgroundColor(R.color.red)
                                 .show();
                     }
+
                 } else {
                     Alerter.create(Follow_people.this)
                             .setText(R.string.network_error)

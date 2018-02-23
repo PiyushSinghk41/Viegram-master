@@ -17,9 +17,7 @@ public class Comment_Model {
     @SerializedName("postid")
     @Expose
     private String postid;
-
     @SerializedName("post_userid")
-
     @Expose
     private String postUserid;
     @SerializedName("comment_userid")
@@ -46,7 +44,6 @@ public class Comment_Model {
     @SerializedName("time_ago")
     @Expose
     private String timeAgo;
-
 
     @SerializedName("mention_people")
     @Expose

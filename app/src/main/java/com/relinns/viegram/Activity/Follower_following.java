@@ -241,8 +241,11 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
             }
         });
 //        get_count();
+
         menu_open_layout.setVisibility(View.GONE);
+
         no_follower.setVisibility(View.GONE);
+
         if (Timeline.resultp != null) {
 
             progress_layout.setVisibility(View.GONE);
@@ -279,10 +282,13 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
             progress_layout.setVisibility(View.VISIBLE);
 
             follower_list.setVisibility(View.GONE);
+
             try {
 //                get_follower();
+
                 getData();
-            } catch (TimeoutException e) {
+            }
+            catch (TimeoutException e) {
 
                 follower_list.setVisibility(View.GONE);
 
@@ -291,6 +297,7 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
                 progress_layout.setVisibility(View.VISIBLE);
 
                 progress.setVisibility(View.GONE);
+
                 Alerter.create(Follower_following.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.login_bg)
@@ -308,88 +315,152 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
         following_text.setText("Following (" + totalFollowing + ")");
 
         if (follow_code.equals("0")) {
+
             followingRV.setVisibility(View.GONE);
+
             if (followerList.size() != 0) {
+
                 follower_list.setVisibility(View.VISIBLE);
+
                 no_follower.setVisibility(View.GONE);
-            } else {
+
+            }
+
+            else {
 
                 follower_list.setVisibility(View.GONE);
+
                 no_follower.setVisibility(View.VISIBLE);
+
                 no_follower_text.setText(getResources().getString(R.string.no_follower));
+
             }
-        } else {
+        }
+        else {
 
             follower_list.setVisibility(View.GONE);
+
             if (followingList.size() != 0) {
+
                 followingRV.setVisibility(View.VISIBLE);
+
                 no_follower.setVisibility(View.GONE);
-            } else {
+            }
+            else {
 
                 followingRV.setVisibility(View.GONE);
+
                 no_follower.setVisibility(View.VISIBLE);
+
                 no_follower_text.setText(getResources().getString(R.string.no_following));
             }
         }
     }
 
     private void setFollowerData() {
+
         followingRV.setVisibility(View.GONE);
+
         follower_list.setVisibility(View.VISIBLE);
+
         Log.d("Follower/ing", "Follwer :" + followerList.size());
+
         follower_text.setText("Followers (" + totalFollower + ")");
+
         following_text.setText("Following (" + totalFollowing + ")");
+
         Log.d("Follower", "list data : " + new Gson().toJson(followerList));
+
         if (followerList.size() != 0) {
+
             no_follower.setVisibility(View.GONE);
+
             follower_list.setVisibility(View.VISIBLE);
+
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Follower_following.this);
+
             follower_list.setLayoutManager(mLayoutManager);
+
             follower_adapter = new Follower_Adapter(Follower_following.this, followerList);
+
             follower_list.setAdapter(follower_adapter);
-        } else {
+
+        }
+
+        else {
+
             no_follower.setVisibility(View.VISIBLE);
+
             follower_list.setVisibility(View.GONE);
+
             no_follower_text.setText(getResources().getString(R.string.no_follower));
+
 
         }
     }
 
     //search friend
+
     private void search_friend(String name) {
+
         if (!tempFollowing.isEmpty()) {
+
             tempFollowing.clear();
+
         }
+
         if (!temp_data.isEmpty())
+
             temp_data.clear();
+
         if (follow_code.equals("0")) {
 
+
             if (!followerList.isEmpty()) {
+
                 for (int data = 0; data < followerList.size(); data++) {
+
                     if (followerList.get(data).getDisplayName().toLowerCase().contains(name)) {
+
                         temp_data.add(followerList.get(data));
                     }
                 }
+
                 follower_list.setVisibility(View.VISIBLE);
+
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Follower_following.this);
+
                 follower_list.setLayoutManager(mLayoutManager);
+
                 follower_adapter = new Follower_Adapter(Follower_following.this, temp_data);
+
                 follower_list.setAdapter(follower_adapter);
             }
-        } else if (follow_code.equals("1")) {
+        }
+        else if (follow_code.equals("1")) {
 
             if (!followingList.isEmpty()) {
+
                 for (int data = 0; data < followingList.size(); data++) {
+
                     if (followingList.get(data).getDisplayName().toLowerCase().contains(name)) {
+
                         tempFollowing.add(followingList.get(data));
                     }
                 }
+
                 followingRV.setVisibility(View.VISIBLE);
+
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Follower_following.this);
+
                 followingRV.setLayoutManager(mLayoutManager);
+
                 following_adapter = new Following_Adapter(Follower_following.this, tempFollowing);
+
                 followingRV.setAdapter(following_adapter);
+
             }
+
         }
     }
 
@@ -397,39 +468,61 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
 
         if (v == activity_layout) {
+
             if (menu_open_layout.getVisibility() == View.VISIBLE) {
+
                 menu_status();
             }
         }
         if (v == search_follower_view) {
+
             if (search_follower.getText().toString().equals("")) {
+
                 search_follower.requestFocus();
-            } else {
+
+            }
+            else {
+
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
                 imm.hideSoftInputFromWindow(activity_layout.getWindowToken(), 0);
+
                 search_friend(search_follower.getText().toString());
             }
         }
         if (v == menu_home) {
+
             menu_status();
+
             Intent i = new Intent(Follower_following.this, Timeline.class);
+
             startActivity(i);
+
             transition();
         }
         if (v == back) {
+
             onBackPressed();
         }
         if (v == followers) {
+
             callFollowersMethod();
         }
         if (v == following) {
+
             follow_code = "1";
+
             following.setBackground(getResources().getDrawable(R.drawable.login_bg));
+
             following_text.setTextColor(getResources().getColor(R.color.white));
+
             followers.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
             follower_text.setTextColor(getResources().getColor(R.color.login_bg));
+
             setData();
-//            setFollowingData(followingList);
+//
+//  setFollowingData(followingList);
 //
 //
 //            try {
@@ -450,84 +543,149 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
 
         }
         if (v == menu_camera) {
+
             menu_status();
+
             Intent i = new Intent(Follower_following.this, Upload_photo.class);
+
             startActivity(i);
+
             transition();
+
         }
+
         if (v == menu_follow) {
+
             menu_status();
+
             callFollowersMethod();
         }
         if (v == menu_notifications) {
+
             menu_status();
+
             Intent i = new Intent(Follower_following.this, Notifications.class);
+
             startActivity(i);
+
             transition();
         }
+
         if (v == menu_profile) {
+
             menu_status();
+
             Intent i = new Intent(Follower_following.this, Profile.class);
+
             startActivity(i);
+
             transition();
         }
+
         if (v == menu_ranking) {
+
             menu_status();
+
             Intent i = new Intent(Follower_following.this, Ranking.class);
+
             startActivity(i);
+
             transition();
         }
+
         if (v == menu_search) {
+
             menu_status();
+
+
             Intent i = new Intent(Follower_following.this, Search.class);
+
             startActivity(i);
+
             transition();
         }
+
         if (v == menu_settings) {
+
             menu_status();
+
             Intent i = new Intent(Follower_following.this, Settings.class);
+
             startActivity(i);
+
             transition();
         }
+
         if (v == menu_stat) {
+
             menu_status();
+
             Intent i = new Intent(Follower_following.this, Stats.class);
+
             i.putExtra("stats_header", "My stats");
+
             i.putExtra("stats_id", preferences.getString("user_id", ""));
+
             startActivity(i);
+
             transition();
         }
+
         if (v == menu_click_view) {
+
             if (preferences.getInt("badge_value", 0) != 0) {
+
                 badgeLayout.setVisibility(View.VISIBLE);
+
                 badgeText.setText(preferences.getInt("badge_value", 0) + "");
-            } else {
-                badgeLayout.setVisibility(View.GONE);
+
             }
+            else {
+                badgeLayout.setVisibility(View.GONE);
+
+            }
+
             menu_open_layout.setVisibility(View.VISIBLE);
+
             menu_click_view.setVisibility(View.GONE);
         }
+
         if (v == menu_close) {
+
             menu_status();
         }
     }
 
     public void setFollowingData(List<FollowingList> list) {
 
+
         follower_list.setVisibility(View.GONE);
+
         follower_text.setText("Followers (" + totalFollower + ")");
+
         following_text.setText("Following (" + totalFollowing + ")");
 
         if (list.size() != 0) {
+
             followingRV.setVisibility(View.VISIBLE);
+
             no_follower.setVisibility(View.GONE);
+
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Follower_following.this);
+
             followingRV.setLayoutManager(mLayoutManager);
+
             following_adapter = new Following_Adapter(Follower_following.this, list);
+
             followingRV.setAdapter(following_adapter);
-        } else {
+
+        }
+        else {
+
             no_follower.setVisibility(View.VISIBLE);
+
             followingRV.setVisibility(View.GONE);
+
             no_follower_text.setText(getResources().getString(R.string.no_following));
 
 
@@ -535,11 +693,17 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
     }
 
     private void callFollowersMethod() {
+
         follow_code = "0";
+
         followers.setBackground(getResources().getDrawable(R.drawable.login_bg));
+
         follower_text.setTextColor(getResources().getColor(R.color.white));
+
         following.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
         following_text.setTextColor(getResources().getColor(R.color.login_bg));
+
         setData();
 //        get_count();
 //        setFollowerData();
@@ -567,58 +731,88 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
 
     // opened menu visibility gone
     private void menu_status() {
+
         menu_open_layout.setVisibility(View.GONE);
+
         menu_click_view.setVisibility(View.VISIBLE);
     }
 
     //get follower following
     public void getData() throws TimeoutException {
+
         Map<String, String> postParams = new HashMap<>();
+
         postParams.put("action", "merge_list");
+
         postParams.put("userid", preferences.getString("user_id", ""));
 
         Log.d("API_Parameters", "merge_list parameters :" + postParams.toString());
+
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
+
         Call<UserData> call = service.getFollower(postParams);
+
         call.enqueue(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, retrofit2.Response<UserData> response) {
+
                 progress_layout.setVisibility(View.GONE);
+
                 if (response.isSuccessful()) {
+
                     Log.e("API_Response", "merge_list Response : " + new Gson().toJson(response.body()));
+
                     followerList = new ArrayList<FollowerList>();
+
                     followingList = new ArrayList<FollowingList>();
+
                     if (response.body().getResult().getMsg().equals("201")) {
+
                         followerList = response.body().getResult().getFollowerList();
+
                         followingList = response.body().getResult().getFollowingList();
+
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Follower_following.this);
+
                         follower_list.setLayoutManager(mLayoutManager);
+
                         follower_adapter = new Follower_Adapter(Follower_following.this, followerList);
+
                         follower_list.setAdapter(follower_adapter);
 
                         RecyclerView.LayoutManager mManager = new LinearLayoutManager(Follower_following.this);
+
                         followingRV.setLayoutManager(mManager);
+
                         following_adapter = new Following_Adapter(Follower_following.this, followingList);
+
                         followingRV.setAdapter(following_adapter);
 
-                    } else if (response.body().getResult().getMsg().equals("204")) {
+                    }
+                    else if (response.body().getResult().getMsg().equals("204")) {
 
-                    } else Alerter.create(Follower_following.this)
+                    }
+                    else Alerter.create(Follower_following.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)
                             .show();
 
+
                     totalFollower = response.body().getResult().getTotalFollowers();
+
                     totalFollowing = response.body().getResult().getTotalFollowings();
+
                     if (Timeline.resultp != null) {
                         Timeline.resultp.setFollowerList(followerList);
                         Timeline.resultp.setFollowingList(followingList);
                         Timeline.resultp.setTotalFollowers(totalFollower);
                         Timeline.resultp.setTotalFollowings(totalFollowing);
                     }
+
                     setData();
 
-                } else {
+                }
+                else {
                     Alerter.create(Follower_following.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)
@@ -630,9 +824,13 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
 
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
+
                 follower_list.setVisibility(View.GONE);
+
                 no_follower.setVisibility(View.GONE);
+
                 progress_layout.setVisibility(View.GONE);
+
 
              Alerter.create(Follower_following.this)
                         .setText(R.string.network_error)
@@ -781,32 +979,49 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
 
     //get total count of follower and following
     public void get_count() {
+
         Map<String, String> postParams = new HashMap<>();
+
         postParams.put("action", "follower_following_total");
+
         postParams.put("userid", preferences.getString("user_id", ""));
+
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
 
         Log.d("API_Parameters", "follower_following_total parameters :" + postParams.toString());
+
         Call<API_Response> call = service.pointsWork(postParams);
+
         call.enqueue(new Callback<API_Response>() {
             @Override
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+
                 if (response.isSuccessful()) {
+
                     Log.e("API_Response", "follower_following_total Response : " + new Gson().toJson(response.body()));
+
                     if (response.body().getResult().getMsg().equals("201")) {
+
                         totalFollowing = response.body().getResult().getTotalFollowings();
+
                         totalFollower = response.body().getResult().getTotalFollowers();
+
                         following_text.setText("Following (" + response.body().getResult().getTotalFollowings() + ")");
+
                         follower_text.setText("Followers (" + response.body().getResult().getTotalFollowers() + ")");
-//                        Timeline.resultp.setTotalFollowings(totalFollowing);
+//
+//                  Timeline.resultp.setTotalFollowings(totalFollowing);
 //                        Timeline.resultp.setTotalFollowers(totalFollower);
                     }
-                } else
+                }
+                else
+
                     Log.e("API_Response", "follower_following_total Response : " + new Gson().toJson(response.errorBody()));
             }
 
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
+
                 Log.d("API_Error", "follower_following_total Error : " + t.getMessage());
             }
         });
@@ -814,8 +1029,11 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
+
         Intent i = new Intent(Follower_following.this, Timeline.class);
+
         startActivity(i);
+
         Follower_following.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
     }
 }

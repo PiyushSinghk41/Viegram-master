@@ -83,19 +83,19 @@ import retrofit2.Callback;
 
 @SuppressWarnings("ALL")
 public class Edit_Profile extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener, View.OnFocusChangeListener {
-    private TextView change_photo , cover_change , badgeText;
+    TextView change_photo, cover_change, badgeText;
 
-    private RelativeLayout badgeLayout, progress_layout , back , activity_layout ,
-            menu_open_layout , menu_close , menu_profile ,menu_stat , menu_follow ,
-            menu_notifications ,menu_settings  , menu_search , menu_ranking ,menu_camera , menu_home  ;
+    RelativeLayout badgeLayout, progress_layout, back, activity_layout,
+            menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow,
+            menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera, menu_home;
 
-    private ImageView menu_click_view , edit_cover_image;
+    ImageView menu_click_view, edit_cover_image;
 
-    private LinearLayout working_layout;
-    private Button save;
-    private CircleImageView circleImageView;
-    private SharedPreferences preferences;
-    private EditText_cursor edit_name , edit_username , edit_link , edit_bio;
+    LinearLayout working_layout;
+    Button save;
+    CircleImageView circleImageView;
+    SharedPreferences preferences;
+    EditText_cursor edit_name, edit_username, edit_link, edit_bio;
 
     private final int CAPTURE_IMAGE = 5;
     private final int PICK_IMAGE = 6;
@@ -107,11 +107,11 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
     private boolean backpressed = true;
     private String profile_image_path = "";
     private String cover_image_path = "";
-    private ProgressDialog progress_Dialog;
+    ProgressDialog progress_Dialog;
     private static final int MEDIA_TYPE_IMAGE = 1;
     private static final String IMAGE_DIRECTORY_NAME = "Viegram";
     private int value = 0;
-    private ProgressBar displayProgress;
+    ProgressBar displayProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +119,7 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_edit__profile);
 
         progress_Dialog = new ProgressDialog(this);
+
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
 
         save = (Button) findViewById(R.id.save);
@@ -184,20 +185,29 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
         working_layout.setVisibility(View.GONE);
 
         cover_change.setPaintFlags(change_photo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         cover_change.setText("Change Cover Photo");
+
         change_photo.setPaintFlags(change_photo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         change_photo.setText("Change Photo");
-        //set data
+
         edit_username.setText(preferences.getString("display_name", ""));
+
         edit_bio.setText(preferences.getString("bio_data", ""));
+
         edit_link.setText(preferences.getString("link", ""));
+
         edit_name.setText(preferences.getString("full_name", ""));
+
 
         Glide.with(this).load(preferences.getString("cover_image", ""))
                 .into(edit_cover_image);
         Log.d("Glide", preferences.getString("profile_image", ""));
+
+
         Glide.with(this).load(preferences.getString("profile_image", ""))
-            //    .thumbnail(0.1f)
+                //    .thumbnail(0.1f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
@@ -264,7 +274,6 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     @Override
     public void onClick(View v) {
         if (v == activity_layout) {
@@ -302,69 +311,127 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
             choose_option();
         }
         if (v == menu_camera) {
+
             menu_status();
+
             Intent i = new Intent(Edit_Profile.this, Upload_photo.class);
+
             startActivity(i);
+
             transition();
         }
+
         if (v == menu_follow) {
+
             menu_status();
+
             Intent i = new Intent(Edit_Profile.this, Follower_following.class);
+
             startActivity(i);
+
             transition();
+
         }
+
         if (v == menu_notifications) {
+
             menu_status();
+
             Intent i = new Intent(Edit_Profile.this, Notifications.class);
+
             startActivity(i);
+
             transition();
+
         }
+
         if (v == menu_profile) {
+
             menu_status();
+
             Intent i = new Intent(Edit_Profile.this, Profile.class);
+
             startActivity(i);
+
             transition();
         }
+
         if (v == menu_ranking) {
+
             menu_status();
+
             Intent i = new Intent(Edit_Profile.this, Ranking.class);
+
             startActivity(i);
+
             transition();
+
         }
+
         if (v == menu_search) {
+
             menu_status();
+
             Intent i = new Intent(Edit_Profile.this, Search.class);
+
             startActivity(i);
+
             transition();
+
         }
+
         if (v == menu_settings) {
+
             menu_status();
+
             Intent i = new Intent(Edit_Profile.this, Settings.class);
+
             startActivity(i);
+
             transition();
         }
+
         if (v == menu_stat) {
+
             menu_status();
+
             Intent i = new Intent(Edit_Profile.this, Stats.class);
+
             i.putExtra("stats_header", "My stats");
+
             i.putExtra("stats_id", preferences.getString("user_id", ""));
+
             startActivity(i);
+
             transition();
+
         }
+
         if (v == menu_click_view) {
+
             if (preferences.getInt("badge_value", 0) != 0) {
+
                 badgeLayout.setVisibility(View.VISIBLE);
+
                 badgeText.setText(preferences.getInt("badge_value", 0) + "");
+
             } else {
+
                 badgeLayout.setVisibility(View.GONE);
             }
+
             menu_open_layout.setVisibility(View.VISIBLE);
+
             menu_click_view.setVisibility(View.GONE);
         }
+
         if (v == menu_close) {
+
             menu_status();
+
         }
     }
+
 
     //transition animation
     private void transition() {
@@ -373,13 +440,14 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
 
     //verify username
     private void verify_username() {
+
         Map<String, String> postParam = new HashMap<String, String>();
+
         postParam.put("action", "verify_name");
+
         postParam.put("display_name", edit_username.getText().toString());
 
         Log.d("API_Parameters", "verify_name parameters :" + postParam.toString());
-
-
 
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
 
@@ -388,21 +456,30 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
         call.enqueue(new Callback<API_Response>() {
             @Override
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+
                 displayProgress.setVisibility(View.GONE);
+
                 if (response.isSuccessful()) {
+
                     Log.e("API_Response", "verify_name Response : " + new Gson().toJson(response.body()));
 
                     Result result = response.body().getResult();
                     if (result.getMsg().equals("201")) {
+
                         edit_username.setError("Display name already exists.");
+
                     }
-                } else
+                }
+                else
+
                     Log.e("API_Response", "verify_name Response : " + new Gson().toJson(response.errorBody()));
             }
 
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
+
                 displayProgress.setVisibility(View.GONE);
+
                 Log.d("API_Error", "verify_email Error : " + t.getMessage());
             }
         });
@@ -410,72 +487,113 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
 
     //custom dialog for choose photo
     private void choose_option() {
+
         final Dialog dialog = new Dialog(this);
+
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
         dialog.setContentView(R.layout.design_choose_photo);
+
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         RelativeLayout choose_gallery, capture_image, remove_image;
+
         choose_gallery = (RelativeLayout) dialog.findViewById(R.id.choose_gallery);
+
         capture_image = (RelativeLayout) dialog.findViewById(R.id.capture_image);
+
         remove_image = (RelativeLayout) dialog.findViewById(R.id.remove_image);
+
         TextView upload_photo_text = (TextView) dialog.findViewById(R.id.upload_image_text);
+
         if (value == 0) {
+
             upload_photo_text.setText("Set a Profile Photo");
-        } else {
-            upload_photo_text.setText("Set a Cover Photo");
+
         }
+        else {
+
+            upload_photo_text.setText("Set a Cover Photo");
+
+        }
+
         choose_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 dialog.dismiss();
+
                 int permissionCheck = ContextCompat.checkSelfPermission(Edit_Profile.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
 
                 if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+
                     ActivityCompat.requestPermissions(Edit_Profile.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION_CODE);
-                } else {
+
+                }
+                else {
 
                     Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
                     startActivityForResult(i, PICK_IMAGE);
+
                     requestStoragePermission();
                 }
 
 
             }
         });
+
         capture_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 dialog.dismiss();
+
                 if ((ContextCompat.checkSelfPermission(Edit_Profile.this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(Edit_Profile.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+
                     capture_ProfileImage();
-                } else {
+
+                }
+                else {
 //                    ActivityCompat.requestPermissions(Edit_Profile.this, new String[]{android.Manifest.permission.CAMERA}, CAPTURE_PERMISSION_CODE);
+
                     ActivityCompat.requestPermissions(Edit_Profile.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA}, CAPTURE_PERMISSION_CODE);
 //                    ActivityCompat.requestPermissions(Edit_Profile.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
                 }
             }
         });
+
         remove_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 dialog.dismiss();
+
                 if (value == 0) {
+
                     circleImageView.setImageDrawable(getResources().getDrawable(R.drawable.default_image2));
+
                     circleImageView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
                     profile_image_path = getFileDataFromDrawable(Edit_Profile.this, circleImageView.getDrawable());
 
-                } else {
+                }
+                else {
+
                     edit_cover_image.setImageDrawable(getResources().getDrawable(R.drawable.default_cover_image));
+
                     cover_image_path = getFileDataFromDrawable(Edit_Profile.this, edit_cover_image.getDrawable());
+
                 }
 
             }
         });
+
         dialog.show();
     }
 
     private String getFileDataFromDrawable(Context context, Drawable drawable) {
+
         Bitmap bitmap = null;
 //        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
 //
@@ -487,87 +605,126 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
 //
 //        }
         bitmap = ((BitmapDrawable) drawable).getBitmap();
+
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("Cache", Context.MODE_PRIVATE);
         // Create imageDir
         File mypath;
+
         if (value == 0)
+
             mypath = new File(directory, "defaultprofile.jpg");
+
         else
+
             mypath = new File(directory, "defaultcover.jpg");
+
         FileOutputStream fos = null;
+
         try {
+
             fos = new FileOutputStream(mypath);
+
             fos.write(byteArrayOutputStream.toByteArray());
+
             // Use the compress method on the BitMap object to write image to the OutputStream
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
+
             e.printStackTrace();
-        } finally {
+        }
+        finally {
+
             try {
+
                 fos.close();
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
+
                 e.printStackTrace();
+
             }
         }
+
         Log.d("Path", mypath.getAbsolutePath());
+
         return mypath.getPath();
     }
 
 
     // opened menu visibility gone
     private void menu_status() {
+
         menu_open_layout.setVisibility(View.GONE);
+
         menu_click_view.setVisibility(View.VISIBLE);
     }
 
     //intent code to capture image
     private void capture_ProfileImage() {
+
         if (!isDeviceSupportCamera()) {
+
             Toast.makeText(getApplicationContext(),
                     "Sorry! Your device doesn't support camera",
                     Toast.LENGTH_LONG).show();
             // will close the app if the device does't have camera
             finish();
-        } else {
+        }
+        else {
+
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
             fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+
             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+
             // start the image capture Intent
+
             startActivityForResult(intent, CAPTURE_IMAGE);
+
         }
     }
+
 
     //get saved image uri
     private Uri getOutputMediaFileUri(int type) {
+
         if (android.os.Build.VERSION.SDK_INT >= 24) {
+
             return FileProvider.getUriForFile(Edit_Profile.this,
+
                     BuildConfig.APPLICATION_ID + ".provider",
+
                     getOutputMediaFile(Edit_Profile.MEDIA_TYPE_IMAGE));
-        } else {
-            return Uri.fromFile(getOutputMediaFile(Edit_Profile.MEDIA_TYPE_IMAGE));
         }
-//        return Uri.fromFile(getOutputMediaFile(type));
+        else {
+
+            return Uri.fromFile(getOutputMediaFile(Edit_Profile.MEDIA_TYPE_IMAGE));
+
+        }
     }
 
-    //check device support camera or not
     private boolean isDeviceSupportCamera() {
-        // this device has a camera
-// no camera on this device
+
         return getApplicationContext().getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_CAMERA);
     }
 
-    //save image in gallery
     private static File getOutputMediaFile(int type) {
+
         File mediaStorageDir = new File(
                 Environment
                         .getExternalStorageDirectory().getAbsolutePath() + "/Viegram/Media/ViegramProfileImages");
 
-        // Create the storage directory if it does not exist
+
         if (!mediaStorageDir.exists()) {
+
             if (!mediaStorageDir.mkdirs()) {
                 Log.d(IMAGE_DIRECTORY_NAME, "Oops! Failed create "
                         + IMAGE_DIRECTORY_NAME + " directory");
@@ -575,7 +732,6 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
                 Locale.getDefault()).format(new Date());
         File mediaFile;
@@ -594,38 +750,34 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case READ_PERMISSION_CODE: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(i, PICK_IMAGE);
 
                 } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+
                 }
                 return;
             }
             case CAPTURE_PERMISSION_CODE: {
-                // If request is cancelled, the result arrays are empty.
+
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     capture_ProfileImage();
                 } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+
                 }
                 return;
             }
             case STORAGE_PERMISSION_CODE: {
-                // If request is cancelled, the result arrays are empty.
+
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 }
                 return;
             }
 
-            // other 'case' lines to check for other
-            // permissions this app might request
+
         }
     }
 
@@ -637,8 +789,8 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    //update profile
     private void update_profile() throws TimeoutException {
+
         RequestBody id =
                 RequestBody.create(
                         MediaType.parse("multipart/form-data"), preferences.getString("user_id", ""));
@@ -661,64 +813,111 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
 
         GetViegramData getResponse = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
         Call<API_Response> call;
+
         if (profile_image_path.equals("") && cover_image_path.equals("")) {
+
             call = getResponse.updateprofile(action, id, full_name, bio_data, link, display_name);
-        } else if (profile_image_path.equals("") && !cover_image_path.equals("")) {
+        }
+        else if (profile_image_path.equals("") && !cover_image_path.equals("")) {
+
             File coverFile = new File(cover_image_path);
+
             RequestBody coverbody = RequestBody.create(MediaType.parse("*/*"), coverFile);
+
             MultipartBody.Part coverImage = MultipartBody.Part.createFormData("cover_image", coverFile.getName(), coverbody);
+
             call = getResponse.updateprofilesingle(coverImage, action, id, full_name, bio_data, link, display_name);
-        } else if (cover_image_path.equals("") && !profile_image_path.equals("")) {
+        }
+        else if (cover_image_path.equals("") && !profile_image_path.equals("")) {
+
             Log.d("path", "profile" + profile_image_path);
+
             File profileFile = new File(profile_image_path);
+
             Log.d("path", "file " + profileFile.getPath());
+
             RequestBody profiebody = RequestBody.create(MediaType.parse("*/*"), profileFile);
+
             MultipartBody.Part profileImage = MultipartBody.Part.createFormData("filename", profileFile.getName(), profiebody);
+
             call = getResponse.updateprofilesingle(profileImage, action, id, full_name, bio_data, link, display_name);
-        } else {
+
+        }
+        else {
+
             File coverFile = new File(cover_image_path);
 
             //ljhklhljjh
 
             RequestBody coverbody = RequestBody.create(MediaType.parse("*/*"), coverFile);
+
             MultipartBody.Part coverImage = MultipartBody.Part.createFormData("cover_image", coverFile.getName(), coverbody);
+
             File profileFile = new File(profile_image_path);
+
             RequestBody profiebody = RequestBody.create(MediaType.parse("*/*"), profileFile);
+
             MultipartBody.Part profileImage = MultipartBody.Part.createFormData("filename", profileFile.getName(), profiebody);
+
             call = getResponse.EditProfile(profileImage, coverImage, action, id, full_name, bio_data, link, display_name);
         }
         call.enqueue(new Callback<API_Response>() {
             @Override
+
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+
                 if (response.isSuccessful()) {
+
                     Log.d("API_Response", "Edit profile response :" + new Gson().toJson(response.body().getResult()));
+
                     progress_Dialog.dismiss();
+
                     Result result = response.body().getResult();
+
                     if (result.getMsg().equals("201")) {
+
                         SharedPreferences.Editor edit = preferences.edit();
+
                         edit.putString("display_name", result.getDetails().getDisplayName());
+
                         edit.putString("bio_data", result.getDetails().getBioData());
+
                         edit.putString("link", result.getDetails().getLink());
+
                         edit.putString("cover_image", result.getDetails().getCoverImage());
+
                         edit.putString("profile_image", result.getDetails().getProfileImage());
-                        edit.putString("full_name",result.getDetails().getFullName());
+
+                        edit.putString("full_name", result.getDetails().getFullName());
+
                         edit.commit();
 //                        SharedPreferences.Editor edit = preferences.edit();
                         Timeline.resultp.setDisplayName(result.getDetails().getDisplayName());
+
                         Timeline.resultp.setBioData(result.getDetails().getBioData());
+
                         Timeline.resultp.setLink(result.getDetails().getLink());
+
                         Timeline.resultp.setCoverImage(result.getDetails().getCoverImage());
+
                         Timeline.resultp.setProfileImage(result.getDetails().getProfileImage());
+
                         Timeline.resultp.setFullName(result.getDetails().getFullName());
-                        if (getIntent().getStringExtra("Activity").equals("profile"))
-                        {
-                        Intent i = new Intent(Edit_Profile.this, Profile.class);
-                        startActivity(i);
-                        overridePendingTransition(R.anim.enter2, R.anim.exit2);
-                        }
-                        else
-                        finish();
+
+                        if (getIntent().getStringExtra("Activity").equals("profile")) {
+
+                            Intent i = new Intent(Edit_Profile.this, Profile.class);
+
+                            startActivity(i);
+
+                            overridePendingTransition(R.anim.enter2, R.anim.exit2);
+
+                        } else
+
+                            finish();
+
                     } else if (result.getMsg().equals("204")) {
+
                         if (result.getReason().equals("display name already exist")) {
 
                             Alerter.create(Edit_Profile.this)
@@ -726,16 +925,20 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
                                     .setBackgroundColor(R.color.red)
                                     .show();
                             edit_username.requestFocus();
+
                         } else Alerter.create(Edit_Profile.this)
                                 .setText(R.string.network_error)
                                 .setBackgroundColor(R.color.login_bg)
                                 .show();
+
                     } else {
                         Alerter.create(Edit_Profile.this)
                                 .setText(R.string.network_error)
                                 .setBackgroundColor(R.color.login_bg)
                                 .show();
                     }
+
+
                 } else {
                     Alerter.create(Edit_Profile.this)
                             .setText(R.string.network_error)
@@ -748,8 +951,10 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
+
                 progress_Dialog.dismiss();
-               Alerter.create(Edit_Profile.this)
+
+                Alerter.create(Edit_Profile.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.login_bg)
                         .show();
@@ -765,15 +970,20 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
             if (resultCode == RESULT_OK) {
+
                 Uri resultUri = result.getUri();
+
                 if (value == 0) {
 
-                 //   profile_image_path = resultUri.getPath();
-                    profile_image_path = FileUtils.getInstance().compressImage(resultUri,this);
+
+                    profile_image_path = FileUtils.getInstance().compressImage(resultUri, this);
+
                     circleImageView.setImageURI(resultUri);
+
                 } else {
-                 //   cover_image_path = resultUri.getPath();
+
                     cover_image_path = FileUtils.getInstance().compressImage(resultUri, this);
                     edit_cover_image.setImageURI(resultUri);
                 }
@@ -786,39 +996,65 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
         }
 
         if (requestCode == CAPTURE_IMAGE && resultCode == RESULT_OK) {
+
             if (resultCode == RESULT_OK) {
+
                 preview_ProfileImage();
-            } else if (resultCode == RESULT_CANCELED) {
+
+            }
+            else if (resultCode == RESULT_CANCELED) {
+
                 Toast.makeText(getApplicationContext(), "User cancelled image capture", Toast.LENGTH_SHORT).show();
-            } else {
-                // failed to capture image
+            }
+            else {
+
                 Toast.makeText(getApplicationContext(), "Sorry! Failed to capture image", Toast.LENGTH_SHORT).show();
+
             }
         }
 
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
 
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
+
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
                 Cursor cursor = Edit_Profile.this.getContentResolver().query(data.getData(), filePathColumn, null, null, null);
+
                 cursor.moveToFirst();
+
                 filepath = getImageUri(Edit_Profile.this, BitmapFactory.decodeFile(cursor.getString(cursor.getColumnIndex(filePathColumn[0]))));
+
                 cursor.close();
 
             } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+
                 ParcelFileDescriptor parcelFileDescriptor;
+
                 try {
+
                     parcelFileDescriptor = getContentResolver().openFileDescriptor(data.getData(), "r");
+
                     FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+
                     Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+
                     parcelFileDescriptor.close();
+
                     filepath = Uri.parse(bitmapToFile(image).getPath());
+
                     Log.d("Image", "K filepath : " + filepath);
+
                     if (value == 0) {
+
                         profile_image_path = filepath.getPath();
+
                         circleImageView.setImageURI(filepath);
+
                     } else {
+
                         cover_image_path = filepath.getPath();
+
                         edit_cover_image.setImageURI(filepath);
                     }
 //                        setImagesize(filepath);

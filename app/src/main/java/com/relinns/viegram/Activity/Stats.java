@@ -35,15 +35,18 @@ public class Stats extends AppCompatActivity implements View.OnClickListener, Vi
 
     LinearLayout butn_layout;
 
-    RelativeLayout activity_layout, menu_home, menu_open_layout, menu_close,
-            menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings,
-            menu_search, menu_ranking, menu_camera, badgeLayout, back, my_stats, status_scores, earning_points;
+    RelativeLayout activity_layout, menu_home, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera, badgeLayout, back, my_stats, status_scores, earning_points;
 
     ImageView menu_click_view;
+
     String value;
+
     String header_text;
+
     String stats_id;
+
     ViewPager mStatsPager;
+
     SharedPreferences preferences;
 
     @Override
@@ -166,27 +169,39 @@ public class Stats extends AppCompatActivity implements View.OnClickListener, Vi
     }
 
     private void setUpViewPager(ViewPager mStatsPager) {
+
         StatsPagerAdapter pagerAdapter = new StatsPagerAdapter(getSupportFragmentManager());
+
         pagerAdapter.addFragment(new My_stats());
+
         pagerAdapter.addFragment(new Status_Score());
+
         pagerAdapter.addFragment(new Earning_point());
+
         mStatsPager.setAdapter(pagerAdapter);
 
     }
 
     @Override
     public void onClick(View v) {
+
         if (v == activity_layout) {
+
             if (menu_open_layout.getVisibility() == View.VISIBLE) {
+
                 menu_status();
             }
         }
+
         if (v == my_stats) {
+
             mStatsPager.setCurrentItem(0, true);
-//            callMyStats();
+//
+//      callMyStats();
 
         }
         if (v == status_scores) {
+
             mStatsPager.setCurrentItem(1, true);
 //
 //            Fragment stats = new Status_Score();
@@ -195,6 +210,7 @@ public class Stats extends AppCompatActivity implements View.OnClickListener, Vi
 //            fragmentTransaction3.commit();
         }
         if (v == earning_points) {
+
             mStatsPager.setCurrentItem(2, true);
 //            Fragment stats = new Earning_point();
 //            FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
@@ -202,113 +218,211 @@ public class Stats extends AppCompatActivity implements View.OnClickListener, Vi
 //            fragmentTransaction3.commit();
         }
         if (v == menu_camera) {
+
             menu_status();
+
             Intent i = new Intent(Stats.this, Upload_photo.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
-        }
-        if (v == menu_follow) {
-            menu_status();
-            Intent i = new Intent(Stats.this, Follower_following.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.enter, R.anim.exit);
-        }
-        if (v == menu_notifications) {
-            menu_status();
-            Intent i = new Intent(Stats.this, Notifications.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.enter, R.anim.exit);
-        }
-        if (v == menu_profile) {
-            menu_status();
-            Intent i = new Intent(Stats.this, Profile.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.enter, R.anim.exit);
-        }
-        if (v == menu_ranking) {
-            menu_status();
-            Intent i = new Intent(Stats.this, Ranking.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.enter, R.anim.exit);
-        }
-        if (v == menu_search) {
-            menu_status();
-            Intent i = new Intent(Stats.this, Search.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.enter, R.anim.exit);
-        }
-        if (v == menu_settings) {
-            menu_status();
-            Intent i = new Intent(Stats.this, Settings.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.enter, R.anim.exit);
-        }
-        if (v == menu_stat) {
-            menu_status();
-            mStatsPager.setCurrentItem(0, true);
 
         }
+
+        if (v == menu_follow) {
+
+            menu_status();
+
+            Intent i = new Intent(Stats.this, Follower_following.class);
+
+            startActivity(i);
+
+            overridePendingTransition(R.anim.enter, R.anim.exit);
+
+        }
+
+        if (v == menu_notifications) {
+
+            menu_status();
+
+            Intent i = new Intent(Stats.this, Notifications.class);
+
+            startActivity(i);
+
+            overridePendingTransition(R.anim.enter, R.anim.exit);
+
+        }
+
+        if (v == menu_profile) {
+
+            menu_status();
+
+            Intent i = new Intent(Stats.this, Profile.class);
+
+            startActivity(i);
+
+            overridePendingTransition(R.anim.enter, R.anim.exit);
+
+        }
+
+        if (v == menu_ranking) {
+
+            menu_status();
+
+            Intent i = new Intent(Stats.this, Ranking.class);
+
+            startActivity(i);
+
+            overridePendingTransition(R.anim.enter, R.anim.exit);
+
+        }
+
+        if (v == menu_search) {
+
+            menu_status();
+
+            Intent i = new Intent(Stats.this, Search.class);
+
+            startActivity(i);
+
+            overridePendingTransition(R.anim.enter, R.anim.exit);
+
+        }
+
+        if (v == menu_settings) {
+
+            menu_status();
+
+            Intent i = new Intent(Stats.this, Settings.class);
+
+            startActivity(i);
+
+            overridePendingTransition(R.anim.enter, R.anim.exit);
+
+        }
+
+        if (v == menu_stat) {
+
+            menu_status();
+
+            mStatsPager.setCurrentItem(0, true);
+
+
+        }
+
+
         if (v == menu_click_view) {
+
             try {
+
                 SharedPreferences preferences;
+
                 preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
+
                 Log.d("badge_value", preferences.getInt("badge_value", 0) + "");
+
                 if (preferences.getInt("badge_value", 0) != 0) {
+
                     badgeLayout.setVisibility(View.VISIBLE);
+
                     badgeText.setText(preferences.getInt("badge_value", 0) + "");
+
                 } else {
+
                     badgeLayout.setVisibility(View.GONE);
+
                 }
+
                 menu_open_layout.setVisibility(View.VISIBLE);
+
                 menu_click_view.setVisibility(View.GONE);
+
             } catch (Exception e) {
+
                 e.printStackTrace();
+
             }
+
         }
         if (v == menu_close) {
+
             menu_status();
         }
+
+
         if (v == back) {
+
             onBackPressed();
+
         }
+
         if (v == menu_home) {
+
             menu_status();
+
             Intent i = new Intent(Stats.this, Timeline.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
     }
 
     private void callMyStats() {
+
         my_stats.setBackground(getResources().getDrawable(R.drawable.login_bg));
+
         stats_text.setTextColor(getResources().getColor(R.color.white));
+
         score_text.setTextColor(getResources().getColor(R.color.login_bg));
+
         earning_text.setTextColor(getResources().getColor(R.color.login_bg));
+
         status_scores.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
         earning_points.setBackground(getResources().getDrawable(R.drawable.stats_bg));
-//        Fragment stats = new My_stats(stats_id, header_text);
+//
+//      Fragment stats = new My_stats(stats_id, header_text);
+
         Fragment stats = new My_stats();
+
         FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
+
         fragmentTransaction3.replace(R.id.show_stats, stats, null);
+
         fragmentTransaction3.commit();
     }
 
     private void menu_status() {
+
         menu_open_layout.setVisibility(View.GONE);
+
         menu_click_view.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onBackPressed() {
+
         if (value == null) {
+
             super.onBackPressed();
+
             Stats.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
-        } else if (!value.equals("")) {
+
+        }
+        else if (!value.equals("")) {
+
             super.onBackPressed();
+
             Stats.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
-        } else {
+        }
+        else {
+
             Intent i = new Intent(Stats.this, Timeline.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
     }
@@ -320,28 +434,48 @@ public class Stats extends AppCompatActivity implements View.OnClickListener, Vi
 
     @Override
     public void onPageSelected(int position) {
+
         if (position == 0) {
+
             my_stats.setBackground(getResources().getDrawable(R.drawable.login_bg));
+
             stats_text.setTextColor(getResources().getColor(R.color.white));
+
             score_text.setTextColor(getResources().getColor(R.color.login_bg));
+
             earning_text.setTextColor(getResources().getColor(R.color.login_bg));
+
             status_scores.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
             earning_points.setBackground(getResources().getDrawable(R.drawable.stats_bg));
         }
         if (position == 1) {
+
             status_scores.setBackground(getResources().getDrawable(R.drawable.login_bg));
+
             score_text.setTextColor(getResources().getColor(R.color.white));
+
             stats_text.setTextColor(getResources().getColor(R.color.login_bg));
+
             earning_text.setTextColor(getResources().getColor(R.color.login_bg));
+
             my_stats.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
             earning_points.setBackground(getResources().getDrawable(R.drawable.stats_bg));
         }
+
         if (position == 2) {
+
             earning_points.setBackground(getResources().getDrawable(R.drawable.login_bg));
+
             earning_text.setTextColor(getResources().getColor(R.color.white));
+
             score_text.setTextColor(getResources().getColor(R.color.login_bg));
+
             stats_text.setTextColor(getResources().getColor(R.color.login_bg));
+
             status_scores.setBackground(getResources().getDrawable(R.drawable.stats_bg));
+
             my_stats.setBackground(getResources().getDrawable(R.drawable.stats_bg));
         }
 
@@ -353,17 +487,23 @@ public class Stats extends AppCompatActivity implements View.OnClickListener, Vi
     }
 
     private class StatsPagerAdapter extends FragmentPagerAdapter {
+
         private List<Fragment> mFragmentList = new ArrayList<>();
 
         public StatsPagerAdapter(FragmentManager supportFragmentManager) {
+
             super(supportFragmentManager);
         }
 
         @Override
         public Fragment getItem(int position) {
+
             if (position == 0) {
+
                 new My_stats().getInstance(stats_id, header_text);
+
             }
+
             return mFragmentList.get(position);
         }
 
@@ -373,12 +513,19 @@ public class Stats extends AppCompatActivity implements View.OnClickListener, Vi
 
         @Override
         public int getCount() {
+
             if (getIntent().getExtras() != null) {
+
                 if (getIntent().getExtras().containsKey("layout"))
+
                     return 1;
+
                 else
+
                     return mFragmentList.size();
+
             } else
+
                 return mFragmentList.size();
         }
 

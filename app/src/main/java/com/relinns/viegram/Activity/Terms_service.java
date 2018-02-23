@@ -75,7 +75,9 @@ public class Terms_service extends AppCompatActivity implements View.OnClickList
         badgeText = (TextView) findViewById(R.id.badge_text);
 
         if (getIntent().getExtras() != null) {
+
             menu_click_view.setVisibility(View.GONE);
+
             menu_open_layout.setVisibility(View.GONE);
         }
         menu_open_layout.setVisibility(View.GONE);
@@ -116,10 +118,15 @@ public class Terms_service extends AppCompatActivity implements View.OnClickList
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
+
                 progress.setVisibility(View.VISIBLE);
+
                 progress.setProgress(newProgress);
+
                 if (newProgress == 100) {
+
                     progress.setVisibility(View.GONE);
+
                 }
             }
         });
@@ -129,74 +136,130 @@ public class Terms_service extends AppCompatActivity implements View.OnClickList
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         Terms_service.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
     }
 
     @Override
     public void onClick(View v) {
         if (v == activity_layout) {
+
             if (menu_open_layout.getVisibility() == View.VISIBLE) {
+
                 menu_status();
             }
         }
         if (v == back) {
+
             onBackPressed();
         }
         if (v == menu_home) {
+
             menu_status();
+
             Intent i = new Intent(Terms_service.this, Timeline.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
         if (v == menu_camera) {
+
             menu_status();
+
             Intent i = new Intent(Terms_service.this, Upload_photo.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
+
         if (v == menu_follow) {
+
             menu_status();
+
             Intent i = new Intent(Terms_service.this, Follower_following.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
+
         if (v == menu_notifications) {
+
             menu_status();
+
             Intent i = new Intent(Terms_service.this, Notifications.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
+
         if (v == menu_profile) {
+
             menu_status();
+
             Intent i = new Intent(Terms_service.this, Profile.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
+
         if (v == menu_ranking) {
+
             menu_status();
+
             Intent i = new Intent(Terms_service.this, Ranking.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
+
         if (v == menu_search) {
+
             menu_status();
+
             Intent i = new Intent(Terms_service.this, Search.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
+
         if (v == menu_settings) {
+
             menu_status();
+
             Intent i = new Intent(Terms_service.this, Settings.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == menu_stat) {
+
             menu_status();
+
             Intent i = new Intent(Terms_service.this, Stats.class);
+
             i.putExtra("stats_header", "My stats");
+
             i.putExtra("stats_id", preferences.getString("user_id", ""));
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
         if (v == menu_click_view) {
 
@@ -215,7 +278,9 @@ public class Terms_service extends AppCompatActivity implements View.OnClickList
     }
 
     private void menu_status() {
+
         menu_open_layout.setVisibility(View.GONE);
+
         menu_click_view.setVisibility(View.VISIBLE);
     }
 }

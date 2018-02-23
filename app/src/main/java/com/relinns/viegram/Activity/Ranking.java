@@ -29,15 +29,14 @@ import java.util.List;
 @SuppressWarnings("ALL")
 public class Ranking extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
-    RelativeLayout badgeLayout, back, activity_layout, menu_home,
-            leader, my_ranking, follower_ranking,
-            menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications,
-            menu_settings, menu_search, menu_ranking, menu_camera;
+    RelativeLayout badgeLayout, back, activity_layout, menu_home, leader, my_ranking, follower_ranking, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera;
 
     ImageView menu_click_view;
+
     TextView leader_text, ranking_text, flwr_rnk_text, badgeText;
 
     SharedPreferences preferences;
+
     ViewPager mRankingPager;
 
     @Override
@@ -96,23 +95,41 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
         menu_open_layout.setVisibility(View.GONE);
 
         menu_follow.setOnClickListener(this);
+
         menu_ranking.setOnClickListener(this);
+
         menu_open_layout.setOnClickListener(this);
+
         menu_search.setOnClickListener(this);
+
         menu_notifications.setOnClickListener(this);
+
         menu_profile.setOnClickListener(this);
+
         menu_camera.setOnClickListener(this);
+
         menu_click_view.setOnClickListener(this);
+
         menu_close.setOnClickListener(this);
+
         menu_settings.setOnClickListener(this);
+
         menu_stat.setOnClickListener(this);
+
         menu_home.setOnClickListener(this);
+
         back.setOnClickListener(this);
+
         leader.setOnClickListener(this);
+
         activity_layout.setOnClickListener(this);
+
         mRankingPager.addOnPageChangeListener(this);
+
         my_ranking.setOnClickListener(this);
+
         follower_ranking.setOnClickListener(this);
+
         setUpViewPager(mRankingPager);
 //        Fragment fragment_leader = new Leader();
 //        FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
@@ -121,26 +138,39 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
     }
 
     private void setUpViewPager(ViewPager mRankingPager) {
+
         Log.d("Fragment", "setUp");
+
         Ranking.ViewPagerAdapter rankingViewAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+
         rankingViewAdapter.addFragment(new Leader());
+
         rankingViewAdapter.addFragment(new My_ranking());
+
         rankingViewAdapter.addFragment(new Follower_ranking());
+
         mRankingPager.setAdapter(rankingViewAdapter);
     }
 
     @Override
     public void onClick(View v) {
+
         if (v == activity_layout) {
+
             if (menu_open_layout.getVisibility() == View.VISIBLE) {
+
                 menu_status();
             }
         }
+
         if (v == leader) {
+
             callLeaderMethod();
 
         }
+
         if (v == my_ranking) {
+
             mRankingPager.setCurrentItem(1, true);
 //            Fragment fragment_leader = new My_ranking();
 //            FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
@@ -155,81 +185,141 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
 //            fragmentTransaction3.commit();
         }
         if (v == menu_camera) {
+
             menu_status();
+
             Intent i = new Intent(Ranking.this, Upload_photo.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == menu_follow) {
+
             menu_status();
+
             Intent i = new Intent(Ranking.this, Follower_following.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == menu_notifications) {
+
             menu_status();
+
             Intent i = new Intent(Ranking.this, Notifications.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == menu_profile) {
+
             menu_status();
+
             Intent i = new Intent(Ranking.this, Profile.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == menu_ranking) {
+
             menu_status();
+
             callLeaderMethod();
-//            Intent i = new Intent(Ranking.this, Ranking.class);
+//
+//      Intent i = new Intent(Ranking.this, Ranking.class);
 //            startActivity(i);
 //            overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == menu_search) {
+
             menu_status();
+
             Intent i = new Intent(Ranking.this, Search.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == menu_settings) {
+
             menu_status();
+
             Intent i = new Intent(Ranking.this, Settings.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
+
         if (v == menu_stat) {
+
             menu_status();
+
             Intent i = new Intent(Ranking.this, Stats.class);
+
             i.putExtra("stats_header", "My stats");
             i.putExtra("stats_id", preferences.getString("user_id", ""));
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
         if (v == menu_click_view) {
+
             if (preferences.getInt("badge_value", 0) != 0) {
+
                 badgeLayout.setVisibility(View.VISIBLE);
+
                 badgeText.setText(preferences.getInt("badge_value", 0) + "");
             } else {
+
                 badgeLayout.setVisibility(View.GONE);
             }
+
             menu_open_layout.setVisibility(View.VISIBLE);
+
             menu_click_view.setVisibility(View.GONE);
+
         }
+
         if (v == menu_close) {
+
             menu_status();
         }
+
         if (v == back) {
+
             onBackPressed();
+
         }
+
         if (v == menu_home) {
+
             menu_status();
+
             Intent i = new Intent(Ranking.this, Timeline.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
+
         }
     }
 
     private void callLeaderMethod() {
+
         mRankingPager.setCurrentItem(0, true);
 
 //
@@ -240,14 +330,20 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
     }
 
     private void menu_status() {
+
         menu_open_layout.setVisibility(View.GONE);
+
         menu_click_view.setVisibility(View.VISIBLE);
+
     }
 
     @Override
     public void onBackPressed() {
+
         Intent i = new Intent(Ranking.this, Timeline.class);
+
         startActivity(i);
+
         Ranking.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
     }
 
@@ -258,7 +354,9 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
 
     @Override
     public void onPageSelected(int position) {
+
         if (position == 0) {
+
             leader.setBackground(getResources().getDrawable(R.drawable.login_bg));
 
             my_ranking.setBackground(getResources().getDrawable(R.drawable.stats_bg));
@@ -271,7 +369,9 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
 
             flwr_rnk_text.setTextColor(getResources().getColor(R.color.login_bg));
         }
+
         if (position == 1) {
+
             my_ranking.setBackground(getResources().getDrawable(R.drawable.login_bg));
 
             leader.setBackground(getResources().getDrawable(R.drawable.stats_bg));
@@ -284,7 +384,9 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
 
             flwr_rnk_text.setTextColor(getResources().getColor(R.color.login_bg));
         }
+
         if (position == 2) {
+
             follower_ranking.setBackground(getResources().getDrawable(R.drawable.login_bg));
 
             my_ranking.setBackground(getResources().getDrawable(R.drawable.stats_bg));
@@ -306,9 +408,11 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
+
         private final List<Fragment> mFragmentList = new ArrayList<>();
 
         public ViewPagerAdapter(FragmentManager supportFragmentManager) {
+
             super(supportFragmentManager);
 
         }

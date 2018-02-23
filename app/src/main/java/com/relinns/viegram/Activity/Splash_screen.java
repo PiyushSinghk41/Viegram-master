@@ -16,18 +16,25 @@ import io.fabric.sdk.android.Fabric;
 
 public class Splash_screen extends Activity {
 
-    private SharedPreferences preferences;
-    private CountDownTimer timer;
+     SharedPreferences preferences;
+
+     CountDownTimer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(Splash_screen.this));
+
         if(FirebaseInstanceId.getInstance()==null){
+
             Log.d("instance","nhi");
+
         }
+
         else {
+
             Log.d("instance","hai");
         }
 
@@ -48,23 +55,36 @@ public class Splash_screen extends Activity {
                 }
             }
         }.start();
+
         Fabric.with(this, new Crashlytics());
+
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
+
         if (!preferences.getString("user_id", "").equals("")) {
+
             Intent i = new Intent(Splash_screen.this, Timeline.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
-        } else {
+
+        }
+        else {
+
             timer = new CountDownTimer(3000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                 }
                 @Override
                 public void onFinish() {
+
                     Intent i = new Intent(Splash_screen.this, Login_Screen.class);
+
                     startActivity(i);
+
                     overridePendingTransition(R.anim.enter, R.anim.exit);
                 }
+
             }.start();
         }
     }

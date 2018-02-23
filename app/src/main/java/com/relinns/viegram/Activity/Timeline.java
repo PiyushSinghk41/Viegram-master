@@ -336,12 +336,11 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
 
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
-                // progress_layout.setVisibility(View.VISIBLE);
+
                 swipe_refresh.setRefreshing(false);
+
                 Log.d("API_Error", "All data : " + t.getMessage());
-//                Toast.makeText(c, "This is my Toast message!3",
-//                        Toast.LENGTH_LONG).show();
-                // progress.setVisibility(View.GONE);
+
             }
         });
 
@@ -1016,15 +1015,16 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         makepostconnection();
     }
 
-    @Override
+   /* @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
-            return;
+      //  if (JZVideoPlayer.backPress()) {
+        //    return;
+
         }
         finishAffinity();
-    }
+    }*/
 
-    @Override
+   /* @Override
     protected void onPause() {
         super.onPause();
         JZVideoPlayer.releaseAllVideos();
@@ -1032,5 +1032,5 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
             value = 1;
             adapter.notifyDataSetChanged();
         }
-    }
+    }*/
 }
