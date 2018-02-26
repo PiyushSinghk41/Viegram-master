@@ -24,8 +24,8 @@ public class RetrofitInstance {
 
     }
 
-   public static final String BASE_URL = "http://107.6.9.5/~viegram/apis/";
-   //public static final String BASE_URL = "http://nationproducts.in/viegram/apis/";
+   //public static final String BASE_URL = "http://107.6.9.5/~viegram/apis/";
+   public static final String BASE_URL = "http://nationproducts.in/viegram/apis/";
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {

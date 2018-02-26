@@ -195,15 +195,12 @@ public class Another_follower_following extends AppCompatActivity implements Vie
         //setData
 
 
-
         Glide.with(this).load(profile_image)
                 //    .thumbnail(0.1f)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .bitmapTransform(new CropCircleTransformation(this))
                 .into(another_user_profile_image);
         another_userName.setText(display_name);
-
-
 
 
         Glide.with(this).load(cover_image)
@@ -343,11 +340,9 @@ public class Another_follower_following extends AppCompatActivity implements Vie
 
                         mfollowingList = result.getFollowingList();
 
-                    }
-                    else if (result.getMsg().equals("204")) {
+                    } else if (result.getMsg().equals("204")) {
 
-                    }
-                    else Alerter.create(Another_follower_following.this)
+                    } else Alerter.create(Another_follower_following.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)
                             .show();
@@ -357,8 +352,7 @@ public class Another_follower_following extends AppCompatActivity implements Vie
                     totalfollowers = result.getTotalFollowers();
 
                     setData();
-                }
-                else {
+                } else {
 
                     Log.e("API_Response", "fetch_user_profile Response : " + new Gson().toJson(response.errorBody()));
 
@@ -413,15 +407,13 @@ public class Another_follower_following extends AppCompatActivity implements Vie
                 another_follower_list.setAdapter(adapter);
 
 
-            }
-            else {
+            } else {
 
                 another_follower_list.setVisibility(View.GONE);
 
                 emptyLayout.setVisibility(View.VISIBLE);
             }
-        }
-        else {
+        } else {
 
             if (mfollowingList.size() != 0) {
 
@@ -437,8 +429,7 @@ public class Another_follower_following extends AppCompatActivity implements Vie
 
                 another_follower_list.setAdapter(adapter);
 
-            }
-            else {
+            } else {
 
                 another_follower_list.setVisibility(View.GONE);
 
@@ -480,8 +471,7 @@ public class Another_follower_following extends AppCompatActivity implements Vie
 
                 search_another_follower.requestFocus();
 
-            }
-            else {
+            } else {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -564,8 +554,7 @@ public class Another_follower_following extends AppCompatActivity implements Vie
                 badgeLayout.setVisibility(View.VISIBLE);
 
                 badgeText.setText(preferences.getInt("badge_value", 0) + "");
-            }
-            else {
+            } else {
 
                 badgeLayout.setVisibility(View.GONE);
 
@@ -702,8 +691,7 @@ public class Another_follower_following extends AppCompatActivity implements Vie
 
 
             }
-        }
-        else {
+        } else {
 
             if (!mfollowingList.isEmpty()) {
 
@@ -742,14 +730,14 @@ public class Another_follower_following extends AppCompatActivity implements Vie
         overridePendingTransition(R.anim.enter, R.anim.exit);
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
 
         super.onBackPressed();
+        finish();
+        // Another_follower_following.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
 
-        Another_follower_following.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
-
-    }
+    }*/
 
     //edittext text watcher methods
     @Override
@@ -765,8 +753,7 @@ public class Another_follower_following extends AppCompatActivity implements Vie
 
                 get_followers(another_follow_code);
 
-            }
-            catch (TimeoutException e) {
+            } catch (TimeoutException e) {
 
                 progress_layout.setVisibility(View.VISIBLE);
 
@@ -783,8 +770,7 @@ public class Another_follower_following extends AppCompatActivity implements Vie
                 e.printStackTrace();
             }
 
-        }
-        else {
+        } else {
 
             Log.d("Tag", "data :" + charSequence);
 

@@ -51,6 +51,9 @@
                             android:background="@drawable/default_cover_image"
                             android:scaleType="fitXY" />
 
+
+
+
                         <ProgressBar
                             android:id="@+id/cover_progress"
                             android:layout_width="24dp"
@@ -78,19 +81,29 @@
 
                             <RelativeLayout
                                 android:id="@+id/edit"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_marginEnd="5dp"
+                                android:background="@drawable/dark"
                                 android:layout_alignParentBottom="true"
                                 android:layout_alignParentRight="true"
+                                android:gravity="center"
                                 android:layout_marginBottom="@dimen/pencil_margin_bottom">
 
                                 <ImageView
                                     android:layout_width="24dp"
-                                    android:layout_height="26dp"
+                                    android:layout_height="24dp"
                                     android:layout_marginRight="5dp"
-                                    android:background="@drawable/edit_96" />
+                                    android:src="@drawable/edit_96"
+                                    android:textAlignment="center"
+                                    />
+
+
+
+
                             </RelativeLayout>
                         </RelativeLayout>
+
 
 
                     </com.github.florent37.diagonallayout.DiagonalLayout>

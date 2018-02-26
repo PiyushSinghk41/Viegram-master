@@ -340,11 +340,13 @@ public class Ranking extends AppCompatActivity implements View.OnClickListener, 
     @Override
     public void onBackPressed() {
 
-        Intent i = new Intent(Ranking.this, Timeline.class);
+       /* Intent i = new Intent(Ranking.this, Timeline.class);
 
         startActivity(i);
 
-        Ranking.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
+        Ranking.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);*/
+
+       finish();
     }
 
     @Override

@@ -504,11 +504,13 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onBackPressed() {
 
-        Intent i = new Intent(Search.this, Timeline.class);
+       /* Intent i = new Intent(Search.this, Timeline.class);
 
         startActivity(i);
 
-        Search.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
+        Search.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);*/
+
+       finish();
     }
 
     @Override
@@ -554,7 +556,9 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
 
             startActivity(i);
 
-            overridePendingTransition(R.anim.enter, R.anim.exit);
+            finish();
+
+            //overridePendingTransition(R.anim.enter, R.anim.exit);
 
         }
 

@@ -65,6 +65,7 @@ public class Splash_screen extends Activity {
             Intent i = new Intent(Splash_screen.this, Timeline.class);
 
             startActivity(i);
+            finish();
 
             overridePendingTransition(R.anim.enter, R.anim.exit);
 

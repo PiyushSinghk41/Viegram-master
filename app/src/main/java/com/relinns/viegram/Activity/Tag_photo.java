@@ -550,7 +550,8 @@ public class Tag_photo extends AppCompatActivity implements View.OnClickListener
 
                 badgeText.setText(preferences.getInt("badge_value", 0) + "");
 
-            } else {
+            }
+            else {
 
                 badgeLayout.setVisibility(View.GONE);
 

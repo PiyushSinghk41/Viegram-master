@@ -277,15 +277,17 @@ public class Comment_like extends AppCompatActivity implements View.OnClickListe
     }
 
     private void transition() {
+
         overridePendingTransition(R.anim.enter, R.anim.exit);
+
     }
 
     private void menu_status() {
 
-
         menu_open.setVisibility(View.GONE);
 
         menu_click.setVisibility(View.VISIBLE);
+
     }
 
     private void get_likes() {
@@ -326,6 +328,7 @@ public class Comment_like extends AppCompatActivity implements View.OnClickListe
 
                         likecomment_list.setAdapter(adapter);
                     }
+
                     else if (!response.body().getResult().getMsg().equals("204")) {
 
                         Alerter.create(Comment_like.this)
@@ -335,7 +338,9 @@ public class Comment_like extends AppCompatActivity implements View.OnClickListe
                     }
 
                 }
+
                 else {
+
                     Alerter.create(Comment_like.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)

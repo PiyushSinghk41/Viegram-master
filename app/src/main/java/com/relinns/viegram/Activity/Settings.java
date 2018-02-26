@@ -791,12 +791,13 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     public void onBackPressed() {
         //add_settings();
 
-        Intent i = new Intent(Settings.this, Timeline.class);
+        /*Intent i = new Intent(Settings.this, Timeline.class);
 
         startActivity(i);
 
         overridePendingTransition(R.anim.enter, R.anim.exit);
-
+*/
+        finish();
     }
 
     @Override

@@ -620,11 +620,13 @@ public class Profile extends AppCompatActivity implements View.OnClickListener, 
     @Override
     public void onBackPressed() {
 
+        finish();
+/*
         Intent i = new Intent(Profile.this, Timeline.class);
 
         startActivity(i);
 
-        Profile.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
+        Profile.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);*/
     }
 
     @Override

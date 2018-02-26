@@ -906,7 +906,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
             menu_status();
             Intent i = new Intent(Timeline.this, Ranking.class);
             startActivity(i);
-            overridePendingTransition(R.anim.enter, R.anim.exit);
+         //   overridePendingTransition(R.anim.enter, R.anim.exit);
         }
         if (v == menu_search) {
             menu_status();
@@ -1015,7 +1015,13 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         makepostconnection();
     }
 
-   /* @Override
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    /* @Override
     public void onBackPressed() {
       //  if (JZVideoPlayer.backPress()) {
         //    return;

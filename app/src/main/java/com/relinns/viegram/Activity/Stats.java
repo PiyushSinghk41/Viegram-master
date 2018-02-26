@@ -408,22 +408,23 @@ public class Stats extends AppCompatActivity implements View.OnClickListener, Vi
 
             super.onBackPressed();
 
-            Stats.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
+           // Stats.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
 
         }
         else if (!value.equals("")) {
 
             super.onBackPressed();
 
-            Stats.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
+            //Stats.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
         }
         else {
 
-            Intent i = new Intent(Stats.this, Timeline.class);
+            /*Intent i = new Intent(Stats.this, Timeline.class);
 
-            startActivity(i);
+            startActivity(i);*/
+            finish();
 
-            overridePendingTransition(R.anim.enter, R.anim.exit);
+//            overridePendingTransition(R.anim.enter, R.anim.exit);
         }
     }
 

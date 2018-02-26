@@ -1030,11 +1030,13 @@ public class Follower_following extends AppCompatActivity implements View.OnClic
     @Override
     public void onBackPressed() {
 
-        Intent i = new Intent(Follower_following.this, Timeline.class);
+       /* Intent i = new Intent(Follower_following.this, Timeline.class);
 
         startActivity(i);
+*/
+        finish();
 
-        Follower_following.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
+        //Follower_following.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
     }
 }
 

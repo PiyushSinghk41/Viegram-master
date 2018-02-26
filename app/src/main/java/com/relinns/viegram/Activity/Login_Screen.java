@@ -148,6 +148,12 @@ public class Login_Screen extends Activity implements View.OnClickListener, View
 
         postParam.put("device_token", token);
 
+
+        Log.d("email" ,login_email.getText().toString());
+
+        Log.d("password" ,login_password.getText().toString());
+        Log.d("device_token" ,token);
+
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
 
         Log.d("API_Parameters", "login parameters :" + postParam.toString());
@@ -194,11 +200,13 @@ public class Login_Screen extends Activity implements View.OnClickListener, View
 
                         edit.commit();
 
+                        overridePendingTransition(R.anim.enter, R.anim.exit);
+
                         Intent i = new Intent(Login_Screen.this, Timeline.class);
 
                         startActivity(i);
 
-                        overridePendingTransition(R.anim.enter, R.anim.exit);
+
 
                     } else if (result.getMsg().equals("204")) {
 

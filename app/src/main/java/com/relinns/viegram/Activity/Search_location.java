@@ -198,6 +198,7 @@ public class Search_location extends AppCompatActivity implements View.OnClickLi
         });
 
         completeAdapter = new PlaceAutoCompleteAdapter(this, R.layout.list_item);
+
         search_location_text.setAdapter(completeAdapter);
     }
 
@@ -270,6 +271,7 @@ public class Search_location extends AppCompatActivity implements View.OnClickLi
                             .show();
                 }
                 else {
+
                     Alerter.create(Search_location.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.red)
@@ -295,8 +297,11 @@ public class Search_location extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finish();
 
+/*
         Search_location.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
+*/
     }
 
     @Override

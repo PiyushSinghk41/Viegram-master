@@ -308,7 +308,6 @@ public class Comments extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
 
-
                 Log.e("API_Response", "fetch_comments Response : " + new Gson().toJson(response.body()));
                 if (response.isSuccessful()) {
 
@@ -348,6 +347,7 @@ public class Comments extends AppCompatActivity implements View.OnClickListener 
 
                         comment_list.setVisibility(View.GONE);
                     }
+
                     else {
 
                         Alerter.create(Comments.this)

@@ -143,11 +143,13 @@ public class Notifications extends AppCompatActivity implements View.OnClickList
     @Override
     public void onBackPressed() {
 
-        Intent i = new Intent(Notifications.this, Timeline.class);
+       /* Intent i = new Intent(Notifications.this, Timeline.class);
 
         startActivity(i);
 
-        Notifications.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);
+        Notifications.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);*/
+
+       finish();
     }
 
     @Override
