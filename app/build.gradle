@@ -79,5 +79,6 @@ dependencies {
     compile 'com.google.android.exoplayer:extension-rtmp:r2.5.1'
     implementation 'net.gotev:uploadservice:3.4.1'
     implementation 'net.gotev:uploadservice-okhttp:3.4.1'
+    compile 'pub.devrel:easypermissions:0.2.0'
 }
 apply plugin: 'com.google.gms.google-services'

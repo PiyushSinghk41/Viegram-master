@@ -48,6 +48,7 @@ public class Options extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_options);
 
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);

@@ -137,6 +137,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+
             }
 
             @Override
@@ -325,19 +326,17 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
 
                             search_photos.setVisibility(View.GONE);
                         }
-                    }
-                    else if (result.getMsg().equals("204")) {
+                    } else if (result.getMsg().equals("204")) {
 
                         no_seach_result.setVisibility(View.VISIBLE);
 
                         search_photos.setVisibility(View.GONE);
-                    }
-                    else Alerter.create(Search.this)
+                    } else Alerter.create(Search.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.red)
                             .show();
-                }
-                else {
+                } else {
+
                     Alerter.create(Search.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.red)
@@ -407,8 +406,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
 
                         search_photos.setAdapter(adapter);
 
-                    }
-                    else if (response.body().getResult().getMsg().equals("204")) {
+                    } else if (response.body().getResult().getMsg().equals("204")) {
 
                         no_seach_result.setVisibility(View.VISIBLE);
 
@@ -416,13 +414,14 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
 
                         progress_layout.setVisibility(View.GONE);
 
-                    }
-                    else Alerter.create(Search.this)
-                            .setText(R.string.network_error)
-                            .setBackgroundColor(R.color.red)
-                            .show();
-                }
-                else {
+                    } else
+
+                        Alerter.create(Search.this)
+                                .setText(R.string.network_error)
+                                .setBackgroundColor(R.color.red)
+                                .show();
+                } else {
+
                     Alerter.create(Search.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.red)
@@ -484,8 +483,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
 
                         loading = true;
                     }
-                }
-                else
+                } else
 
                     Log.e("API_Response", "random_posts Response : " + new Gson().toJson(response.errorBody()));
             }
@@ -510,7 +508,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
 
         Search.this.overridePendingTransition(R.anim.exit2, R.anim.enter2);*/
 
-       finish();
+        finish();
     }
 
     @Override

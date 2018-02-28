@@ -36,6 +36,8 @@
     <string name="retrofit_internet_error">Unable to resolve host \"www.viegram.com\": No address associated with hostname</string>
     <string name="network_error">There is some Network problem. Please try again</string>
     <string name="image_doesn_t_exist">Image doesn\'t exist.</string>
+    <string name="read_file">This app needs access to your file storage so that it can read video.</string>
+
 
     <string name="compressing">Compressing file</string>
     <string name="permission_storage_need">WIthout storage permission this app cannot compress the video</string>

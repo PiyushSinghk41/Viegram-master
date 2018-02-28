@@ -479,7 +479,6 @@ public class Stats extends AppCompatActivity implements View.OnClickListener, Vi
 
             my_stats.setBackground(getResources().getDrawable(R.drawable.stats_bg));
         }
-
     }
 
     @Override

@@ -248,6 +248,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -308,7 +309,9 @@
                     android:id="@+id/timeline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/load_moreData"></android.support.v7.widget.RecyclerView>
+                    android:layout_above="@+id/load_moreData">
+
+                </android.support.v7.widget.RecyclerView>
 
                 <LinearLayout
                     android:id="@+id/load_moreData"
@@ -323,7 +326,9 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center" />
                 </LinearLayout>
+
             </RelativeLayout>
+
         </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>

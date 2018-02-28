@@ -1,139 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="10"
-    android:background="@color/white"
-    android:orientation="vertical"
-    tools:context="com.relinns.viegram.Stats">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:background="@drawable/background"
-    android:layout_weight="1"
-    >
-    <RelativeLayout
+    android:layout_height="match_parent">
 
-        android:id="@+id/back"
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true">
 
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/backbutton_purple_96" />
-    </RelativeLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Stats"
-        android:textSize="19dp"
-        android:id="@+id/stats_header"
-        android:textColor="@color/login_bg"/>
-</RelativeLayout>
-<View
-    android:layout_width="match_parent"
-    android:background="#EEEEEE"
-    android:layout_height="1dp"></View>
-    <LinearLayout
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.7"
-        android:id="@+id/layout"
-        android:weightSum="3"
-        tools:ignore="DisableBaselineAlignment">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:weightSum="10"
+        tools:context="com.relinns.viegram.Stats">
+
         <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:id="@+id/my_stats"
-            android:background="@drawable/login_bg"
-            android:layout_weight="0.8"
-            tools:ignore="NestedWeights">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/background">
+
+            <RelativeLayout
+
+                android:id="@+id/back"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true">
+
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/backbutton_purple_96" />
+
+
+            </RelativeLayout>
+
             <TextView
+                android:id="@+id/stats_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Stats"
                 android:layout_centerInParent="true"
-                android:textSize="13dp"
-                android:id="@+id/stats_text"
-                android:textColor="@color/white"/>
+                android:text="Stats"
+                android:textColor="@color/login_bg"
+                android:textSize="19dp" />
         </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EEEEEE">
+
+        </View>
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"
+            android:weightSum="6"
+            tools:ignore="DisableBaselineAlignment">
+
+            <RelativeLayout
+                android:id="@+id/my_stats"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="2"
+                android:background="@drawable/login_bg"
+                tools:ignore="NestedWeights">
+
+                <TextView
+                    android:id="@+id/stats_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="My Stats"
+                    android:textColor="@color/white"
+                    android:textSize="13dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/status_score"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="2"
+                android:background="@drawable/stats_bg">
+
+                <TextView
+                    android:id="@+id/scores_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Status Scores"
+                    android:textColor="@color/login_bg"
+                    android:textSize="13dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/earning_points"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="2"
+                android:background="@drawable/stats_bg">
+
+                <TextView
+                    android:id="@+id/earning_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Earning points"
+                    android:textColor="@color/login_bg"
+                    android:textSize="13dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/stats_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8.3"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </android.support.v4.view.ViewPager>
+
+        <FrameLayout
+            android:id="@+id/show_stats"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8.3">
+
+        </FrameLayout>
+
         <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:id="@+id/status_score"
-            android:background="@drawable/stats_bg"
-            android:layout_weight="1.1">
-            <TextView
+            android:id="@+id/progress_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8.3"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Status Scores"
-                android:layout_centerInParent="true"
-                android:textSize="13dp"
-                android:id="@+id/scores_text"
-                android:textColor="@color/login_bg"/>
+                android:layout_centerInParent="true" />
+
         </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:id="@+id/earning_points"
-            android:background="@drawable/stats_bg"
-            android:layout_weight="1.1">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Earning points"
-                android:layout_centerInParent="true"
-                android:textSize="13dp"
-                android:id="@+id/earning_text"
-                android:textColor="@color/login_bg"/>
-        </RelativeLayout>
+
 
     </LinearLayout>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/stats_pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8.3"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    </android.support.v4.view.ViewPager>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/show_stats"
-        android:layout_weight="8.3"></FrameLayout>
-
-    <RelativeLayout
-        android:id="@+id/progress_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="gone"
-
-        android:layout_weight="8.3">
-
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
-
-
-</LinearLayout>
 
     <ImageView
         android:id="@+id/stat_menu_click"
@@ -149,5 +173,7 @@
         layout="@layout/design_menu"
         android:layout_width="150dp"
         android:layout_height="250dp"
-        android:layout_alignParentBottom="true"></include>
+        android:layout_alignParentBottom="true">
+
+    </include>
 </RelativeLayout>

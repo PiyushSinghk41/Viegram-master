@@ -29,20 +29,26 @@ import com.relinns.viegram.R;
 import java.util.List;
 
 public class RandomPostAdapter extends RecyclerView.Adapter<RandomPostAdapter.ViewHolder> {
-    private Search context;
-    private List<TimelinePost> posts;
-    private SharedPreferences preferences;
+
+    Search context;
+
+    List<TimelinePost> posts;
+
+    SharedPreferences preferences;
 
     public RandomPostAdapter(Search search, List<TimelinePost> timelinePosts) {
+
         this.context = search;
+
         this.posts = timelinePosts;
+
         preferences = context.getSharedPreferences("Viegram", Context.MODE_PRIVATE);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.design_photo, parent, false);
 
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.design_photo, parent, false);
         return new ViewHolder(v);
     }
 
@@ -61,7 +67,6 @@ public class RandomPostAdapter extends RecyclerView.Adapter<RandomPostAdapter.Vi
             e.printStackTrace();
             mImageUrl = posts.get(position).getPhoto();
         }
-
 
 
         DisplayImageOptions options = new DisplayImageOptions.Builder().
@@ -94,8 +99,7 @@ public class RandomPostAdapter extends RecyclerView.Adapter<RandomPostAdapter.Vi
 
             holder.playIcon.setVisibility(View.VISIBLE);
 
-        }
-        else {
+        } else {
 
             holder.playIcon.setVisibility(View.GONE);
 
@@ -104,10 +108,15 @@ public class RandomPostAdapter extends RecyclerView.Adapter<RandomPostAdapter.Vi
         holder.img_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 SharedPreferences.Editor editor = preferences.edit();
+
                 editor.putString("post_id", posts.get(position).getPostId());
+
                 editor.commit();
+
                 Intent i = new Intent(context, Open_photo.class);
+
                 context.startActivity(i);
             }
         });

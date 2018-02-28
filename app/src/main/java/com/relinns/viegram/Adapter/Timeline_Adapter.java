@@ -196,7 +196,7 @@ public class Timeline_Adapter extends RecyclerView.Adapter<Timeline_Adapter.View
                 cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
 
         ImageLoader loader = ImageLoader.getInstance();
-        loader.displayImage(list.get(position).getProfileImage(), holder.profile_image, options);
+       loader.displayImage(list.get(position).getProfileImage(), holder.profile_image, options);
 
 
 //set post image

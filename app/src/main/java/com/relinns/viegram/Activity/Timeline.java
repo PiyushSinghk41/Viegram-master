@@ -30,6 +30,8 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.relinns.viegram.Adapter.Timeline_Adapter;
 import com.relinns.viegram.Modal.API_Response;
 import com.relinns.viegram.Modal.LeaderData;
@@ -102,6 +104,8 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(Timeline.this));
 
         preferences = getSharedPreferences("Viegram", MODE_PRIVATE);
 

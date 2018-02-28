@@ -93,6 +93,7 @@ import java.util.UUID;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -109,11 +110,13 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
     ImageView play_video, menu_click_view, upload_image_view, inital_image;
 
+
+    String pathToStoredVideo;
     Button upload_photo;
 
 
-    private static final int VIDEO_CAPTURE = 101;
-    private Uri fi;
+    //private static final int VIDEO_CAPTURE = 101;
+    //private Uri fi;
 
     private final int PICK_VIDEOIMAGE = 5;
 
@@ -126,6 +129,12 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
     private final int LOCATION_CODE = 3;
 
     private final int CAPTURE_PERMISSION_CODE = 5;
+
+
+    private static final int REQUEST_VIDEO_CAPTURE = 0;
+
+
+    private static final int READ_REQUEST_CODE = 00;
 
     private final int READ_PERMISSION_CODE = 10;
 
@@ -142,25 +151,42 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
     String result_id = "";
 
     String x_value_result = "";
+
     String y_value_result = "";
+
     TextView badgeText, upload_header, location, tag_text, add_caption_textbt;
 
     Uri fileUri;
-    SharedPreferences preferences;
-    CheckBox check;
-    EditText caption_text;
-    private static final String IMAGE_DIRECTORY_NAME = "Hello Camera";
-    private static final int MEDIA_TYPE_IMAGE = 1;
-    private File thumbnail;
-    private File tempFile;
-    private ProgressDialog progressDialog;
-    private CircleProgress circleProgress;
-    private Uri mSelectedMediaUri;
-    private static final String PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-    private static final int REQUEST_STORAGE_PERMISSION = 123;
-    private static final int MAX_RETRIES = 3;
-    private static final boolean FIXED_LENGTH_STREAMING_MODE = true;
 
+    SharedPreferences preferences;
+
+    CheckBox check;
+
+    EditText caption_text;
+
+    VideoView displayRecordedVideo;
+
+    private static final String IMAGE_DIRECTORY_NAME = "Hello Camera";
+
+    private static final int MEDIA_TYPE_IMAGE = 1;
+
+    File thumbnail;
+
+    File tempFile;
+
+    ProgressDialog progressDialog;
+
+    CircleProgress circleProgress;
+
+    Uri mSelectedMediaUri;
+
+    private static final String PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+    private static final int REQUEST_STORAGE_PERMISSION = 123;
+
+    private static final int MAX_RETRIES = 3;
+
+    private static final boolean FIXED_LENGTH_STREAMING_MODE = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -322,9 +348,12 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
                 if (b) {
+
                     check_value = "1";
                 } else {
+
                     check_value = "0";
                 }
             }
@@ -389,18 +418,21 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
         switch (requestCode) {
+
             case READ_PERMISSION_CODE: {
-                // If request is cancelled, the result arrays are empty.
+
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
                     intent.setType("*/*");
+
                     intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/*", "video/*"});
 
-                    //     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    //  intent.setType("video/*, image/*");
-                    //     intent.setType("*/*");
                     startActivityForResult(intent, PICK_VIDEOIMAGE);
 
                 }
@@ -423,147 +455,231 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {                                    //cropped image code
+
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
             if (resultCode == RESULT_OK) {
+
                 filetype = "image";
+
                 onImageSet(result.getUri());
+
                 setImagesize(result.getUri());
+
                 upload_image_path = FileUtils.getInstance().compressImage(result.getUri(), this);
+
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+
                 Exception error = result.getError();
+
                 Log.d("Screen_Upload_Photo", "Crop Error : " + error);
+
             }
         }
         if (requestCode == TAG_CODE) {                                                                              //get tagged people data
+
             if (resultCode == Activity.RESULT_OK) {
+
                 result_id = data.getStringExtra("result_id");
+
                 x_value_result = data.getStringExtra("x_value_result");
+
                 y_value_result = data.getStringExtra("y_value_result");
+
                 SharedPreferences.Editor editor = preferences.edit();
+
                 editor.putString("result_name", data.getStringExtra("result_name"));
+
                 editor.putString("result_id", result_id);
+
                 editor.putString("x_value_result", x_value_result);
+
                 editor.putString("y_value_result", y_value_result);
+
                 editor.putString("result_size", data.getStringExtra("result_size"));
+
                 editor.commit();
+
                 if (data.getStringExtra("result_size").equals("0")) {
+
                     tag_text.setText("Tag People");
+
                 } else
+
                     tag_text.setText(data.getStringExtra("result_size") + " people tagged ");
             }
+
             if (resultCode == Activity.RESULT_CANCELED) {
+
             }
         }
         if (requestCode == LOCATION_CODE) {                                                                 //get location
+
             if (resultCode == Activity.RESULT_OK) {
+
                 location_result = data.getStringExtra("location");
+
                 if (!location_result.equals(""))
+
                     location.setText(location_result);
+
             }
 
         }
         if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {                                         //captured image
+
             if (resultCode == RESULT_OK) {
+
                 play_video.setVisibility(View.GONE);
+
                 previewCapturedImage();
+
             } else if (resultCode == RESULT_CANCELED) {
+
                 Toast.makeText(getApplicationContext(), "User cancelled image capture", Toast.LENGTH_SHORT).show();
+
             } else {
-                // failed to capture image
+
                 Toast.makeText(getApplicationContext(), "Sorry! Failed to capture image", Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
+
+
+        if (requestCode == REQUEST_VIDEO_CAPTURE) {
+
+            if (resultCode == RESULT_OK) {
+
+
+                mSelectedMediaUri = data.getData();
+                //   File video_final_path = new File(getRealPathFromURI(mSelectedMediaUri));
+                File video_final_path = new File(RealPathUtils.getRealPath(mSelectedMediaUri, this));
+                //    File video_final_path = new File(RealPathUtils.getRealPath(getApplicationContext(),selectedMediaUri));
+
+                Log.d("Screen_Upload_Photo", "pick video or image uri : " + video_final_path.toString());
+
+                add_location.setEnabled(true);
+
+                location.setTextColor(getResources().getColor(R.color.upload_text));
+
+                result_id = "";
+
+                x_value_result = "";
+
+                y_value_result = "";
+
+                SharedPreferences.Editor editor = preferences.edit();
+
+                editor.putString("result_name", "");
+
+                editor.putString("result_id", "");
+
+                editor.putString("x_value_result", "");
+
+                editor.putString("y_value_result", "");
+
+                editor.putString("result_size", "");
+
+                editor.commit();
+                //    saveTempFile(mSelectedMediaUri);
+
+             /*   Bitmap b = */
+
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+                float width_screen = displayMetrics.widthPixels;
+
+                Bitmap out = null;
+
+                try {
+
+                    Bitmap bm = MediaStore.Video.Thumbnails.getThumbnail(
+                            getContentResolver(),
+                            ContentUris.parseId(mSelectedMediaUri),
+                            MediaStore.Video.Thumbnails.MINI_KIND,
+                            null);
+
+                    out = Bitmap.createScaledBitmap(bm, (int) width_screen, (int) width_screen, false);
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+                upload_image_path = video_final_path.toString();
+
+                Log.d("Screen_Upload_Photo", "thumbnailout : " + upload_image_path);
+
+                videoIsSelected(out);
+
             }
         }
 
 
-        if (requestCode == VIDEO_CAPTURE) {
-            if (resultCode == RESULT_OK) {
-
-
-                File file = new File(upload_image_path);
-
-                Log.d("Screen_Upload_Photo", "video to be upload string : " + upload_image_path);
-
-                Log.d("Screen_Upload_Photo", "video to be upload file : " + file.getPath());
-
-                Log.d("Screen_Upload_Photo", "thumbnial : " + thumbnail);
-
-
-                RequestBody videoThumbnail = RequestBody.create(MediaType.parse("*/*"), thumbnail);
-
-                MultipartBody.Part thumbnailBody = MultipartBody.Part.createFormData("thumbnail", thumbnail.getName(), videoThumbnail);
-
-
-                Log.d("Screen_Upload_Photo", "video thumbnail to be upload file : " + thumbnail);
-
-                RequestBody imagefile = RequestBody.create(MediaType.parse("image/* video/*"), file);
-
-                ProgressRequestBody fileBody = new ProgressRequestBody(imagefile, this);
-
-                MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("filename", file.getName(), fileBody);
-
-
-                Call<API_Response> call = null;
-
-                RequestBody id =
-
-                        RequestBody.create(MediaType.parse("multipart/form-data"), preferences.getString("user_id", ""));
-
-                RequestBody action =
-
-                        RequestBody.create(MediaType.parse("multipart/form-data"), "upload_photo");
-
-                RequestBody caption =
-
-                        RequestBody.create(MediaType.parse("multipart/form-data"), caption_text.getText().toString());
-
-                RequestBody file_type =
-
-                        RequestBody.create(MediaType.parse("multipart/form-data"), filetype);
-
-                RequestBody restricted_status =
-
-                        RequestBody.create(MediaType.parse("multipart/form-data"), check_value);
-
-                RequestBody tag_people =
-
-                        RequestBody.create(MediaType.parse("multipart/form-data"), result_id);
-
-                RequestBody location =
-
-                        RequestBody.create(MediaType.parse("multipart/form-data"), location_result);
-
-                RequestBody x_cordinates =
-
-                        RequestBody.create(MediaType.parse("multipart/form-data"), x_value_result);
-
-                RequestBody y_cordinates =
-
-                        RequestBody.create(MediaType.parse("multipart/form-data"), y_value_result);
 
 
 
-                GetViegramData getResponse = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
+       /*
+        if(EasyPermissions.hasPermissions(MainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE)){
+            displayRecordedVideo.setVideoURI(uri);
+            displayRecordedVideo.start();
 
-                call = getResponse.UploadVideo(
+            pathToStoredVideo = getRealPathFromURIPath(uri, MainActivity.this);
+            Log.d(TAG, "Recorded Video Path " + pathToStoredVideo);
+            //Store the video to your server
+            uploadVideoToServer(pathToStoredVideo);
 
-                        fileToUpload,
-                        thumbnailBody,
-                        action,
-                        id,
-                        caption,
-                        file_type,
-                        restricted_status,
-                        tag_people, location,
-                        x_cordinates,
-                        y_cordinates);
+        }else{
+            EasyPermissions.requestPermissions(MainActivity.this, getString(R.string.read_file), READ_REQUEST_CODE, Manifest.permission.READ_EXTERNAL_STORAGE);
+        }*/
 
-                call.enqueue(new Callback<API_Response>() {
+
+               /* if (requestCode == VIDEO_CAPTURE) {
+                    if (resultCode == RESULT_OK) {
+                        Toast.makeText(this, "Video saved to:\n" +
+                                data.getData(), Toast.LENGTH_LONG).show();
+                    } else if (resultCode == RESULT_CANCELED) {
+                        Toast.makeText(this, "Video recording cancelled.",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this, "Failed to record video",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }*/
+        //Log.d("Screen_Upload_Photo", "video to be upload file : " + file.getPath());
+
+        //Log.d("Screen_Upload_Photo", "thumbnial : " + thumbnail);
+
+        //RequestBody videoThumbnail = RequestBody.create(MediaType.parse("*/*"), thumbnail);
+
+        //MultipartBody.Part thumbnailBody = MultipartBody.Part.createFormData("thumbnail", thumbnail.getName(), videoThumbnail);
+
+        //Log.d("Screen_Upload_Photo", "video thumbnail to be upload file : " + thumbnail);
+
+        //RequestBody imagefile = RequestBody.create(MediaType.parse("image/* video/*"), file);
+
+
+        //ProgressRequestBody fileBody = new ProgressRequestBody(imagefile, this);
+
+        // MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("filename", file.getName(), fileBody);
+
+        //Call<API_Response> call = null;
+
+
+
+               /* call.enqueue(new Callback<API_Response>() {
                     @Override
                     public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
                         uploadprogressLayout.setVisibility(View.GONE);
+
                         if (response.isSuccessful()) {
+
                             Result result = response.body().getResult();
+
                             Log.d("API_Response", "upload_photo" + new Gson().toJson(response.body().getResult()));
                             //Toast.makeText(getApplicationContext(), "User can1"+new Gson().toJson(response.body().getResult()), Toast.LENGTH_SHORT).show();
 
@@ -571,20 +687,31 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
 
                                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(Upload_photo.this).setCancelable(false);
+
                                 if (filetype.equals("video"))
+
                                     alertDialog.setMessage(getResources().getString(R.string.upload_video_done));
+
                                 else
+
                                     alertDialog.setMessage(getResources().getString(R.string.upload_image_done));
+
                                 alertDialog.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
+
                                         deleteTempFile();
+
                                         dialogInterface.dismiss();
+
                                         Intent intent = new Intent(Upload_photo.this, Timeline.class);
+
                                         startActivity(intent);
+
                                         overridePendingTransition(R.anim.enter, R.anim.exit);
                                     }
                                 });
+
                                 alertDialog.show();
                             } else {
                                 //  Toast.makeText(getApplicationContext(), "User can1", Toast.LENGTH_SHORT).show();
@@ -608,7 +735,9 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void onFailure(Call<API_Response> call, Throwable t) {
+
                         uploadprogressLayout.setVisibility(View.GONE);
+
                         setScreenClickable();
 
                         //  Toast.makeText(getApplicationContext(), "User 31", Toast.LENGTH_SHORT).show();
@@ -619,97 +748,143 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
                                 .show();
                     }
                 });
+*/
 
 
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "Video recording cancelled.",
-                        Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Failed to record video",
-                        Toast.LENGTH_LONG).show();
-            }
+        if (requestCode == PICK_VIDEOIMAGE && resultCode == RESULT_OK) {                                        //pick video or image code
 
+            mSelectedMediaUri = data.getData();
+            //   File video_final_path = new File(getRealPathFromURI(mSelectedMediaUri));
+            File video_final_path = new File(RealPathUtils.getRealPath(mSelectedMediaUri, this));
+            //    File video_final_path = new File(RealPathUtils.getRealPath(getApplicationContext(),selectedMediaUri));
 
-            if (requestCode == PICK_VIDEOIMAGE && resultCode == RESULT_OK) {                                        //pick video or image code
-                mSelectedMediaUri = data.getData();
-                //   File video_final_path = new File(getRealPathFromURI(mSelectedMediaUri));
-                File video_final_path = new File(RealPathUtils.getRealPath(mSelectedMediaUri, this));
-                //    File video_final_path = new File(RealPathUtils.getRealPath(getApplicationContext(),selectedMediaUri));
-                Log.d("Screen_Upload_Photo", "pick video or image uri : " + video_final_path.toString());
+            Log.d("Screen_Upload_Photo", "pick video or image uri : " + video_final_path.toString());
 
-                add_location.setEnabled(true);
-                location.setTextColor(getResources().getColor(R.color.upload_text));
-                if (mSelectedMediaUri.toString().contains("image")) {                                                        //if image is selected
-                    imageIsSelected(mSelectedMediaUri);
-                } else if (mSelectedMediaUri.toString().contains("video")) {   //if video is selected
-                    result_id = "";
-                    x_value_result = "";
-                    y_value_result = "";
+            add_location.setEnabled(true);
 
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("result_name", "");
-                    editor.putString("result_id", "");
-                    editor.putString("x_value_result", "");
-                    editor.putString("y_value_result", "");
-                    editor.putString("result_size", "");
-                    editor.commit();
-                    //    saveTempFile(mSelectedMediaUri);
+            location.setTextColor(getResources().getColor(R.color.upload_text));
+
+            if (mSelectedMediaUri.toString().contains("image")) {                                                        //if image is selected
+
+                imageIsSelected(mSelectedMediaUri);
+
+            } else if (mSelectedMediaUri.toString().contains("video")) {   //if video is selected
+
+                result_id = "";
+
+                x_value_result = "";
+
+                y_value_result = "";
+
+                SharedPreferences.Editor editor = preferences.edit();
+
+                editor.putString("result_name", "");
+
+                editor.putString("result_id", "");
+
+                editor.putString("x_value_result", "");
+
+                editor.putString("y_value_result", "");
+
+                editor.putString("result_size", "");
+
+                editor.commit();
+                //    saveTempFile(mSelectedMediaUri);
 
              /*   Bitmap b = */
 
-                    DisplayMetrics displayMetrics = new DisplayMetrics();
-                    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                    float width_screen = displayMetrics.widthPixels;
+                DisplayMetrics displayMetrics = new DisplayMetrics();
 
-                    Bitmap out = null;
-                    try {
-                        Bitmap bm = MediaStore.Video.Thumbnails.getThumbnail(
-                                getContentResolver(),
-                                ContentUris.parseId(mSelectedMediaUri),
-                                MediaStore.Video.Thumbnails.MINI_KIND,
-                                null);
-                        out = Bitmap.createScaledBitmap(bm, (int) width_screen, (int) width_screen, false);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+                float width_screen = displayMetrics.widthPixels;
+
+                Bitmap out = null;
+
+                try {
+
+                    Bitmap bm = MediaStore.Video.Thumbnails.getThumbnail(
+                            getContentResolver(),
+                            ContentUris.parseId(mSelectedMediaUri),
+                            MediaStore.Video.Thumbnails.MINI_KIND,
+                            null);
+
+                    out = Bitmap.createScaledBitmap(bm, (int) width_screen, (int) width_screen, false);
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+                upload_image_path = video_final_path.toString();
+
+                Log.d("Screen_Upload_Photo", "thumbnailout : " + upload_image_path);
+
+                videoIsSelected(out);
+
+            }
+            //when uri returns file path
+            else {
+
+                if (mSelectedMediaUri.toString().endsWith(".jpg") || mSelectedMediaUri.toString().endsWith(".jpeg") ||
+
+                        mSelectedMediaUri.toString().endsWith(".png")) {
+
+                    CropImage.activity(mSelectedMediaUri)
+                            .setCropShape(CropImageView.CropShape.RECTANGLE)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setAspectRatio(1, 1)
+                            .start(this);
+                } else {
+
+                    result_id = "";
+
+                    x_value_result = "";
+
+                    y_value_result = "";
+
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    editor.putString("result_name", "");
+
+                    editor.putString("result_id", "");
+
+                    editor.putString("x_value_result", "");
+
+                    editor.putString("y_value_result", "");
+
+                    editor.putString("result_size", "");
+
+                    editor.commit();
+
+                    File tempVideo = new File(mSelectedMediaUri.getPath());
+
+                    Log.d("Screen_Upload_Photo", "tempFile of video  : " + tempVideo.getAbsolutePath());
+
+                    Bitmap thumb = ThumbnailUtils.createVideoThumbnail(tempVideo.getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);
+
+                    Log.d("Screen_Upload_Photo", "thumbnail created by video : " + thumb);
 
                     upload_image_path = video_final_path.toString();
-                    Log.d("Screen_Upload_Photo", "thumbnailout : " + upload_image_path);
 
-                    videoIsSelected(out);
+                    videoIsSelected(thumb);
 
-                }
-                //when uri returns file path
-                else {
-                    if (mSelectedMediaUri.toString().endsWith(".jpg") || mSelectedMediaUri.toString().endsWith(".jpeg") ||
-                            mSelectedMediaUri.toString().endsWith(".png")) {
-                        CropImage.activity(mSelectedMediaUri)
-                                .setCropShape(CropImageView.CropShape.RECTANGLE)
-                                .setGuidelines(CropImageView.Guidelines.ON)
-                                .setAspectRatio(1, 1)
-                                .start(this);
-                    } else {
-                        result_id = "";
-                        x_value_result = "";
-                        y_value_result = "";
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("result_name", "");
-                        editor.putString("result_id", "");
-                        editor.putString("x_value_result", "");
-                        editor.putString("y_value_result", "");
-                        editor.putString("result_size", "");
-                        editor.commit();
-                        File tempVideo = new File(mSelectedMediaUri.getPath());
-                        Log.d("Screen_Upload_Photo", "tempFile of video  : " + tempVideo.getAbsolutePath());
-                        Bitmap thumb = ThumbnailUtils.createVideoThumbnail(tempVideo.getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);
-                        Log.d("Screen_Upload_Photo", "thumbnail created by video : " + thumb);
-                        upload_image_path = video_final_path.toString();
-                        videoIsSelected(thumb);
-                    }
                 }
             }
         }
     }
+
+
+    private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
+        Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            return contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
+    }
+
 
     //when video is selected from gallery
     private void videoIsSelected(Bitmap out) {
@@ -972,7 +1147,7 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-            RelativeLayout choose_gallery, capture_image, remove_image , capture_video;
+            RelativeLayout choose_gallery, capture_image, remove_image, capture_video;
 
 
             TextView upload_photo_text = (TextView) dialog.findViewById(R.id.upload_image_text);
@@ -1029,34 +1204,22 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
             });
 
 
-
-            capture_video.setOnClickListener(new View.OnClickListener() {
+           capture_video.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     dialog.dismiss();
 
-                    File mediaFile =
-                            new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                                    + "/myvideo.mp4");
 
-                    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
-                    Uri photoURI = FileProvider.getUriForFile(Upload_photo.this,
-                            BuildConfig.APPLICATION_ID + ".provider",
-                            mediaFile);
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, fi);
-                    startActivityForResult(intent, VIDEO_CAPTURE);
-
+                    Intent videoCaptureIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                    if(videoCaptureIntent.resolveActivity(getPackageManager()) != null){
+                        startActivityForResult(videoCaptureIntent, REQUEST_VIDEO_CAPTURE);
+                    }
 
 
                 }
             });
-
-
-
-
 
 
             dialog.show();
@@ -1201,10 +1364,10 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
         postParam.put("repost_text", caption_text.getText().toString());
 
 
-        Log.d("postid" , getIntent().getStringExtra("post_id"));
-        Log.d("post_userid" , getIntent().getStringExtra("postuser_id"));
-        Log.d("repost_userid" , preferences.getString("user_id", ""));
-        Log.d("repost_text" ,caption_text.getText().toString());
+        Log.d("postid", getIntent().getStringExtra("post_id"));
+        Log.d("post_userid", getIntent().getStringExtra("postuser_id"));
+        Log.d("repost_userid", preferences.getString("user_id", ""));
+        Log.d("repost_text", caption_text.getText().toString());
 
 
         Log.d("API_Response", "repost_post Parameters : " + postParam.toString());
@@ -1231,8 +1394,7 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
                         startActivity(i);
                     }
-                }
-                else
+                } else
 
                     Log.e("API_Response", "repost_post Response : " + new Gson().toJson(response.errorBody()));
             }
@@ -1310,8 +1472,7 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("filename", file.getName(), fileBody);
 
             call = getResponse.UploadImage(fileToUpload, action, id, caption, file_type, restricted_status, tag_people, location, x_cordinates, y_cordinates);
-        }
-        else {
+        } else {
 
             File file = new File(upload_image_path);
 
@@ -1668,6 +1829,183 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
+
+
+        /*Call<ResultObject>  serverCom = vInterface.uploadVideoToServer(vFile);
+        serverCom.enqueue(new Callback<ResultObject>() {
+            @Override
+            public void onResponse(Call<ResultObject> call, Response<ResultObject> response) {
+                ResultObject result = response.body();
+                if(!TextUtils.isEmpty(result.getSuccess())){
+                    Toast.makeText(MainActivity.this, "Result " + result.getSuccess(), Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "Result " + result.getSuccess());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResultObject> call, Throwable t) {
+                Log.d(TAG, "Error message " + t.getMessage());
+            }
+        });
+    */
+
+    private void uploadVideoToServer(String pathToVideoFile){
+
+        GetViegramData getResponse = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
+
+        Call<API_Response> call = null;
+
+        RequestBody id =
+
+                RequestBody.create(MediaType.parse("multipart/form-data"), preferences.getString("user_id", ""));
+
+        RequestBody action =
+
+                RequestBody.create(MediaType.parse("multipart/form-data"), "upload_photo");
+
+        RequestBody caption =
+
+                RequestBody.create(MediaType.parse("multipart/form-data"), caption_text.getText().toString());
+
+        RequestBody file_type =
+
+                RequestBody.create(MediaType.parse("multipart/form-data"), filetype);
+
+        RequestBody restricted_status =
+
+                RequestBody.create(MediaType.parse("multipart/form-data"), check_value);
+
+        RequestBody tag_people =
+
+                RequestBody.create(MediaType.parse("multipart/form-data"), result_id);
+
+        RequestBody location =
+
+                RequestBody.create(MediaType.parse("multipart/form-data"), location_result);
+
+        RequestBody x_cordinates =
+
+                RequestBody.create(MediaType.parse("multipart/form-data"), x_value_result);
+
+        RequestBody y_cordinates =
+
+                RequestBody.create(MediaType.parse("multipart/form-data"), y_value_result);
+
+        File videoFile = new File(pathToVideoFile);
+
+        RequestBody videoBody = RequestBody.create(MediaType.parse("video/*"), videoFile);
+
+        MultipartBody.Part vFile = MultipartBody.Part.createFormData("video", videoFile.getName(), videoBody);
+
+
+
+
+       //File file = new File(upload_image_path);
+
+
+
+        RequestBody videoThumbnail = RequestBody.create(MediaType.parse("*/*"), thumbnail);
+
+        MultipartBody.Part thumbnailBody = MultipartBody.Part.createFormData("thumbnail", thumbnail.getName(), videoThumbnail);
+
+        Log.d("Screen_Upload_Photo", "video thumbnail to be upload file : " + thumbnail);
+
+        RequestBody imagefile = RequestBody.create(MediaType.parse("video/*"), videoFile);
+
+        ProgressRequestBody fileBody = new ProgressRequestBody(imagefile, this);
+
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("filename", videoFile.getName(), fileBody);
+
+        call = getResponse.UploadImage(fileToUpload, action, id, caption, file_type, restricted_status, tag_people, location, x_cordinates, y_cordinates);
+
+        call = getResponse.UploadVideo(
+
+                fileToUpload,
+                thumbnailBody,
+                action,
+                id,
+                caption,
+                file_type,
+                restricted_status,
+                tag_people, location,
+                x_cordinates,
+                y_cordinates);
+
+        call.enqueue(new Callback<API_Response>() {
+        @Override
+        public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+            uploadprogressLayout.setVisibility(View.GONE);
+            if (response.isSuccessful()) {
+                Result result = response.body().getResult();
+                Log.d("API_Response", "upload_photo" + new Gson().toJson(response.body().getResult()));
+                //Toast.makeText(getApplicationContext(), "User can1"+new Gson().toJson(response.body().getResult()), Toast.LENGTH_SHORT).show();
+
+                if (result.getMsg().equals("201")) {
+
+
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(Upload_photo.this).setCancelable(false);
+                    if (filetype.equals("video"))
+
+                        alertDialog.setMessage(getResources().getString(R.string.upload_video_done));
+
+
+
+                    alertDialog.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            deleteTempFile();
+                            dialogInterface.dismiss();
+                            Intent intent = new Intent(Upload_photo.this, Timeline.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.enter, R.anim.exit);
+                        }
+                    });
+                    alertDialog.show();
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(Call<API_Response> call, Throwable t) {
+            uploadprogressLayout.setVisibility(View.GONE);
+            setScreenClickable();
+
+            //  Toast.makeText(getApplicationContext(), "User 31", Toast.LENGTH_SHORT).show();
+
+            Alerter.create(Upload_photo.this)
+                    .setText(R.string.network_error)
+                    .setBackgroundColor(R.color.red)
+                    .show();
+        }
+    });
+
+
+
+        /*File file1 = new File(upload_image_path);
+
+        Log.d("Screen_Upload_Photo", "upload file : " + file1.getPath() + "-----type-----" + filetype);
+
+        if (filetype.equals("image")) {
+
+            Log.d("Screen_Upload_Photo", "image to be upload string :" + upload_image_path);
+
+            File file = new File(upload_image_path);
+
+            Log.d("Screen_Upload_Photo", "image to be upload file : " + file.getPath());
+
+            RequestBody imagefile = RequestBody.create(MediaType.parse("image*//* video*//*"), file);
+
+            ProgressRequestBody fileBody = new ProgressRequestBody(imagefile, this);
+
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("filename", file.getName(), fileBody);
+*/
+
+
+
+
+
+    }
+
 
     private String getRealPathFromURI(Uri contentURI) {
         String result;

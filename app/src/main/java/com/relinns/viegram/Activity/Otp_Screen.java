@@ -31,17 +31,17 @@ import retrofit2.Callback;
 
 public class Otp_Screen extends AppCompatActivity implements View.OnClickListener {
 
-     RelativeLayout back;
+    RelativeLayout back;
 
-     Button submit_otp;
+    Button submit_otp;
 
-     EditText first , second ,third ,fourth ;
+    EditText first, second, third, fourth;
 
-     ProgressDialog progress_Dialog;
+    ProgressDialog progress_Dialog;
 
-     SharedPreferences preferences;
+    SharedPreferences preferences;
 
-     String otp_code = "";
+    String otp_code = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +95,7 @@ public class Otp_Screen extends AppCompatActivity implements View.OnClickListene
 
                     third.requestFocus();
 
-                }
-                else if (s.toString().length() == 0) {
+                } else if (s.toString().length() == 0) {
 
                     first.requestFocus();
                 }
@@ -180,8 +179,7 @@ public class Otp_Screen extends AppCompatActivity implements View.OnClickListene
                 progress_Dialog.show();
 
                 submit_otp();
-            }
-            else {
+            } else {
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(this);
                 alert.setMessage("Invalid OTP code.");
@@ -238,8 +236,7 @@ public class Otp_Screen extends AppCompatActivity implements View.OnClickListene
                         startActivity(i);
 
                         overridePendingTransition(R.anim.enter, R.anim.exit);
-                    }
-                    else if (msg.equals("204")) {
+                    } else if (msg.equals("204")) {
 
                         AlertDialog.Builder alert = new AlertDialog.Builder(Otp_Screen.this);
                         alert.setMessage("Invalid OTP code.");
@@ -254,15 +251,13 @@ public class Otp_Screen extends AppCompatActivity implements View.OnClickListene
                                 first.requestFocus();
                             }
                         }).show();
-                    }
-                    else {
+                    } else {
                         Alerter.create(Otp_Screen.this)
                                 .setText(R.string.network_error)
                                 .setBackgroundColor(R.color.login_bg)
                                 .show();
                     }
-                }
-                else {
+                } else {
                     Alerter.create(Otp_Screen.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.login_bg)
