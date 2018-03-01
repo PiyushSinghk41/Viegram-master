@@ -59,7 +59,7 @@
                 android:layout_margin="5dp"
                 android:id="@+id/leader"
                 android:background="@drawable/login_bg"
-                android:layout_weight="1.5"
+                android:layout_weight="2"
                 tools:ignore="NestedWeights">
 
 
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:text="Leaders"
                     android:layout_centerInParent="true"
-                    android:textSize="14dp"
+                    android:textSize="12dp"
                     android:id="@+id/leader_text"
                     android:textColor="@color/white"/>
 
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:text="My Ranking"
                     android:layout_centerInParent="true"
-                    android:textSize="14dp"
+                    android:textSize="12dp"
                     android:id="@+id/ranking_text"
                     android:textColor="@color/login_bg"/>
 
@@ -104,7 +104,7 @@
                 android:layout_margin="5dp"
                 android:id="@+id/follower_ranking"
                 android:background="@drawable/stats_bg"
-                android:layout_weight="2.5">
+                android:layout_weight="2">
 
 
                 <TextView
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:text="Followers Ranking"
                     android:layout_centerInParent="true"
-                    android:textSize="13dp"
+                    android:textSize="12dp"
                     android:textAlignment="center"
                     android:id="@+id/fllwr_text"
                     android:textColor="@color/login_bg"/>

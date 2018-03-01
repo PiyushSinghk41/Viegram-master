@@ -182,24 +182,38 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         getLeaderData();
 
         if (preferences.getBoolean("timelinecache", false)) {
+
             progress_layout.setVisibility(View.GONE);
+
             swipe_refresh.setVisibility(View.VISIBLE);
+
             getFromCache();
-        } else {
+        }
+        else {
+
             progress_layout.setVisibility(View.VISIBLE);
+
             swipe_refresh.setVisibility(View.GONE);
         }
 
         no_posts.setVisibility(View.GONE);
+
         menu_open_layout.setVisibility(View.GONE);
+
         load_moreData.setVisibility(View.GONE);
+
         try {
+
             get_timeline();
+
         } catch (TimeoutException e) {
+
             load_moreData.setVisibility(View.GONE);
+
             loading = true;
 
             load_moreData.setVisibility(View.GONE);
+
             swipe_refresh.setRefreshing(false);
 
             Alerter.create(Timeline.this)
@@ -207,26 +221,39 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
                     .setBackgroundColor(R.color.red)
                     .show();
             Log.d("API_", "Timeout error : " + e.getMessage());
+
             e.printStackTrace();
         }
+
         upload_token();
 
         if (getIntent().getExtras() != null) {
+
             if (getIntent().getExtras().containsKey("signup")) {
+
                 final Dialog dialog = new Dialog(this);
+
                 dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
                 dialog.setContentView(R.layout.pop_up_congratulations);
+
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
                 RelativeLayout cancel = dialog.findViewById(R.id.cancel1);
+
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
                     }
                 });
+
                 dialog.show();
+
                 SharedPreferences.Editor editor = preferences.edit();
+
                 editor.putBoolean("timelinecache", false);
+
                 editor.apply();
             }
         }
@@ -263,21 +290,35 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
                 if (dy > 0) {
+
                     int visibleItemCount = layoutManager.getChildCount();
+
                     int totalItemCount = layoutManager.getItemCount();
+
                     int pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+
                     Log.d("kajal", "total post: " + total_posts);
+
                     Log.d("kajal", "total item count : " + totalItemCount);
+
                     Log.d("kajal", "visible item count : " + visibleItemCount);
+
                     Log.d("kajal", "past visible count : " + pastVisiblesItems);
 //                    if (total_posts > totalItemCount) {
                     if (loading) {
+
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+
                             load_moreData.setVisibility(View.VISIBLE);
+
                             loading = false;
+
                             Log.v("P_new data", "Last Item Wow !");
+
                             index++;
+
                             load_more(index);
                         }
                     }
@@ -311,29 +352,41 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
     public void makepostconnection() {
 
         Map<String, String> postParams = new HashMap<>();
+
         postParams.put("action", "all_data");
+
         postParams.put("userid", preferences.getString("user_id", ""));
 
-
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
+
         Log.d("API_Parameters", "fetch_profile parameters :" + postParams.toString());
+
         Call<UserData> call = service.getAllData(postParams);
+
         call.enqueue(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, retrofit2.Response<UserData> response) {
 
                 if (response.isSuccessful()) {
+
                     Log.d("API_Response", "all_data Response : " + new Gson().toJson(response.body()));
+
                     resultp = response.body().getResult();
+
                     if (resultp.getMsg().equals("201")) {
+
                         SharedPreferences.Editor editor = preferences.edit();
+
                         editor.putString("total_points", response.body().getResult().getScorePoints());
+
                         editor.commit();
+
                         updatePoints(response.body().getResult().getScorePoints());
-//                        Toast.makeText(c, "This is my Toast message1!" + resultp.getDisplayName(),
-//                                Toast.LENGTH_LONG).show();
+
                     }
-                } else
+                }
+                else
+
                     Log.d("API_Response", "all_data Response : " + new Gson().toJson(response.errorBody()));
 
             }
@@ -354,30 +407,55 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
 
         String secondname = "", profileimage = "", postimage = "", location = "", firstname = "", timeago = "", firstuserid = "", seconduserid = "", caption = "", tagpeopleid = "", tagpeoplename = "",
                 tagx = "", tagy = "", imagewidth = "", imageheight = "", posttype = "", filetype = "", postpoints = "", postlike = "", postid = "", repostid = "", video = "";
+
         profileimage = preferences.getString("timelineprofile", "");
+
         firstname = preferences.getString("firstname", "");
+
         secondname = preferences.getString("secondname", "");
+
         firstuserid = preferences.getString("firstuserid", "");
+
         seconduserid = preferences.getString("seconduserid", "");
+
         location = preferences.getString("locationtimeline", "");
+
         timeago = preferences.getString("timeago", "");
+
         postimage = preferences.getString("timelinepost", "");
+
         postid = preferences.getString("timelinepostid", "");
+
         posttype = preferences.getString("posttype", "");
+
         filetype = preferences.getString("postfile", "");
+
         postlike = preferences.getString("postlike", "");
+
         video = preferences.getString("post_video", "");
+
         repostid = preferences.getString("repostid", "");
+
         postpoints = preferences.getString("postpoint", "");
+
         caption = preferences.getString("caption", "");
+
         tagpeoplename = preferences.getString("tagpeoplename", "");
+
         tagpeopleid = preferences.getString("tagpeopleid", "");
+
         tagx = preferences.getString("tagx", "");
+
         tagy = preferences.getString("tagy", "");
+
         imageheight = preferences.getString("postheight", "");
+
         imagewidth = preferences.getString("postwidth", "");
+
         if (!list.isEmpty()) {
+
             list.clear();
+
         }
 
         String[] videoArray = video.split(",");
@@ -425,31 +503,50 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         String[] width = imagewidth.split(",");
 
         for (int m = 0; m < captiontext.length; m++) {
+
             List<TagPerson> tagdata = new ArrayList<>();
 
             if (temptagid[m].contains(",")) {
+
                 String[] tagname = temptagname[m].split(",");
+
                 String[] tagid = temptagid[m].split(",");
+
                 String[] tag_x = temptag_x[m].split(",");
+
                 String[] tag_y = temptag_y[m].split(",");
+
                 for (int z = 0; z < tagid.length; z++) {
+
                     tagdata.add(new TagPerson(tagid[z], tagname[z], tag_x[z], tag_y[z]));
+
                 }
-            } else {
+            }
+
+            else {
+
                 tagdata.add(new TagPerson(temptagid[m], temptagname[m], temptag_x[m], temptag_y[m]));
             }
+
             list.add(m, new TimelinePost(getStringValue(videoArray, m), getStringValue(type, m), getStringValue(repost_id, m), getStringValue(photoid, m), getStringValue(points, m), getStringValue(like, m), getStringValue(secondid, m), getStringValue(firstid, m), getStringValue(secondName, m), getStringValue(image, m), getStringValue(photo, m), getStringValue(file, m), getStringValue(captiontext, m), getStringValue(name, m), tagdata, getStringValue(locationArray, m), getStringValue(width, m), getStringValue(height, m), getStringValue(time_Ago, m)));
         }
+
         offlineposts = list.size();
+
         timeline.measure(0, 0);
+
         layoutManager = new LinearLayoutManager(Timeline.this);
+
         timeline.setLayoutManager(layoutManager);
+
         adapter = new Timeline_Adapter(Timeline.this, list, value);
+
         timeline.setAdapter(adapter);
 
         timeline.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
+
             }
 
             @Override
@@ -471,12 +568,17 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
     }
 
     private String getStringValue(String[] mArray, int mPosition) {
+
         try {
+
             if (mArray[mPosition] != null)
+
                 return mArray[mPosition];
             else
+
                 return "";
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
             return "";
         }
@@ -485,17 +587,25 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
     private void upload_token() {
 
         Map<String, String> postParam = new HashMap<String, String>();
+
         postParam.put("action", "update_token");
+
         postParam.put("userid", preferences.getString("user_id", ""));
+
         postParam.put("device_token", FirebaseInstanceId.getInstance().getToken());
+
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
+
         Call<API_Response> call = service.
+
                 pointsWork(postParam);
 
         call.enqueue(new Callback<API_Response>() {
             @Override
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+
                 if (!response.isSuccessful()) {
+
                     upload_token();
                 }
             }
@@ -503,6 +613,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
 //                Log.d("API_Error ", "update_token error : " + t.getMessage());
+
                 upload_token();
             }
         });
@@ -510,24 +621,39 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
     }
 
     private void load_more(int index) {
+
         Map<String, String> postParam = new HashMap<String, String>();
+
         postParam.put("action", "fetch_timeline");
+
         postParam.put("userid", preferences.getString("user_id", ""));
+
         postParam.put("page", index + "");
+
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
+
         Call<API_Response> call = service.getTimeline(postParam);
+
         Log.wtf("URL Called", call.request().url() + "");
+
         Log.d("API_Parameters", "Timeline Parameters : " + postParam.toString());
+
         call.enqueue(new Callback<API_Response>() {
             @Override
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+
                 load_moreData.setVisibility(View.GONE);
+
                 loading = true;
+
                 if (response.isSuccessful()) {
 
                     Log.d("API_Response", "Timeline Response : " + new Gson().toJson(response.body()));
+
                     if (response.body().getResult().getTimelinePosts() != null) {
+
                         list.addAll(response.body().getResult().getTimelinePosts());
+
                         adapter.notifyDataSetChanged();
 
                     } else Alerter.create(Timeline.this)
@@ -535,6 +661,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
                             .setBackgroundColor(R.color.red)
                             .show();
                 } else {
+
                     Alerter.create(Timeline.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.red)
@@ -545,7 +672,9 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
 
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
+
                 load_moreData.setVisibility(View.GONE);
+
                 Alerter.create(Timeline.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.red)
@@ -558,11 +687,15 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
     private void get_timeline() throws TimeoutException {
 
         Map<String, String> postParam = new HashMap<>();
+
         postParam.put("action", "fetch_timeline");
+
         postParam.put("userid", preferences.getString("user_id", ""));
+
         postParam.put("page", index + "");
 
         Log.d("nisha", preferences.getString("user_id", ""));
+
         Log.d("nisha", index + "");
 
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
@@ -570,18 +703,30 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
         Call<API_Response> call = service.getTimeline(postParam);
 
         Log.d("API_Parameters", "Timeline Parameters : " + postParam.toString());
+
         call.enqueue(new Callback<API_Response>() {
             @Override
             public void onResponse(Call<API_Response> call, retrofit2.Response<API_Response> response) {
+
                 progress_layout.setVisibility(View.GONE);
+
                 load_moreData.setVisibility(View.GONE);
+
                 offlineposts = 0;
+
                 if (response.isSuccessful()) {
+
                     updatePoints(response.body().getResult().getTotal_score());
+
                     Log.d("API_Response", "Timeline Response : " + new Gson().toJson(response.body()));
+
                     generatetimelineData(response.body().getResult());
-                } else {
+
+                }
+                else {
+
                     swipe_refresh.setRefreshing(false);
+
                     Alerter.create(Timeline.this)
                             .setText(R.string.network_error)
                             .setBackgroundColor(R.color.red)
@@ -592,12 +737,19 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
 
             @Override
             public void onFailure(Call<API_Response> call, Throwable t) {
+
                 load_moreData.setVisibility(View.GONE);
+
                 progress_layout.setVisibility(View.GONE);
+
                 loading = true;
+
                 Log.d("API_Error ", "Timeline error : " + t.getMessage());
+
                 load_moreData.setVisibility(View.GONE);
+
                 swipe_refresh.setRefreshing(false);
+
                 Alerter.create(Timeline.this)
                         .setText(R.string.network_error)
                         .setBackgroundColor(R.color.red)
@@ -607,31 +759,50 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
     }
 
     private void generatetimelineData(Result result) {
+
         String msg = result.getMsg();
+
         progress_layout.setVisibility(View.GONE);
+
         if (msg.equals("201")) {
+
             if (!list.isEmpty()) {
+
                 list.clear();
             }
             Log.e("timeline_rsponse", "add data: +" + result.getTotalRecords());
 
             try {
+
                 total_posts = Integer.parseInt(result.getTotalRecords());
+
             } catch (Exception e) {
 
             }
 
+
             no_posts.setVisibility(View.GONE);
+
             swipe_refresh.setVisibility(View.VISIBLE);
+
             swipe_refresh.setRefreshing(false);
+
             list = result.getTimelinePosts();
+
             load_moreData.setVisibility(View.GONE);
+
             loading = true;
+
             timeline.measure(0, 0);
+
             layoutManager = new LinearLayoutManager(Timeline.this);
+
             timeline.setLayoutManager(layoutManager);
+
             adapter = new Timeline_Adapter(Timeline.this, list, value);
+
             timeline.setAdapter(adapter);
+
             timeline.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
                 @Override
                 public void onChildViewAttachedToWindow(View view) {
@@ -642,6 +813,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
 
 
                     SimpleExoPlayerView simpleExoPlayerView = view.findViewById(R.id.player);
+
                     simpleExoPlayerView.removeAllViews();
                     //simpleExoPlayerView.setPlayer(player);
                     //simpleExoPlayerView.setUseController(false);
@@ -657,14 +829,23 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
             addtocache();
         } else {
             String reason = result.getReason();
+
             TextView no_timeline_text = findViewById(R.id.no_timeline_text);
+
             if (reason.equals("No post upload by your following")) {
+
                 no_posts.setVisibility(View.VISIBLE);
+
                 timeline.setVisibility(View.GONE);
+
                 no_timeline_text.setText(getResources().getString(R.string.no_following_posts));
-            } else {
+            }
+            else {
+
                 no_posts.setVisibility(View.VISIBLE);
+
                 timeline.setVisibility(View.GONE);
+
                 no_timeline_text.setText(getResources().getString(R.string.no_posts));
             }
         }

@@ -110,10 +110,9 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
     ImageView play_video, menu_click_view, upload_image_view, inital_image;
 
-
     String pathToStoredVideo;
-    Button upload_photo;
 
+    Button upload_photo;
 
     //private static final int VIDEO_CAPTURE = 101;
     //private Uri fi;
@@ -130,9 +129,7 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
     private final int CAPTURE_PERMISSION_CODE = 5;
 
-
     private static final int REQUEST_VIDEO_CAPTURE = 0;
-
 
     private static final int READ_REQUEST_CODE = 00;
 
@@ -1122,21 +1119,34 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == play_video) {
+
             play_video.setVisibility(View.GONE);
+
             upload_image_view.setVisibility(View.GONE);
+
             upload_video_view.setVisibility(View.VISIBLE);
+
             upload_video_view.setVideoPath(upload_image_path);
+
             upload_video_view.requestFocus();
+
             upload_video_view.start();
         }
+
         if (v == add_caption_textbt) {
+
             caption_text.requestFocus();
+
         }
+
         if (v == activity_layout) {
+
             if (menu_open_layout.getVisibility() == View.VISIBLE) {
+
                 menu_status();
             }
         }
+
         if (v == upload_edit_photo || v == upload_image_view || v == imageHolder) {
 
             final Dialog dialog = new Dialog(this);
@@ -1149,12 +1159,12 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
             RelativeLayout choose_gallery, capture_image, remove_image, capture_video;
 
-
             TextView upload_photo_text = (TextView) dialog.findViewById(R.id.upload_image_text);
 
             choose_gallery = (RelativeLayout) dialog.findViewById(R.id.choose_gallery);
 
             capture_image = (RelativeLayout) dialog.findViewById(R.id.capture_image);
+
             capture_video = (RelativeLayout) dialog.findViewById(R.id.capture_video);
 
             remove_image = (RelativeLayout) dialog.findViewById(R.id.remove_image);
@@ -1194,11 +1204,17 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
             capture_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     dialog.dismiss();
+
                     if ((ContextCompat.checkSelfPermission(Upload_photo.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(Upload_photo.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+
                         captureImage();
+
                     } else {
+
                         ActivityCompat.requestPermissions(Upload_photo.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAPTURE_PERMISSION_CODE);
+
                     }
                 }
             });
@@ -1210,13 +1226,12 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
                     dialog.dismiss();
 
-
-
                     Intent videoCaptureIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+
                     if(videoCaptureIntent.resolveActivity(getPackageManager()) != null){
+
                         startActivityForResult(videoCaptureIntent, REQUEST_VIDEO_CAPTURE);
                     }
-
 
                 }
             });
@@ -1241,19 +1256,31 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
         if (v == upload_photo) {
+
             if (type.equals("repost")) {
+
                 progressDialog.show();
+
                 repost_photo();
-            } else {
+            }
+
+            else {
+
                 if (!upload_image_path.equals("")) {
+
                     if (filetype.equals("video")) {
+
                         Log.i("image_path", upload_image_path);
 
                         new VideoCompressor().execute();
+
                     } else {
+
                         callUploadMethod();
+
                     }
                 } else {
+
                     Alerter.create(Upload_photo.this)
                             .setText("Please select an image to upload..")
                             .setBackgroundColor(R.color.red)
@@ -1263,90 +1290,144 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
         }
 
         if (v == back) {
+
             onBackPressed();
         }
         if (v == menu_home) {
+
             menu_status();
+
             deleteTempFile();
+
             Intent i = new Intent(Upload_photo.this, Timeline.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
         if (v == add_location) {
+
             Intent i = new Intent(Upload_photo.this, Search_location.class);
+
             i.putExtra("location", location_result);
+
             startActivityForResult(i, LOCATION_CODE);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
         if (v == menu_camera) {
+
             menu_status();
+
             deleteTempFile();
         }
         if (v == menu_follow) {
+
             menu_status();
+
             deleteTempFile();
+
             Intent i = new Intent(Upload_photo.this, Follower_following.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
         if (v == menu_notifications) {
+
             menu_status();
+
             deleteTempFile();
+
             Intent i = new Intent(Upload_photo.this, Notifications.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
         if (v == menu_profile) {
+
             menu_status();
+
             deleteTempFile();
+
             Intent i = new Intent(Upload_photo.this, Profile.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
         if (v == menu_ranking) {
+
             menu_status();
+
             deleteTempFile();
+
             Intent i = new Intent(Upload_photo.this, Ranking.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
         if (v == menu_search) {
+
             menu_status();
+
             deleteTempFile();
+
             Intent i = new Intent(Upload_photo.this, Search.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
+
         if (v == menu_settings) {
+
             menu_status();
+
             deleteTempFile();
+
             Intent i = new Intent(Upload_photo.this, Settings.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
         if (v == menu_stat) {
+
             menu_status();
+
             deleteTempFile();
+
             Intent i = new Intent(Upload_photo.this, Stats.class);
+
             startActivity(i);
+
             overridePendingTransition(R.anim.enter, R.anim.exit);
         }
         if (v == menu_click_view) {
+
             if (preferences.getInt("badge_value", 0) != 0) {
+
                 badgeLayout.setVisibility(View.VISIBLE);
+
                 badgeText.setText(preferences.getInt("badge_value", 0) + "");
             } else {
+
                 badgeLayout.setVisibility(View.GONE);
             }
+
             menu_open_layout.setVisibility(View.VISIBLE);
+
             menu_click_view.setVisibility(View.GONE);
         }
         if (v == menu_close) {
+
             menu_status();
         }
     }
 
-    //hit repost api
     private void repost_photo() {
 
         GetViegramData service = RetrofitInstance.getRetrofitInstance().create(GetViegramData.class);
@@ -1363,10 +1444,12 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
         postParam.put("repost_text", caption_text.getText().toString());
 
-
         Log.d("postid", getIntent().getStringExtra("post_id"));
+
         Log.d("post_userid", getIntent().getStringExtra("postuser_id"));
+
         Log.d("repost_userid", preferences.getString("user_id", ""));
+
         Log.d("repost_text", caption_text.getText().toString());
 
 
@@ -1516,7 +1599,6 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
                 if (response.isSuccessful()) {
                     Result result = response.body().getResult();
                     Log.d("API_Response", "upload_photo" + new Gson().toJson(response.body().getResult()));
-                    //Toast.makeText(getApplicationContext(), "User can1"+new Gson().toJson(response.body().getResult()), Toast.LENGTH_SHORT).show();
 
                     if (result.getMsg().equals("201")) {
 
@@ -1538,7 +1620,7 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
                         });
                         alertDialog.show();
                     } else {
-                        //  Toast.makeText(getApplicationContext(), "User can1", Toast.LENGTH_SHORT).show();
+
 
                         Alerter.create(Upload_photo.this)
                                 .setText(R.string.network_error)

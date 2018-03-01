@@ -8,14 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content">
-
-
-
-
-
-
 
         <!--<de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="40dp"
@@ -24,8 +17,8 @@
             android:layout_margin="5dp"
             android:background="@drawable/default_image"
             tools:ignore="ContentDescription"
-
             />-->
+
 
 
         <ImageView
@@ -36,6 +29,8 @@
             android:layout_margin="5dp"
             android:background="@drawable/default_image"
             tools:ignore="ContentDescription" />
+
+
 
         <TextView
             android:id="@+id/username_text"
@@ -48,6 +43,8 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+
+
         <TextView
             android:id="@+id/post_time"
             android:layout_width="wrap_content"
@@ -55,6 +52,8 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="7dp" />
+
+
 
         <TextView
             android:id="@+id/location_text"
