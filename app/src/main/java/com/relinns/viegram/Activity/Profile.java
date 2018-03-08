@@ -368,8 +368,16 @@ public class Profile extends AppCompatActivity implements View.OnClickListener, 
 
         ImageLoader loader = ImageLoader.getInstance();
         loader.displayImage(profileImage , profile_image , options);
-*/
 
+
+
+
+        DisplayImageOptions options1 = new DisplayImageOptions.Builder().
+                cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
+
+        ImageLoader loader1 = ImageLoader.getInstance();
+        loader1.displayImage(coverImage , profile_cover_image , options1);
+*/
 
 
         Glide.with(Profile.this).load(profileImage)

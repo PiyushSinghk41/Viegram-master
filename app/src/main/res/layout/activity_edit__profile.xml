@@ -301,7 +301,9 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/s3"
                 android:layout_marginLeft="23dp"
-                android:background="@color/login_bg"></View>
+                android:background="@color/login_bg">
+
+            </View>
 
         </RelativeLayout>
 

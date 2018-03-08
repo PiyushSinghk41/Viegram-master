@@ -46,6 +46,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
+import com.googlecode.mp4parser.authoring.Edit;
 import com.relinns.viegram.BuildConfig;
 import com.relinns.viegram.Modal.API_Response;
 import com.relinns.viegram.Modal.Result;
@@ -83,34 +84,53 @@ import retrofit2.Callback;
 
 @SuppressWarnings("ALL")
 public class Edit_Profile extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener, View.OnFocusChangeListener {
+
     TextView change_photo, cover_change, badgeText;
 
-    RelativeLayout badgeLayout, progress_layout, back, activity_layout,
-            menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow,
-            menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera, menu_home;
+    RelativeLayout badgeLayout, progress_layout, back, activity_layout, menu_open_layout, menu_close, menu_profile, menu_stat, menu_follow, menu_notifications, menu_settings, menu_search, menu_ranking, menu_camera, menu_home;
 
     ImageView menu_click_view, edit_cover_image;
 
     LinearLayout working_layout;
+
     Button save;
+
     CircleImageView circleImageView;
+
     SharedPreferences preferences;
+
+    private final int PICK_VIDEOIMAGE = 5;
+
     EditText_cursor edit_name, edit_username, edit_link, edit_bio;
 
     private final int CAPTURE_IMAGE = 5;
+
     private final int PICK_IMAGE = 6;
+
     private final int STORAGE_PERMISSION_CODE = 23;
+
     private final int CAPTURE_PERMISSION_CODE = 5;
+
     private final int READ_PERMISSION_CODE = 10;
+
     private Uri filepath;
+
     private Uri fileUri;
+
     private boolean backpressed = true;
+
     private String profile_image_path = "";
+
     private String cover_image_path = "";
+
     ProgressDialog progress_Dialog;
+
     private static final int MEDIA_TYPE_IMAGE = 1;
+
     private static final String IMAGE_DIRECTORY_NAME = "Viegram";
+
     private int value = 0;
+
     ProgressBar displayProgress;
 
     @Override
@@ -496,7 +516,7 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        RelativeLayout choose_gallery, capture_image, remove_image;
+        RelativeLayout choose_gallery, capture_image, remove_image , capture_video;
 
         choose_gallery = (RelativeLayout) dialog.findViewById(R.id.choose_gallery);
 
@@ -504,7 +524,11 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
 
         remove_image = (RelativeLayout) dialog.findViewById(R.id.remove_image);
 
+        capture_video = (RelativeLayout) dialog.findViewById(R.id.capture_video);
+
         TextView upload_photo_text = (TextView) dialog.findViewById(R.id.upload_image_text);
+
+        capture_video.setVisibility(View.GONE);
 
         if (value == 0) {
 
@@ -517,7 +541,7 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
 
         }
 
-        choose_gallery.setOnClickListener(new View.OnClickListener() {
+        /*choose_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -540,6 +564,37 @@ public class Edit_Profile extends AppCompatActivity implements View.OnClickListe
                 }
 
 
+            }
+        });*/
+
+
+
+        choose_gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.dismiss();
+
+                int permissionCheck = ContextCompat.checkSelfPermission(Edit_Profile.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+
+                    ActivityCompat.requestPermissions(Edit_Profile.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_PERMISSION_CODE);
+
+                } else {
+
+
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("*/*");
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/*", "video/*"});
+
+                    //     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    //  intent.setType("video/*, image/*");
+                    //     intent.setType("*/*");
+                    startActivityForResult(intent,PICK_IMAGE );
+                    requestStoragePermission();
+                    //return;
+                }
             }
         });
 

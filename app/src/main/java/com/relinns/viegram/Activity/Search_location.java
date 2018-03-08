@@ -204,23 +204,35 @@ public class Search_location extends AppCompatActivity implements View.OnClickLi
 
 
     private void myLoc() throws IOException {
+
         LocationManager ls = (LocationManager) getSystemService(LOCATION_SERVICE);
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
+
         }
+
         Location lc = ls.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
         if (lc == null) {
+
             Log.d("Tag", "check location through network provider");
             lc = ls.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
         }
+
         if (lc == null) {
             Log.d("Tag", "check  location");
             Toast.makeText(Search_location.this, "No Network Location Available", Toast.LENGTH_SHORT).show();
-        } else {
+
+        }
+
+        else {
             Log.d("Tag", "call search location");
             progress_layout.setVisibility(View.VISIBLE);
             result_list.setVisibility(View.GONE);
             get_results(lc.getLatitude(), lc.getLongitude());
+
         }
         Log.d("Tag", "call search");
     }

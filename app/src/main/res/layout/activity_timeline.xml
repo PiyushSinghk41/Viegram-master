@@ -49,8 +49,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="0"
-
                     android:textColor="@color/timeline_name" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -65,15 +65,18 @@
                 android:layout_toLeftOf="@+id/pt1"
                 android:background="@drawable/point_box">
 
+
                 <TextView
                     android:id="@+id/point2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="0"
-
                     android:textColor="@color/timeline_name" />
+
+
             </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/pt3"
@@ -93,9 +96,11 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="0"
-
                     android:textColor="@color/timeline_name" />
+
+
             </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/pt4"

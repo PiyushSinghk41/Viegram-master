@@ -558,6 +558,7 @@ public class Timeline extends AppCompatActivity implements View.OnClickListener,
 
                 simpleExoPlayerView.setUseController(false);
 
+
                 // JZVideoPlayer jzvd = view.findViewById(R.id.player);
                 // if (jzvd != null && jzvd.dataSourceObjects != null)
                 // if (JZUtils.dataSourceObjectsContainsUri(jzvd.dataSourceObjects, JZMediaManager.getCurrentDataSource()))

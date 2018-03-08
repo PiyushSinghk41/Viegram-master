@@ -550,7 +550,6 @@ public class Upload_photo extends AppCompatActivity implements View.OnClickListe
 
             if (resultCode == RESULT_OK) {
 
-
                 mSelectedMediaUri = data.getData();
                 //   File video_final_path = new File(getRealPathFromURI(mSelectedMediaUri));
                 File video_final_path = new File(RealPathUtils.getRealPath(mSelectedMediaUri, this));
